@@ -1,7 +1,5 @@
 const config = require("../config");
 const handler = require("./handler.js");
-const welcome = require("./welcome.js");
-const goodbye = require("./goodbye.js");
 
 /**
  * @param {import('discord.js').Client} client
