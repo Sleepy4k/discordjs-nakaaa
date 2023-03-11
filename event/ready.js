@@ -20,6 +20,4 @@ module.exports = (client) =>
       client.user.setStatus(config.options.status.type);
 
     handler.loadInteraction(client);
-    welcome(client);
-    goodbye(client);
   });
