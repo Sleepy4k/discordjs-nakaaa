@@ -49,7 +49,7 @@ const loadInteraction = (client) => {
 
   console.log("Registering interactions...");
 
-  const interactions = readdirSync(`interaction/`).filter((file) =>
+  const interactions = readdirSync(`interactions/`).filter((file) =>
     file.endsWith(".js")
   );
 
