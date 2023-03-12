@@ -1,11 +1,10 @@
 const { EmbedBuilder } = require("discord.js");
-const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "ping",
-  data: new SlashCommandBuilder()
-    .setName("ping")
-    .setDescription("Show your ping to the bot"),
+  description: "Show your ping to the bot.",
+  cooldown: 1,
+  options: [],
 
   /**
    * @param {import('discord.js').Client} client

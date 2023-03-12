@@ -1,11 +1,10 @@
 const { useHistory } = require("discord-player");
-const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "previous",
-  data: new SlashCommandBuilder()
-    .setName("previous")
-    .setDescription("Plays previous track."),
+  description: "Plays previous track.",
+  cooldown: 1,
+  options: [],
 
   /**
    * @param {import('discord.js').Client} client

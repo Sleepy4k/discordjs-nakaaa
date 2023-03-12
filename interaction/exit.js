@@ -1,11 +1,10 @@
 const { usePlayer } = require("discord-player");
-const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "exit",
-  data: new SlashCommandBuilder()
-    .setName("exit")
-    .setDescription("Kick the bot from the channel."),
+  description: "Kick the bot from the channel.",
+  cooldown: 1,
+  options: [],
 
   /**
    * @param {import('discord.js').Client} client

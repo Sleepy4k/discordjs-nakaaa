@@ -49,12 +49,12 @@ const loadInteraction = (client) => {
 
   console.log("Registering interactions...");
 
-  const interactions = readdirSync(`interactions/`).filter((file) =>
+  const interactions = readdirSync(`interaction/`).filter((file) =>
     file.endsWith(".js")
   );
 
   for (let file of interactions) {
-    let pull = require(`../interactions/${file}`);
+    let pull = require(`../interaction/${file}`);
     if (pull.name) dataMap.set(pull.name, pull);
     commands.push({
       name: pull.name,

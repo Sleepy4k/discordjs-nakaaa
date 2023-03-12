@@ -1,11 +1,10 @@
 const { useQueue } = require("discord-player");
-const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "shuffle",
-  data: new SlashCommandBuilder()
-    .setName("shuffle")
-    .setDescription("Shuffles the tracks in the queue."),
+  description: "Shuffles the tracks in the queue.",
+  cooldown: 1,
+  options: [],
 
   /**
    * @param {import('discord.js').Client} client

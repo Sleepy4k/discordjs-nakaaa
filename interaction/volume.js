@@ -1,10 +1,9 @@
 const { usePlayer } = require("discord-player");
-const { ApplicationCommandOptionType } = require("discord.js");
 
 module.exports = {
   name: "volume",
   description: "Changes the volume of the track and entire queue.",
-  cooldown: 1, // Cooldown in seconds, by default it's 2 seconds | OPTIONAL
+  cooldown: 1,
   options: [
     {
       name: "volume",

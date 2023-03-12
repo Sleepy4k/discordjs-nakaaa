@@ -1,12 +1,11 @@
 const { EmbedBuilder } = require("discord.js");
 const { parseDur } = require("../utils/parseDur");
-const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "uptime",
-  data: new SlashCommandBuilder()
-    .setName("uptime")
-    .setDescription("Show bot uptime"),
+  description: "Show bot uptime.",
+  cooldown: 1,
+  options: [],
 
   /**
    * @param {import('discord.js').Client} client

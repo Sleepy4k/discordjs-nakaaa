@@ -1,18 +1,16 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
-
 module.exports = {
   name: "play",
-  data: new SlashCommandBuilder()
-    .setName("play")
-    .setDescription(
-      "Plays the specified song from YouTube, Soundcloud, Spotify etc."
-    )
-    .addStringOption((options) =>
-      options
-        .setName("search")
-        .setRequired(true)
-        .setDescription("Plays and enqueues track(s) of the query provided.")
-    ),
+  description:
+    "Plays the specified song from YouTube, Soundcloud, Spotify etc.",
+  cooldown: 1,
+  options: [
+    {
+      name: "search",
+      description: "Plays and enqueues track(s) of the query provided.",
+      type: 3,
+      required: true,
+    },
+  ],
 
   /**
    * @param {import('discord.js').Client} client

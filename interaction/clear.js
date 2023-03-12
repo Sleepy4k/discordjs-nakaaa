@@ -1,13 +1,10 @@
 const { useQueue } = require("discord-player");
-const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "clear",
-  data: new SlashCommandBuilder()
-    .setName("clear")
-    .setDescription(
-      "Clears the current queue and removes all enqueued tracks."
-    ),
+  description: "Clears the current queue and removes all enqueued tracks.",
+  cooldown: 1,
+  options: [],
 
   /**
    * @param {import('discord.js').Client} client

@@ -1,12 +1,11 @@
 const axios = require("axios");
 const { EmbedBuilder } = require("discord.js");
-const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "cat",
-  data: new SlashCommandBuilder()
-    .setName("cat")
-    .setDescription("Show random cat image"),
+  description: "Show random cat image.",
+  cooldown: 1,
+  options: [],
 
   /**
    * @param {import('discord.js').Client} client

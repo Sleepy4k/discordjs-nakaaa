@@ -1,12 +1,11 @@
 const { EmbedBuilder } = require("discord.js");
 const { useQueue } = require("discord-player");
-const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "queue",
-  data: new SlashCommandBuilder()
-    .setName("queue")
-    .setDescription("Shows the first 10 songs in the queue with pagination."),
+  description: "Shows the first 10 songs in the queue with pagination.",
+  cooldown: 1,
+  options: [],
 
   /**
    * @param {import('discord.js').Client} client

@@ -1,11 +1,10 @@
 const { usePlayer } = require("discord-player");
-const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "pause",
-  data: new SlashCommandBuilder()
-    .setName("pause")
-    .setDescription("Pauses the current song"),
+  description: "Pauses the current song.",
+  cooldown: 1,
+  options: [],
 
   /**
    * @param {import('discord.js').Client} client

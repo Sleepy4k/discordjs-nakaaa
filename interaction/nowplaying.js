@@ -1,12 +1,11 @@
 const { useQueue } = require("discord-player");
 const { EmbedBuilder } = require("discord.js");
-const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "nowplaying",
-  data: new SlashCommandBuilder()
-    .setName("nowplaying")
-    .setDescription("Displays the current track in an embed."),
+  description: "Displays the current track in an embed.",
+  cooldown: 1,
+  options: [],
 
   /**
    * @param {import('discord.js').Client} client

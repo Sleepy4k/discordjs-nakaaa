@@ -1,12 +1,11 @@
 const { EmbedBuilder } = require("discord.js");
 const { usePlayer } = require("discord-player");
-const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "skip",
-  data: new SlashCommandBuilder()
-    .setName("skip")
-    .setDescription("Skips the current song"),
+  description: "Skips the current song.",
+  cooldown: 1,
+  options: [],
 
   /**
    * @param {import('discord.js').Client} client

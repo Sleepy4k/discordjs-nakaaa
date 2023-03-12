@@ -1,11 +1,10 @@
 const { usePlayer } = require("discord-player");
-const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "resume",
-  data: new SlashCommandBuilder()
-    .setName("resume")
-    .setDescription("Resumes the current song"),
+  description: "Resumes the current song.",
+  cooldown: 1,
+  options: [],
 
   /**
    * @param {import('discord.js').Client} client

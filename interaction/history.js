@@ -1,12 +1,11 @@
 const { EmbedBuilder } = require("discord.js");
 const { useHistory } = require("discord-player");
-const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "history",
-  data: new SlashCommandBuilder()
-    .setName("history")
-    .setDescription("Shows the last 10 songs in the history with pagination."),
+  description: "Shows the last 10 songs in the history with pagination.",
+  cooldown: 1,
+  options: [],
 
   /**
    * @param {import('discord.js').Client} client
