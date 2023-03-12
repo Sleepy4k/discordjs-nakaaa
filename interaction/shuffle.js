@@ -43,7 +43,7 @@ module.exports = {
     await queue.shuffle();
 
     const embed = new EmbedBuilder()
-      .setColor("RANDOM")
+      .setColor("Random")
       .setTitle("Play queue has just been shuffled!")
       .setFooter({
         text: `XII RPL 1 | Bot by Nakaaaa#8558`,

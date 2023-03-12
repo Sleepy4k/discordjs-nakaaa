@@ -30,7 +30,7 @@ module.exports = {
     const success = queue.skip();
 
     const embed = new EmbedBuilder()
-      .setColor("RANDOM")
+      .setColor("Random")
       .setTitle(
         success ? "Musik telah dilewati!" : "Tidak ada musik yang dilewati!"
       )

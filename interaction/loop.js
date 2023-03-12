@@ -45,7 +45,7 @@ module.exports = {
         const success = queue.setRepeatMode(QueueRepeatMode.QUEUE);
 
         const embed = new EmbedBuilder()
-          .setColor("RANDOM")
+          .setColor("Random")
           .setTitle(
             success
               ? "Repeat mode **Enabled** the entire playlist will repeat.n (You can end the cycle with '/loop disabled')"
@@ -65,7 +65,7 @@ module.exports = {
         const success = queue.setRepeatMode(QueueRepeatMode.OFF);
 
         const embed = new EmbedBuilder()
-          .setColor("RANDOM")
+          .setColor("Random")
           .setTitle(
             success
               ? "Repeat mode **Disabled**"
@@ -98,7 +98,7 @@ module.exports = {
         const success = queue.setRepeatMode(QueueRepeatMode.TRACK);
 
         const embed = new EmbedBuilder()
-          .setColor("RANDOM")
+          .setColor("Random")
           .setTitle(
             success
               ? "Repeat mode **Enabled** the current song will repeat.n (You can end the cycle with '/loop disabled')"

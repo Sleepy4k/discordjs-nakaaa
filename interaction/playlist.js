@@ -54,7 +54,7 @@ module.exports = {
         : `In the list there are **${songs}** songs...`;
 
     const embed = new EmbedBuilder()
-      .setColor("RANDOM")
+      .setColor("Random")
       .setTitle("Playlist")
       .setDescription(
         `${tracks.slice(0, 10).join("\n")}

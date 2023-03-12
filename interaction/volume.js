@@ -54,7 +54,7 @@ module.exports = {
     const success = queue.setVolume(volume);
 
     const embed = new EmbedBuilder()
-      .setColor("RANDOM")
+      .setColor("Random")
       .setTitle(success ? `Volume set to ${volume}!` : "Something went wrong!")
       .setFooter({
         text: `XII RPL 1 | Bot by Nakaaaa#8558`,

@@ -43,7 +43,7 @@ module.exports = {
     const success = queue.setPaused(true);
 
     const embed = new EmbedBuilder()
-      .setColor("RANDOM")
+      .setColor("Random")
       .setTitle(success ? "Musik di pause!" : "Gagal mempause musik!")
       .setFooter({
         text: `XII RPL 1 | Bot by Nakaaaa#8558`,

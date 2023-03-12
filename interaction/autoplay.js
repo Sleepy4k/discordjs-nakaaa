@@ -30,7 +30,7 @@ module.exports = {
     const success = queue.setRepeatMode(3);
 
     const embed = new EmbedBuilder()
-      .setColor("RANDOM")
+      .setColor("Random")
       .setTitle(
         success ? "Modo Autoplay diaktifkan!" : "Modo Autoplay dinonaktifkan!"
       )

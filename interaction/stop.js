@@ -30,7 +30,7 @@ module.exports = {
     await queue.destroy();
 
     const embed = new EmbedBuilder()
-      .setColor("RANDOM")
+      .setColor("Random")
       .setTitle("Musik telah dihentikan!")
       .setFooter({
         text: `XII RPL 1 | Bot by Nakaaaa#8558`,
