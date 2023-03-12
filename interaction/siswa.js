@@ -1,3 +1,5 @@
+const { EmbedBuilder } = require("discord.js");
+
 module.exports = {
   name: "siswa",
   description: "List of XII RPL 1 Students.",

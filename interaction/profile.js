@@ -1,3 +1,5 @@
+const { EmbedBuilder } = require("discord.js");
+
 module.exports = {
   name: "profile",
   description: "Show XII RPL 1 Profile.",
