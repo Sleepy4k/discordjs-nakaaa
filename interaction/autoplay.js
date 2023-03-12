@@ -16,7 +16,7 @@ module.exports = {
 
     if (!queue || !queue.playing) {
       const embed = new EmbedBuilder()
-        .setColor("RED")
+        .setColor("Red")
         .setTitle("Tidak ada musik yang diputar!")
         .setFooter({
           text: `XII RPL 1 | Bot by Nakaaaa#8558`,

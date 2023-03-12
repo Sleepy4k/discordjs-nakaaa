@@ -31,7 +31,7 @@ module.exports = {
 
     if (!result || !result.tracks.length) {
       const embed = new EmbedBuilder()
-        .setColor("RED")
+        .setColor("Red")
         .setTitle("No results were found!")
         .setFooter({
           text: `XII RPL 1 | Bot by Nakaaaa#8558`,
@@ -59,7 +59,7 @@ module.exports = {
     } catch {
       await client.player.deleteQueue(interaction.guildId);
       const embed = new EmbedBuilder()
-        .setColor("RED")
+        .setColor("Red")
         .setTitle("Could not join your voice channel!")
         .setFooter({
           text: `XII RPL 1 | Bot by Nakaaaa#8558`,

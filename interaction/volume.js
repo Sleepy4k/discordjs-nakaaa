@@ -25,7 +25,7 @@ module.exports = {
 
     if (!queue || !queue.playing) {
       const embed = new EmbedBuilder()
-        .setColor("RED")
+        .setColor("Red")
         .setTitle("Tidak ada musik yang diputar!")
         .setFooter({
           text: `XII RPL 1 | Bot by Nakaaaa#8558`,
@@ -40,7 +40,7 @@ module.exports = {
 
     if (queue.volume === volume) {
       const embed = new EmbedBuilder()
-        .setColor("RED")
+        .setColor("Red")
         .setTitle(`Volume is already set to ${volume}!`)
         .setFooter({
           text: `XII RPL 1 | Bot by Nakaaaa#8558`,
