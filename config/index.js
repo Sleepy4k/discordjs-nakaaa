@@ -12,8 +12,6 @@ module.exports = {
     activity: {
       enable: true,
       description: "On XII RPL 1 Discord Server",
-      type: "WATCHING",
-      url: "https://hub.com",
     },
     token:
       "ODA1NDgyNDc0MDc0NjY5MDc2.GcxYpo.ecOfIRlz-SE53z8A_c-7M_KDpx5hzTMO2465_E",

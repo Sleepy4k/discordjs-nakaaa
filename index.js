@@ -43,7 +43,6 @@ cooldowns = new Collection();
 
 client.player = new Player(client, {
   ytdlOptions: {
-    smoothVolume: true,
     quality: "highestaudio",
     highWaterMark: 1 << 25,
   },
@@ -51,6 +50,5 @@ client.player = new Player(client, {
 
 require("./event/handler.js").exec(client);
 require("./event/anticrash.js")(client);
-// registerPlayerEvents(client.player);
 
 client.login(config.options.token);

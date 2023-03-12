@@ -1,5 +1,6 @@
 const config = require("../config");
 const handler = require("./handler.js");
+const { ActivityType } = require("discord.js");
 
 /**
  * @param {import('discord.js').Client} client
@@ -10,8 +11,7 @@ module.exports = (client) =>
 
     if (config.options.activity.enable)
       client.user.setActivity(config.options.activity.description, {
-        type: config.options.activity.type,
-        url: config.options.activity.url,
+        type: ActivityType.LISTENING,
       });
 
     if (config.options.status.enable)

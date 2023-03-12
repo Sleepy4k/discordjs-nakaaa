@@ -1,16 +1,17 @@
-const playdl = require("play-dl");
 const { QueryType } = require("discord-player");
+const { EmbedBuilder, ApplicationCommandOptionType } = require("discord.js");
 
 module.exports = {
   name: "play",
   description:
     "Plays the specified song from YouTube, Soundcloud, Spotify etc.",
   cooldown: 1,
+  voiceChannel: true,
   options: [
     {
       name: "search",
       description: "Plays and enqueues track(s) of the query provided.",
-      type: 3,
+      type: ApplicationCommandOptionType.STRING,
       required: true,
     },
   ],
@@ -20,81 +21,63 @@ module.exports = {
    * @param {import('discord.js').CommandInteraction} interaction
    */
   exec: async (client, interaction) => {
-    const channel = interaction.member.voice.channel;
+    await interaction.deferReply({ ephemeral: true });
 
-    if (!channel)
-      return interaction.reply("You are not connected to a voice channel!");
-
-    const song = interaction.options.getString("search", true);
-    const result = await interaction.client.player.search(song, {
+    const song = interaction.options.getString("search");
+    const result = await client.player.search(song, {
       requestedBy: interaction.user,
       searchEngine: QueryType.AUTO,
     });
 
     if (!result || !result.tracks.length) {
-      return interaction.reply("No tracks were found for your query");
+      const embed = new EmbedBuilder()
+        .setColor("RED")
+        .setTitle("No results were found!")
+        .setFooter({
+          text: `XII RPL 1 | Bot by Nakaaaa#8558`,
+          iconURL:
+            "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
+        });
+
+      return interaction.editReply({ embeds: [embed] });
     }
+
+    const queue = await client.player.createQueue(interaction.guild, {
+      metadata: interaction.channel,
+      initialVolume: 100,
+      autoSelfDeaf: true,
+      leaveOnEnd: true,
+      leaveOnEndCooldown: 60000,
+      leaveOnStop: true,
+      leaveOnEmpty: true,
+      leaveOnEmptyCooldown: 60000,
+    });
 
     try {
-      const queue = await interaction.client.player.createQueue(
-        interaction.guild,
-        {
-          metadata: interaction,
-          guild: interaction.guildId,
-          selfDeaf: true,
-          leaveOnEmptyCooldown: 300000,
-          leaveOnEnd: false,
-          leaveOnStop: true,
+      if (!queue.connection)
+        await queue.connect(interaction.member.voice.channel);
+    } catch {
+      await client.player.deleteQueue(interaction.guildId);
+      const embed = new EmbedBuilder()
+        .setColor("RED")
+        .setTitle("Could not join your voice channel!")
+        .setFooter({
+          text: `XII RPL 1 | Bot by Nakaaaa#8558`,
+          iconURL:
+            "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
+        });
 
-          async onBeforeCreateStream(track, source, _queue) {
-            if (track.url.includes("youtube.com")) {
-              return (
-                await playdl.stream(track.url, {
-                  discordPlayerCompatibility: true,
-                })
-              ).stream;
-            } else if (track.url.includes("spotify.com")) {
-              return (
-                await playdl.stream(
-                  await playdl
-                    .search(`${track.author} ${track.title} lyric`, {
-                      limit: 1,
-                      source: { youtube: "video" },
-                    })
-                    .then((x) => x[0].url),
-                  { discordPlayerCompatibility: true }
-                )
-              ).stream;
-            }
-          },
-        }
-      );
-
-      try {
-        if (!queue.connection) await queue.connect(channel);
-      } catch (error) {
-        console.error(error);
-        await queue.destroy();
-        return await interaction.editReply(
-          "Could not join your voice channel!"
-        );
-      }
-
-      result.playlist
-        ? queue.addTracks(result.tracks)
-        : queue.addTrack(result.tracks[0]);
-
-      await interaction.editReply({
-        content: `🎶 | Enqueued **${
-          result.playlist ? result.tracks.length : 1
-        }** ${result.playlist ? "tracks" : "track"} from **${
-          result.playlist ? result.playlist.name : result.tracks[0].title
-        }**`,
-      });
-
-      if (!queue.playing) await queue.play();
-    } catch (error) {
-      return interaction.followUp(`Something went wrong: ${error}`);
+      return interaction.editReply({ embeds: [embed] });
     }
+
+    await interaction.editReply({
+      content: `Enqueued **${result.tracks[0].title}**`,
+    });
+
+    result.playlist
+      ? queue.addTracks(result.tracks)
+      : queue.addTrack(result.tracks[0]);
+
+    if (!queue.playing) await queue.play();
   },
 };
