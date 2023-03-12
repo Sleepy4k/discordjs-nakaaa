@@ -8,7 +8,7 @@ module.exports = {
     {
       name: "text",
       description: "Text to say.",
-      type: "STRING",
+      type: 3,
       required: true,
     },
   ],

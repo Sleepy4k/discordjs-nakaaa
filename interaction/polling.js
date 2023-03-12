@@ -8,7 +8,7 @@ module.exports = {
     {
       name: "poll",
       description: "Polling",
-      type: "STRING",
+      type: 3,
       required: true,
     },
   ],
@@ -64,6 +64,7 @@ module.exports = {
             .catch(console.error);
         })
         .catch(console.error);
+
       return interaction.deleteReply();
     }
   },
