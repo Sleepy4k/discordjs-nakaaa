@@ -16,7 +16,7 @@ module.exports = {
       url: "https://hub.com",
     },
     token:
-      "ODA1NDgyNDc0MDc0NjY5MDc2.GLJWk2.ZwEiX-0rgXPghiQTCHUeZRTwmCsMtjPDXbVtJM",
+      "NzUyMTc5NTkwNzc2MDk0Nzgw.GClmrt.TKYejBs-OxncsHMarkODRwmQ8a0fZHvCnsYdw8",
   },
   lang: {
     error: {
