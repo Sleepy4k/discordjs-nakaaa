@@ -21,17 +21,8 @@ module.exports = {
    * @param {import('discord.js').CommandInteraction} interaction
    */
   exec: async (client, interaction) => {
-    const player = usePlayer(interaction.guildId);
     const volume = interaction.options.getInteger("volume");
 
-    if (!player) return interaction.reply("I am not in a voice channel");
-    if (!player.queue.currentTrack)
-      return interaction.reply("There is no track **currently** playing");
-
-    await interaction.deferReply();
-    player.setVolume(volume);
-    return interaction.followUp({
-      content: `I **changed** the volume to: **${player.volume}%**`,
-    });
+    return interaction.reply(`Volume set to: ${volume}`);
   },
 };
