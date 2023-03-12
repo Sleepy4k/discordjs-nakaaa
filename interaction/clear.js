@@ -1,9 +1,10 @@
-const { useQueue } = require("discord-player");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
   name: "clear",
-  description: "Clears the current queue and removes all enqueued tracks.",
+  description: "Clear all music in queue.",
   cooldown: 1,
+  voiceChannel: true,
   options: [],
 
   /**
@@ -11,18 +12,45 @@ module.exports = {
    * @param {import('discord.js').CommandInteraction} interaction
    */
   exec: async (client, interaction) => {
-    try {
-      const queue = useQueue(interaction.guild.id);
+    const queue = client.player.getQueue(interaction.guildId);
 
-      if (!queue) return interaction.reply(`I am not in a voice channel`);
-      if (!queue.tracks) return interaction.reply(`There is nothing to clear`);
+    if (!queue || !queue.playing) {
+      const embed = new EmbedBuilder()
+        .setColor("RED")
+        .setTitle("Tidak ada musik yang diputar!")
+        .setFooter({
+          text: `XII RPL 1 | Bot by Nakaaaa#8558`,
+          iconURL:
+            "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
+        });
 
-      queue.tracks.clear();
-      queue.history.clear();
-
-      return interaction.reply(`I have **cleared** the queue`);
-    } catch (error) {
-      return interaction.reply(`Something went wrong: ${error}`);
+      return interaction.editReply({ embeds: [embed] });
     }
+
+    if (!queue.tracks[0]) {
+      const embed = new EmbedBuilder()
+        .setColor("RED")
+        .setTitle("Tidak ada musik yang diputar!")
+        .setFooter({
+          text: `XII RPL 1 | Bot by Nakaaaa#8558`,
+          iconURL:
+            "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
+        });
+
+      return interaction.editReply({ embeds: [embed] });
+    }
+
+    await queue.clear();
+
+    const embed = new EmbedBuilder()
+      .setColor("RANDOM")
+      .setTitle("Play queue has just been cleared!")
+      .setFooter({
+        text: `XII RPL 1 | Bot by Nakaaaa#8558`,
+        iconURL:
+          "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
+      });
+
+    return interaction.editReply({ embeds: [embed] });
   },
 };

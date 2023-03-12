@@ -1,10 +1,10 @@
 const { EmbedBuilder } = require("discord.js");
-const { usePlayer } = require("discord-player");
 
 module.exports = {
   name: "skip",
-  description: "Skips the current song.",
+  description: "skip a song.",
   cooldown: 1,
+  voiceChannel: true,
   options: [],
 
   /**
@@ -12,22 +12,34 @@ module.exports = {
    * @param {import('discord.js').CommandInteraction} interaction
    */
   exec: async (client, interaction) => {
-    const player = usePlayer(interaction.guildId);
+    const queue = client.player.getQueue(interaction.guildId);
 
-    if (!player) return interaction.reply("I am not in a voice channel");
-    if (!player.queue.currentTrack)
-      return interaction.reply("There is no track **currently** playing");
+    if (!queue || !queue.playing) {
+      const embed = new EmbedBuilder()
+        .setColor("RED")
+        .setTitle("Tidak ada musik yang diputar!")
+        .setFooter({
+          text: `XII RPL 1 | Bot by Nakaaaa#8558`,
+          iconURL:
+            "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
+        });
 
-    const currentSong = player.queue.currentTrack;
+      return interaction.editReply({ embeds: [embed] });
+    }
 
-    player.queue.node.skip();
+    const success = queue.skip();
 
-    await interaction.reply({
-      embeds: [
-        new EmbedBuilder()
-          .setDescription(`${currentSong.title} has been skipped!`)
-          .setThumbnail(currentSong.thumbnail),
-      ],
-    });
+    const embed = new EmbedBuilder()
+      .setColor("RANDOM")
+      .setTitle(
+        success ? "Musik telah dilewati!" : "Tidak ada musik yang dilewati!"
+      )
+      .setFooter({
+        text: `XII RPL 1 | Bot by Nakaaaa#8558`,
+        iconURL:
+          "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
+      });
+
+    return interaction.editReply({ embeds: [embed] });
   },
 };

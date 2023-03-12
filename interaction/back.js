@@ -1,20 +1,11 @@
 const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
-  name: "volume",
-  description: "Adjust music volume.",
+  name: "back",
+  description: "Go back to the previous song.",
   cooldown: 1,
   voiceChannel: true,
-  options: [
-    {
-      name: "volume",
-      description: "Volume to set.",
-      type: 4,
-      minValue: 0,
-      maxValue: 100,
-      required: true,
-    },
-  ],
+  options: [],
 
   /**
    * @param {import('discord.js').Client} client
@@ -36,12 +27,10 @@ module.exports = {
       return interaction.editReply({ embeds: [embed] });
     }
 
-    const volume = interaction.options.getInteger("volume");
-
-    if (queue.volume === volume) {
+    if (!queue.previousTracks[1]) {
       const embed = new EmbedBuilder()
         .setColor("RED")
-        .setTitle(`Volume is already set to ${volume}!`)
+        .setTitle("Tidak ada lagu sebelumnya!")
         .setFooter({
           text: `XII RPL 1 | Bot by Nakaaaa#8558`,
           iconURL:
@@ -51,11 +40,11 @@ module.exports = {
       return interaction.editReply({ embeds: [embed] });
     }
 
-    const success = queue.setVolume(volume);
+    await queue.back();
 
     const embed = new EmbedBuilder()
       .setColor("RANDOM")
-      .setTitle(success ? `Volume set to ${volume}!` : "Something went wrong!")
+      .setTitle("Berhasil kembali ke lagu sebelumnya!")
       .setFooter({
         text: `XII RPL 1 | Bot by Nakaaaa#8558`,
         iconURL:

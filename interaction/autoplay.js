@@ -1,20 +1,11 @@
 const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
-  name: "volume",
-  description: "Adjust music volume.",
+  name: "autoplay",
+  description: "Modo Autoplay.",
   cooldown: 1,
   voiceChannel: true,
-  options: [
-    {
-      name: "volume",
-      description: "Volume to set.",
-      type: 4,
-      minValue: 0,
-      maxValue: 100,
-      required: true,
-    },
-  ],
+  options: [],
 
   /**
    * @param {import('discord.js').Client} client
@@ -36,26 +27,13 @@ module.exports = {
       return interaction.editReply({ embeds: [embed] });
     }
 
-    const volume = interaction.options.getInteger("volume");
-
-    if (queue.volume === volume) {
-      const embed = new EmbedBuilder()
-        .setColor("RED")
-        .setTitle(`Volume is already set to ${volume}!`)
-        .setFooter({
-          text: `XII RPL 1 | Bot by Nakaaaa#8558`,
-          iconURL:
-            "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
-        });
-
-      return interaction.editReply({ embeds: [embed] });
-    }
-
-    const success = queue.setVolume(volume);
+    const success = queue.setRepeatMode(3);
 
     const embed = new EmbedBuilder()
       .setColor("RANDOM")
-      .setTitle(success ? `Volume set to ${volume}!` : "Something went wrong!")
+      .setTitle(
+        success ? "Modo Autoplay diaktifkan!" : "Modo Autoplay dinonaktifkan!"
+      )
       .setFooter({
         text: `XII RPL 1 | Bot by Nakaaaa#8558`,
         iconURL:

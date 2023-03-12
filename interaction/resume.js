@@ -1,9 +1,10 @@
-const { usePlayer } = require("discord-player");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
   name: "resume",
-  description: "Resumes the current song.",
+  description: "Play the song.",
   cooldown: 1,
+  voiceChannel: true,
   options: [],
 
   /**
@@ -11,14 +12,45 @@ module.exports = {
    * @param {import('discord.js').CommandInteraction} interaction
    */
   exec: async (client, interaction) => {
-    const player = usePlayer(interaction.guildId);
+    const queue = client.player.getQueue(interaction.guildId);
 
-    if (!player) return interaction.reply("I am not in a voice channel");
-    if (!player.queue.currentTrack)
-      return interaction.reply("There is no track **currently** playing");
+    if (!queue) {
+      const embed = new EmbedBuilder()
+        .setColor("RED")
+        .setTitle("Tidak ada musik yang diputar!")
+        .setFooter({
+          text: `XII RPL 1 | Bot by Nakaaaa#8558`,
+          iconURL:
+            "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
+        });
 
-    player.queue.node.resume();
+      return interaction.editReply({ embeds: [embed] });
+    }
 
-    await interaction.reply("Player has been resumed.");
+    if (!queue.connection.paused) {
+      const embed = new EmbedBuilder()
+        .setColor("RED")
+        .setTitle("Musik sudah di play!")
+        .setFooter({
+          text: `XII RPL 1 | Bot by Nakaaaa#8558`,
+          iconURL:
+            "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
+        });
+
+      return interaction.editReply({ embeds: [embed] });
+    }
+
+    const success = queue.setPaused(false);
+
+    const embed = new EmbedBuilder()
+      .setColor("RANDOM")
+      .setTitle(success ? "Musik di play!" : "Gagal memplay musik!")
+      .setFooter({
+        text: `XII RPL 1 | Bot by Nakaaaa#8558`,
+        iconURL:
+          "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
+      });
+
+    return interaction.editReply({ embeds: [embed] });
   },
 };

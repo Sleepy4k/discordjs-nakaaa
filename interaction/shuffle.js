@@ -1,9 +1,10 @@
-const { useQueue } = require("discord-player");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
   name: "shuffle",
-  description: "Shuffles the tracks in the queue.",
+  description: "Activate random mode.",
   cooldown: 1,
+  voiceChannel: true,
   options: [],
 
   /**
@@ -11,16 +12,45 @@ module.exports = {
    * @param {import('discord.js').CommandInteraction} interaction
    */
   exec: async (client, interaction) => {
-    const queue = useQueue(interaction.guild.id);
-    if (!queue) return interaction.reply(`I am not in a voice channel`);
+    const queue = client.player.getQueue(interaction.guildId);
 
-    if (queue.tracks.size < 2)
-      return interaction.reply(
-        `There aren't **enough tracks** in queue to **shuffle**`
-      );
+    if (!queue || !queue.playing) {
+      const embed = new EmbedBuilder()
+        .setColor("RED")
+        .setTitle("Tidak ada musik yang diputar!")
+        .setFooter({
+          text: `XII RPL 1 | Bot by Nakaaaa#8558`,
+          iconURL:
+            "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
+        });
 
-    queue.tracks.shuffle();
+      return interaction.editReply({ embeds: [embed] });
+    }
 
-    return interaction.reply(`I have **shuffled** the queue`);
+    if (!queue.tracks[0]) {
+      const embed = new EmbedBuilder()
+        .setColor("RED")
+        .setTitle("Tidak ada musik yang diputar!")
+        .setFooter({
+          text: `XII RPL 1 | Bot by Nakaaaa#8558`,
+          iconURL:
+            "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
+        });
+
+      return interaction.editReply({ embeds: [embed] });
+    }
+
+    await queue.shuffle();
+
+    const embed = new EmbedBuilder()
+      .setColor("RANDOM")
+      .setTitle("Play queue has just been shuffled!")
+      .setFooter({
+        text: `XII RPL 1 | Bot by Nakaaaa#8558`,
+        iconURL:
+          "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
+      });
+
+    return interaction.editReply({ embeds: [embed] });
   },
 };

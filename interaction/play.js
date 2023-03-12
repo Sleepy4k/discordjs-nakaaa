@@ -21,7 +21,7 @@ module.exports = {
    * @param {import('discord.js').CommandInteraction} interaction
    */
   exec: async (client, interaction) => {
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply();
 
     const song = interaction.options.getString("search");
     const result = await client.player.search(song, {

@@ -1,20 +1,11 @@
 const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
-  name: "volume",
-  description: "Adjust music volume.",
+  name: "playlist",
+  description: "See the playlist.",
   cooldown: 1,
   voiceChannel: true,
-  options: [
-    {
-      name: "volume",
-      description: "Volume to set.",
-      type: 4,
-      minValue: 0,
-      maxValue: 100,
-      required: true,
-    },
-  ],
+  options: [],
 
   /**
    * @param {import('discord.js').Client} client
@@ -23,7 +14,7 @@ module.exports = {
   exec: async (client, interaction) => {
     const queue = client.player.getQueue(interaction.guildId);
 
-    if (!queue || !queue.playing) {
+    if (!queue) {
       const embed = new EmbedBuilder()
         .setColor("RED")
         .setTitle("Tidak ada musik yang diputar!")
@@ -36,12 +27,10 @@ module.exports = {
       return interaction.editReply({ embeds: [embed] });
     }
 
-    const volume = interaction.options.getInteger("volume");
-
-    if (queue.volume === volume) {
+    if (!queue.tracks[0]) {
       const embed = new EmbedBuilder()
         .setColor("RED")
-        .setTitle(`Volume is already set to ${volume}!`)
+        .setTitle("Tidak ada musik yang diputar!")
         .setFooter({
           text: `XII RPL 1 | Bot by Nakaaaa#8558`,
           iconURL:
@@ -51,11 +40,26 @@ module.exports = {
       return interaction.editReply({ embeds: [embed] });
     }
 
-    const success = queue.setVolume(volume);
+    const methods = ["", "🔁", "🔂"];
+    const songs = queue.tracks.length;
+    const tracks = queue.tracks.map(
+      (track, i) =>
+        `**${i + 1}** - ${track.title} | ${track.author} - **${
+          track.requestedBy.username
+        }**`
+    );
+    const nextSongs =
+      songs > 10
+        ? `.. **${songs - 10}** more songs...`
+        : `In the list there are **${songs}** songs...`;
 
     const embed = new EmbedBuilder()
       .setColor("RANDOM")
-      .setTitle(success ? `Volume set to ${volume}!` : "Something went wrong!")
+      .setTitle("Playlist")
+      .setDescription(
+        `${tracks.slice(0, 10).join("\n")}
+${nextSongs}`
+      )
       .setFooter({
         text: `XII RPL 1 | Bot by Nakaaaa#8558`,
         iconURL:
