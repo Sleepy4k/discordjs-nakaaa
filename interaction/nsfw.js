@@ -48,7 +48,7 @@ module.exports = {
               "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
           });
 
-        interaction.reply({ embeds: [embed] });
+        interaction.reply({ embeds: [embed], ephemeral: true });
       } else if (type === "gif") {
         const response = await axios.get(
           "https://scathach.redsplit.org/v3/nsfw/gif/"
@@ -65,7 +65,7 @@ module.exports = {
               "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
           });
 
-        interaction.reply({ embeds: [embed] });
+        interaction.reply({ embeds: [embed], ephemeral: true });
       } else if (type === "jav") {
         const response = await axios.get(
           "https://scathach.redsplit.org/v3/nsfw/jav/"
@@ -82,7 +82,7 @@ module.exports = {
               "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
           });
 
-        interaction.reply({ embeds: [embed] });
+        interaction.reply({ embeds: [embed], ephemeral: true });
       }
     } catch (error) {
       return interaction.reply(`Something went wrong: ${error}`);
