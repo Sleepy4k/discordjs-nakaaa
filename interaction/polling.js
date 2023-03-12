@@ -48,7 +48,7 @@ module.exports = {
           .setTitle("Polling baru")
           .setDescription("```fix\n " + poll + "\n```")
           .setFooter({
-            text: `${message.author.tag} | Bot by Nakaaaa#8558`,
+            text: `<@${interaction.user.id}> | Bot by Nakaaaa#8558`,
             iconURL:
               "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
           })
