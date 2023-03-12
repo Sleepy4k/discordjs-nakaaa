@@ -40,15 +40,13 @@ module.exports = {
             msg.delete();
           }, 5000);
         });
-
-        interaction.deleteReply();
       } else {
         let embed = new EmbedBuilder()
           .setColor("Random")
           .setTitle("Polling baru")
           .setDescription("```fix\n " + poll + "\n```")
           .setFooter({
-            text: `<@${interaction.user.id}> | Bot by Nakaaaa#8558`,
+            text: `${interaction.user.tag} | Bot by Nakaaaa#8558`,
             iconURL:
               "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
           })
@@ -66,8 +64,6 @@ module.exports = {
               .catch(console.error);
           })
           .catch(console.error);
-
-        return interaction.deleteReply();
       }
     } catch (error) {
       return interaction.reply(`Something went wrong: ${error}`);
