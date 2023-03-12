@@ -25,7 +25,7 @@ module.exports = {
         .setTitle("woahh")
         .setColor("#fc2403")
         .setDescription(
-          `Hey <@${message.author.id}>, you need to specify a polling!`
+          `Hey <@${interaction.user.id}>, you need to specify a polling!`
         )
         .setFooter({
           text: `XII RPL 1 | Bot by Nakaaaa#8558`,
@@ -39,6 +39,7 @@ module.exports = {
           msg.delete();
         }, 5000);
       });
+
       interaction.deleteReply();
     } else {
       let embed = new EmbedBuilder()
