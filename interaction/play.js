@@ -1,3 +1,5 @@
+const { QueryType } = require("discord-player");
+
 module.exports = {
   name: "play",
   description:
@@ -23,7 +25,7 @@ module.exports = {
     const query = interaction.options.getString("search", true); // we need input/query to play
     const results = await client.player.search(query);
 
-    if (!results.hasTracks())
+    if (!results || !results.hasTracks())
       return interaction.reply("No tracks were found for your query");
 
     await interaction.deferReply();
@@ -34,20 +36,7 @@ module.exports = {
     });
 
     try {
-      const { track } = await client.player.play(channel, results, {
-        nodeOptions: {
-          metadata: {
-            channel: interaction.channel,
-            client: interaction.guild.members.me,
-            requestedBy: interaction.user,
-          },
-          volume: 100,
-          selfDeaf: true,
-          leaveOnEnd: false,
-          leaveOnStop: false,
-          leaveOnEmpty: false,
-        },
-      });
+      const { track } = await client.player.play(channel, results);
       await interaction.editReply({
         content: `Successfully enqueued${
           track.playlist
