@@ -11,14 +11,18 @@ module.exports = {
    * @param {import('discord.js').CommandInteraction} interaction
    */
   exec: async (client, interaction) => {
-    const player = usePlayer(interaction.guildId);
+    try {
+      const player = usePlayer(interaction.guildId);
 
-    if (!player) return interaction.reply("I am not in a voice channel");
-    if (!player.queue.currentTrack)
-      return interaction.reply("There is no track **currently** playing");
+      if (!player) return interaction.reply("I am not in a voice channel");
+      if (!player.queue.currentTrack)
+        return interaction.reply("There is no track **currently** playing");
 
-    player.queue.destroy();
+      player.queue.destroy();
 
-    await interaction.reply("Why you do this to me?");
+      await interaction.reply("Why you do this to me?");
+    } catch (error) {
+      return interaction.reply(`Something went wrong: ${error}`);
+    }
   },
 };

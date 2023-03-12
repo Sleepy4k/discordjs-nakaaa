@@ -18,8 +18,12 @@ module.exports = {
    * @param {import('discord.js').CommandInteraction} interaction
    */
   exec: async (client, interaction) => {
-    interaction.reply({
-      content: interaction.options.getString("text", true),
-    });
+    try {
+      interaction.reply({
+        content: interaction.options.getString("text", true),
+      });
+    } catch (error) {
+      return interaction.reply(`Something went wrong: ${error}`);
+    }
   },
 };
