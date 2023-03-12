@@ -33,7 +33,7 @@ module.exports = {
             "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
         });
 
-      return interaction.editReply({ embeds: [embed] });
+      return interaction.reply({ embeds: [embed] });
     }
 
     const volume = interaction.options.getInteger("volume");
@@ -48,7 +48,7 @@ module.exports = {
             "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
         });
 
-      return interaction.editReply({ embeds: [embed] });
+      return interaction.reply({ embeds: [embed] });
     }
 
     const success = queue.setVolume(volume);
@@ -62,6 +62,6 @@ module.exports = {
           "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
       });
 
-    return interaction.editReply({ embeds: [embed] });
+    return interaction.reply({ embeds: [embed] });
   },
 };

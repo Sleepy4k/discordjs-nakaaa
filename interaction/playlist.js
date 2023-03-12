@@ -24,7 +24,7 @@ module.exports = {
             "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
         });
 
-      return interaction.editReply({ embeds: [embed] });
+      return interaction.reply({ embeds: [embed] });
     }
 
     if (!queue.tracks[0]) {
@@ -37,10 +37,9 @@ module.exports = {
             "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
         });
 
-      return interaction.editReply({ embeds: [embed] });
+      return interaction.reply({ embeds: [embed] });
     }
 
-    const methods = ["", "🔁", "🔂"];
     const songs = queue.tracks.length;
     const tracks = queue.tracks.map(
       (track, i) =>
@@ -66,6 +65,6 @@ ${nextSongs}`
           "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
       });
 
-    return interaction.editReply({ embeds: [embed] });
+    return interaction.reply({ embeds: [embed] });
   },
 };
