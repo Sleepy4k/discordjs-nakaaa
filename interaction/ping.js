@@ -12,31 +12,43 @@ module.exports = {
    */
   exec: async (client, interaction) => {
     try {
-      await interaction
-        .reply({
-          content: "Pinging...",
-          ephemeral: true,
-        })
-        .then((msg) => {
-          const embed = new EmbedBuilder()
-            .setColor("Random")
-            .setTitle("Pong! 🏓")
-            .setDescription(
-              `Latency : ${Math.floor(
-                msg.createdTimestamp - interaction.createdTimestamp
-              )}ms\nAPI Latency : ${client.ws.ping}ms`
-            )
-            .setFooter({
-              text: `XII RPL 1 | Bot by Nakaaaa#8558`,
-              iconURL:
-                "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
-            });
+      const sent = await interaction.reply({
+        fetchReply: true,
+        ephemeral: true,
+        content: "Pinging...",
+      });
 
-          msg.editReply({ embeds: [embed] });
-        })
-        .catch((error) => {
-          return interaction.reply(`Something went wrong: ${error}`);
-        });
+      await interaction.editReply({
+        content: `Pong! 🏓\nLatency : ${Math.floor(
+          sent.createdTimestamp - interaction.createdTimestamp
+        )}ms\nAPI Latency : ${client.ws.ping}ms`,
+      });
+
+      // await interaction
+      //   .reply({
+      //     content: "Pinging...",
+      //     ephemeral: true,
+      //   })
+      //   .then((msg) => {
+      //     const embed = new EmbedBuilder()
+      //       .setColor("Random")
+      //       .setTitle("Pong! 🏓")
+      //       .setDescription(
+      //         `Latency : ${Math.floor(
+      //           msg.createdTimestamp - interaction.createdTimestamp
+      //         )}ms\nAPI Latency : ${client.ws.ping}ms`
+      //       )
+      //       .setFooter({
+      //         text: `XII RPL 1 | Bot by Nakaaaa#8558`,
+      //         iconURL:
+      //           "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
+      //       });
+
+      //     msg.editReply({ embeds: [embed] });
+      //   })
+      //   .catch((error) => {
+      //     return interaction.reply(`Something went wrong: ${error}`);
+      //   });
     } catch (error) {
       return interaction.reply(`Something went wrong: ${error}`);
     }
