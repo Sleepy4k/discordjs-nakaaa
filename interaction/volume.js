@@ -1,5 +1,5 @@
 const { usePlayer } = require("discord-player");
-const { SlashCommandBuilder } = require("@discordjs/builders");
+const { ApplicationCommandOptionType } = require("discord.js");
 
 module.exports = {
   name: "volume",

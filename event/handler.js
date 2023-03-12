@@ -56,20 +56,21 @@ const loadInteraction = (client) => {
   for (let file of interactions) {
     let pull = require(`../interaction/${file}`);
     if (pull.name) dataMap.set(pull.name, pull);
-    commands.push([
-      {
-        name: pull.name,
-        description: pull.description,
-        options: pull.options,
-      },
-    ]);
+    commands.push({
+      name: pull.name,
+      description: pull.description,
+      options: pull.options,
+    });
   }
 
   client.guilds.cache.forEach(async (guild) => {
     try {
-      await rest.put(Routes.applicationCommands(config.options.botId), {
-        body: commands,
-      });
+      await rest.put(
+        Routes.applicationGuildCommands(client.user.id, guild.id),
+        {
+          body: commands,
+        }
+      );
     } catch (e) {
       if (e) console.error("cannot register interaction: " + e);
     }
