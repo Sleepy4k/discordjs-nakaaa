@@ -6,11 +6,8 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("volume")
     .setDescription("Changes the volume of the track and entire queue.")
-    .addStringOption((options) =>
+    .addIntegerOption((options) =>
       options
-        .setType(4)
-        .setMinValue(0)
-        .setMaxValue(100)
         .setName("volume")
         .setRequired(true)
         .setDescription("The amount of volume you want to change to")

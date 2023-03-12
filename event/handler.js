@@ -61,12 +61,9 @@ const loadInteraction = (client) => {
 
   client.guilds.cache.forEach(async (guild) => {
     try {
-      await rest.put(
-        Routes.applicationGuildCommands(client.user.id, guild.id),
-        {
-          body: commands,
-        }
-      );
+      await rest.put(Routes.applicationCommands(config.options.botId), {
+        body: commands,
+      });
     } catch (e) {
       if (e) console.error("cannot register interaction: " + e);
     }

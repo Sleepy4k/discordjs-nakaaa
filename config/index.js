@@ -15,6 +15,7 @@ module.exports = {
       type: "WATCHING",
       url: "https://hub.com",
     },
+    botId: "752179590776094780",
     token:
       "NzUyMTc5NTkwNzc2MDk0Nzgw.GClmrt.TKYejBs-OxncsHMarkODRwmQ8a0fZHvCnsYdw8",
   },
