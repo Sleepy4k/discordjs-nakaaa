@@ -3,15 +3,18 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "volume",
-  data: new SlashCommandBuilder()
-    .setName("volume")
-    .setDescription("Changes the volume of the track and entire queue.")
-    .addIntegerOption((options) =>
-      options
-        .setName("volume")
-        .setRequired(true)
-        .setDescription("The amount of volume you want to change to")
-    ),
+  description: "Changes the volume of the track and entire queue.",
+  cooldown: 1, // Cooldown in seconds, by default it's 2 seconds | OPTIONAL
+  options: [
+    {
+      name: "volume",
+      description: "The amount of volume you want to change to",
+      type: 4,
+      min_value: 0,
+      max_value: 100,
+      required: true,
+    },
+  ],
 
   /**
    * @param {import('discord.js').Client} client
