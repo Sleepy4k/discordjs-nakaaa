@@ -9,6 +9,7 @@ module.exports = {
     )
     .addStringOption((options) =>
       options
+        .setType(3)
         .setName("search")
         .setRequired(true)
         .setDescription("Plays and enqueues track(s) of the query provided.")
