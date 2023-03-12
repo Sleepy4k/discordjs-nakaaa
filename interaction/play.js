@@ -73,7 +73,7 @@ module.exports = {
       try {
         if (!queue.connection) await queue.connect(channel);
       } catch (error) {
-        console.error(err);
+        console.error(error);
         await queue.destroy();
         return await interaction.editReply(
           "Could not join your voice channel!"
@@ -94,7 +94,7 @@ module.exports = {
 
       if (!queue.playing) await queue.play();
     } catch (error) {
-      return interaction.followUp(`Something went wrong: ${e}`);
+      return interaction.followUp(`Something went wrong: ${error}`);
     }
   },
 };
