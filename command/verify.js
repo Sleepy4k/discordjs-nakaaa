@@ -3,7 +3,7 @@ const config = require("../config");
 module.exports = {
   name: "verify",
   cooldown: 2,
-  aliases: ["v"],
+
   /**
    * @param {import('discord.js').Client} client
    * @param {import('discord.js').Message} message

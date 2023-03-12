@@ -3,7 +3,6 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
   name: "polling",
   cooldown: 2,
-  aliases: ["poll"],
 
   /**
    * @param {import('discord.js').Client} client

@@ -4,7 +4,6 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
   name: "nsfw",
   cooldown: 2,
-  aliases: ["sange"],
 
   /**
    * @param {import('discord.js').Client} client

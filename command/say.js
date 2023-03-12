@@ -1,9 +1,6 @@
-const { MessageEmbed } = require("discord.js");
-
 module.exports = {
   name: "say",
   cooldown: 2,
-  aliases: ["curhat"],
 
   /**
    * @param {import('discord.js').Client} client
