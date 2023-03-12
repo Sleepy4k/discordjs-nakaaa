@@ -6,22 +6,10 @@ module.exports = {
   cooldown: 1,
   options: [
     {
-      name: "poll 1",
+      name: "poll",
       description: "Polling",
-      type: 3,
+      type: "STRING",
       required: true,
-    },
-    {
-      name: "poll 2",
-      description: "Polling",
-      type: 3,
-      required: false,
-    },
-    {
-      name: "poll 3",
-      description: "Polling",
-      type: 3,
-      required: false,
     },
   ],
 
@@ -30,11 +18,9 @@ module.exports = {
    * @param {import('discord.js').CommandInteraction} interaction
    */
   exec: async (client, interaction) => {
-    let poll1 = interaction.options.getString("poll 1", true);
-    let poll2 = interaction.options.getString("poll 2", true);
-    let poll3 = interaction.options.getString("poll 3", true);
+    let poll = interaction.options.getString("poll", true);
 
-    if (!poll1) {
+    if (!poll) {
       let embed = new EmbedBuilder()
         .setTitle("woahh")
         .setColor("#fc2403")
