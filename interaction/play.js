@@ -1,5 +1,5 @@
 const { QueryType } = require("discord-player");
-const { EmbedBuilder, ApplicationCommandOptionType } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
   name: "play",
@@ -11,7 +11,7 @@ module.exports = {
     {
       name: "search",
       description: "Plays and enqueues track(s) of the query provided.",
-      type: ApplicationCommandOptionType.STRING,
+      type: 3,
       required: true,
     },
   ],
