@@ -32,6 +32,7 @@ const load = (client) => {
 
   for (let file of events) {
     if (file == "handler.js") continue;
+    if (file == "anticrash.js") continue;
 
     let pull = require(`./${file}`);
     pull(client);

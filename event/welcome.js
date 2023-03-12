@@ -36,6 +36,9 @@ module.exports = (client) => {
       .setTimestamp();
 
     const channel = member.guild.channels.cache.get(channelId);
+
+    if (!channel) return;
+
     channel.send({
       content: message,
       embeds: [embed],
