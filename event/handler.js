@@ -3,7 +3,7 @@ const config = require("../config");
 const { readdirSync } = require("fs");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
-const rest = new REST({ version: "9" }).setToken(config.options.token);
+const rest = new REST({ version: "10" }).setToken(config.options.token);
 
 /**
  * @param {import('discord.js').Client} client
@@ -56,7 +56,13 @@ const loadInteraction = (client) => {
   for (let file of interactions) {
     let pull = require(`../interaction/${file}`);
     if (pull.name) dataMap.set(pull.name, pull);
-    commands.push(pull.data);
+    commands.push([
+      {
+        name: pull.name,
+        description: pull.description,
+        options: pull.options,
+      },
+    ]);
   }
 
   client.guilds.cache.forEach(async (guild) => {
