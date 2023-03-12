@@ -25,8 +25,6 @@ client.errros = new Collection();
 cooldowns = new Collection();
 
 client.player = new Player(client, {
-  timeout: 10000,
-  autoSelfDeaf: true,
   ytdlOptions: {
     smoothVolume: true,
     quality: "highestaudio",

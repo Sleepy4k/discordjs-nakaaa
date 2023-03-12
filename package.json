@@ -21,7 +21,11 @@
     "util": "^0.12.5",
     "moment": "^2.29.4",
     "quick.db": "^9.0.8",
-    "ffmpeg-static": "^5.1.0"
+    "ffmpeg-static": "^5.1.0",
+    "ytdl-core": "^4.9.1",
+    "@distube/ytdl-core": "^1.0.0",
+    "play-dl": "^1.6.0",
+    "opusscript": "^0.0.7"
   },
   "repository": {
     "type": "git",

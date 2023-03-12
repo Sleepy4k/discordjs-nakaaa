@@ -41,13 +41,11 @@ module.exports = {
             client: interaction.guild.members.me,
             requestedBy: interaction.user,
           },
-          skipOnNoStream: true,
-          selfDeaf: true,
           volume: 100,
-          leaveOnEmpty: true,
-          leaveOnEmptyCooldown: 300000,
-          leaveOnEnd: true,
-          leaveOnEndCooldown: 300000,
+          selfDeaf: true,
+          leaveOnEnd: false,
+          leaveOnStop: false,
+          leaveOnEmpty: false,
         },
       });
       await interaction.editReply({
