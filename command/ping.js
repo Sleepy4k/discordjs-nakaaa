@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
   name: "ping",
@@ -12,7 +12,7 @@ module.exports = {
     message.channel.send("🏓 Pinging....").then(async (msg) => {
       msg.delete();
 
-      const pEmbed = new MessageEmbed()
+      const pEmbed = new EmbedBuilder()
         .setTitle("🏓 Pong!")
         .setColor("BLUE")
         .setDescription(

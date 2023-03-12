@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
   name: "nsfw",
@@ -19,7 +19,7 @@ module.exports = {
         );
         const porn = response.data;
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
           .setColor("RANDOM")
           .setTitle(`Requested by ${message.author.tag}`)
           .setImage(porn.url)
@@ -35,7 +35,7 @@ module.exports = {
         );
         const porn = response.data;
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
           .setColor("RANDOM")
           .setTitle(`Requested by ${message.author.tag}`)
           .setImage(porn.url)
@@ -51,7 +51,7 @@ module.exports = {
         );
         const jav = response.data;
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
           .setColor("RANDOM")
           .setTitle(`Requested by ${message.author.tag}`)
           .setImage(jav.url)

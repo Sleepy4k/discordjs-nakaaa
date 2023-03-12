@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { parseDur } = require("../utils/parseDur");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
@@ -15,7 +15,7 @@ module.exports = {
   exec: async (client, interaction) => {
     const duration = parseDur(client.uptime);
 
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setColor("RANDOM")
       .setTitle("Uptime")
       .setDescription(`Bot has been online for ${duration}`)

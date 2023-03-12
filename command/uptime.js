@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { parseDur } = require("../utils/parseDur");
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
     message.channel.send("⌛ Loading...").then(async (msg) => {
       msg.delete();
 
-      const pEmbed = new MessageEmbed()
+      const pEmbed = new EmbedBuilder()
         .setTitle(":inbox_tray: Online for")
         .setColor("BLUE")
         .setDescription(`**${duration}**`);

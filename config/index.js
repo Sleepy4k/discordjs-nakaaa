@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
@@ -29,7 +29,7 @@ module.exports = {
       cooldown: (author, time_left, command) => {
         return {
           embeds: [
-            new MessageEmbed()
+            new EmbedBuilder()
               .setDescription(
                 `Mohon ${time_left.toFixed(
                   1
@@ -102,7 +102,7 @@ module.exports = {
        * @returns
        */
       message: (client) => {
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
           .setColor("RANDOM")
           .setTitle("XII RPL 1 Profile")
           .setDescription("Ordanary Profile of XII RPL 1")
@@ -155,7 +155,7 @@ module.exports = {
        * @returns
        */
       message: (client) => {
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
           .setColor("RANDOM")
           .setTitle("XII RPL 1 Students")
           .setDescription("List of XII RPL 1 Students")
@@ -313,7 +313,7 @@ module.exports = {
        * @returns
        */
       message: (client) => {
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
           .setColor("RANDOM")
           .setTitle("XII RPL 1 Students")
           .setDescription("List of XII RPL 1 Students")

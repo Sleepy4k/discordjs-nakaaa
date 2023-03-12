@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const channelId = "1084131071886635058";
 
 /**
@@ -16,7 +16,7 @@ module.exports = (client) => {
     });
 
     const message = `${user}`;
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setColor("RANDOM")
       .setTitle(`Selamat Tinggal, ${username}!`)
       .setImage(user_avatar)

@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
@@ -16,7 +16,7 @@ module.exports = {
     const response = await axios.get("https://some-random-api.ml/img/cat");
     const data = response.data;
 
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setColor("RANDOM")
       .setTitle("Cute Cat! 🐱")
       .setImage(data.link)

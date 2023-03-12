@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
    * @param {import('discord.js').CommandInteraction} interaction
    */
   exec: async (client, interaction) => {
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setColor("RANDOM")
       .setTitle("Pong! 🏓")
       .setDescription(

@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
   name: "polling",
@@ -12,7 +12,7 @@ module.exports = {
     var randomColor = Math.floor(Math.random() * 16777215).toString(16);
     let poll = args.join(" ");
     if (!poll) {
-      let emptyEmbed = new MessageEmbed()
+      let emptyEmbed = new EmbedBuilder()
         .setTitle("woahh")
         .setColor("#fc2403")
         .setDescription(
@@ -30,7 +30,7 @@ module.exports = {
       });
       message.delete();
     } else {
-      let embed = new MessageEmbed()
+      let embed = new EmbedBuilder()
         .setColor(randomColor)
         .setTitle("Polling baru")
         .setDescription("```fix\n " + poll + "\n```")

@@ -1,7 +1,7 @@
 const ruleId = "1083345847439331348";
 const channelId = "1083339991884767354";
 const announcementId = "1083353375787208784";
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 /**
  * @param {import('discord.js').Client} client
@@ -18,7 +18,7 @@ module.exports = (client) => {
     });
 
     const message = `${user}`;
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setColor("RANDOM")
       .setTitle(`Hello, ${username}!`)
       .setImage(user_avatar)
