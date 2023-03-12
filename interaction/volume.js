@@ -1,12 +1,17 @@
-const { EmbedBuilder } = require("discord.js");
 const { usePlayer } = require("discord-player");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
-  name: "skip",
+  name: "volume",
   data: new SlashCommandBuilder()
-    .setName("skip")
-    .setDescription("Skips the current song"),
+    .setName("volume")
+    .setDescription("Changes the volume of the track and entire queue.")
+    .addStringOption((options) =>
+      options
+        .setName("volume")
+        .setRequired(true)
+        .setDescription("The amount of volume you want to change to")
+    ),
 
   /**
    * @param {import('discord.js').Client} client
@@ -14,21 +19,16 @@ module.exports = {
    */
   exec: async (client, interaction) => {
     const player = usePlayer(interaction.guildId);
+    const volume = interaction.options.getInteger("volume");
 
     if (!player) return interaction.reply("I am not in a voice channel");
     if (!player.queue.currentTrack)
       return interaction.reply("There is no track **currently** playing");
 
-    const currentSong = player.queue.currentTrack;
-
-    player.queue.node.skip();
-
-    await interaction.reply({
-      embeds: [
-        new EmbedBuilder()
-          .setDescription(`${currentSong.title} has been skipped!`)
-          .setThumbnail(currentSong.thumbnail),
-      ],
+    await interaction.deferReply();
+    player.setVolume(volume);
+    return interaction.followUp({
+      content: `I **changed** the volume to: **${player.volume}%**`,
     });
   },
 };

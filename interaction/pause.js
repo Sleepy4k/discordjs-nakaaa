@@ -1,3 +1,4 @@
+const { usePlayer } = require("discord-player");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
@@ -11,14 +12,13 @@ module.exports = {
    * @param {import('discord.js').CommandInteraction} interaction
    */
   exec: async (client, interaction) => {
-    const queue = client.player.getQueue(interaction.guildId);
+    const player = usePlayer(interaction.guildId);
 
-    if (!queue) {
-      await interaction.reply("There are no songs in the queue");
-      return;
-    }
+    if (!player) return interaction.reply("I am not in a voice channel");
+    if (!player.queue.currentTrack)
+      return interaction.reply("There is no track **currently** playing");
 
-    queue.setPaused(true);
+    player.queue.node.pause();
 
     await interaction.reply("Player has been paused.");
   },

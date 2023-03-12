@@ -1,45 +1,88 @@
+const { EmbedBuilder } = require("discord.js");
+const { useQueue } = require("discord-player");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   name: "queue",
   data: new SlashCommandBuilder()
     .setName("queue")
-    .setDescription("shows first 10 songs in the queue"),
+    .setDescription("Shows the first 10 songs in the queue with pagination."),
 
   /**
    * @param {import('discord.js').Client} client
    * @param {import('discord.js').CommandInteraction} interaction
    */
   exec: async (client, interaction) => {
-    const queue = client.player.getQueue(interaction.guildId);
+    const queue = useQueue(interaction.guildId);
 
-    if (!queue || !queue.playing) {
-      await interaction.reply("There are no songs in the queue");
-      return;
+    if (!queue)
+      return interaction.reply("I am not in a voice channel", {
+        ephemeral: false,
+      });
+    if (!queue.tracks || !queue.currentTrack)
+      return interaction.reply("There is no queue", { ephemeral: false });
+
+    const tracks = queue.tracks
+      .toArray()
+      .map((track, idx) => `**${++idx})** [${track.title}](${track.url})`);
+
+    const embeds = [];
+    const chunkSize = 10;
+    let index = 0;
+    while (tracks.length > 0) {
+      const chunk = tracks.slice(0, chunkSize);
+      const embed = new EmbedBuilder()
+        .setColor("Red")
+        .setTitle("Tracks Queue")
+        .setDescription(chunk.join("\n") || "**No more queued songs**")
+        .setFooter({
+          text: `Page ${index + 1} | Total ${queue.tracks.size} tracks`,
+        });
+
+      embeds.push(embed);
+      tracks.splice(0, chunkSize);
+      index++;
     }
 
-    const queueString = queue.tracks
-      .slice(0, 10)
-      .map((song, i) => {
-        return `${i}) [${song.duration}]\` ${song.title} - <@${song.requestedBy.id}>`;
-      })
-      .join("\n");
+    const message = await interaction.reply({
+      embeds: [embeds[0]],
+      fetchReply: true,
+    });
 
-    const currentSong = queue.current;
+    if (embeds.length === 1) return;
 
-    const embed = new MessageEmbed()
-      .setDescription(
-        `**Currently Playing**\n` +
-          (currentSong
-            ? `\`[${currentSong.duration}]\` ${currentSong.title} - <@${currentSong.requestedBy.id}>`
-            : "None") +
-          `\n\n**Queue**\n${queueString}`
-      )
-      .setThumbnail(currentSong.setThumbnail);
+    message.react("⬅️");
+    message.react("➡️");
 
-    await interaction.reply({
-      embeds: [embed],
-      ephemeral: true,
+    const collector = message.createReactionCollector({
+      filter: (reaction, user) =>
+        ["⬅️", "➡️"].includes(reaction.emoji.name) &&
+        user.id === interaction.user.id,
+      time: 60000,
+    });
+
+    let currentIndex = 0;
+    collector.on("collect", (reaction, user) => {
+      switch (reaction.emoji.name) {
+        case "⬅️":
+          if (currentIndex === 0) return;
+          currentIndex--;
+          break;
+        case "➡️":
+          if (currentIndex === embeds.length - 1) return;
+          currentIndex++;
+          break;
+        default:
+          break;
+      }
+
+      reaction.users.remove(user.id).catch(() => {});
+
+      message.edit({ embeds: [embeds[currentIndex]] });
+    });
+
+    collector.on("end", () => {
+      message.reactions.removeAll().catch(() => {});
     });
   },
 };
