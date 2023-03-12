@@ -1,8 +1,8 @@
 const dataMap = new Map();
 const config = require("../config");
 const { readdirSync } = require("fs");
+const { Routes } = require("discord.js");
 const { REST } = require("@discordjs/rest");
-const { Routes } = require("discord-api-types/v9");
 const rest = new REST({ version: "10" }).setToken(config.options.token);
 
 /**

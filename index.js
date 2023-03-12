@@ -1,5 +1,6 @@
 const config = require("./config");
 const { Player } = require("discord-player");
+const { registerPlayerEvents } = require("./utils/botEvent.js");
 const {
   Client,
   Partials,
@@ -33,6 +34,7 @@ const client = new Client({
   ],
 });
 
+client.prefix = config.options.prefix;
 client.commands = new Collection();
 client.aliases = new Collection();
 client.events = new Collection();
@@ -47,17 +49,8 @@ client.player = new Player(client, {
   },
 });
 
-client.player.events.on("playerStart", (queue, track) => {
-  queue.metadata.channel.send(`Started playing **${track.title}**!`);
-});
-
-client.player.events.on("playerError", (queue, error, track) => {
-  return queue.metadata.channel.send(
-    `There was an error with **${track.title}**!`
-  );
-});
-
 require("./event/handler.js").exec(client);
 require("./event/anticrash.js")(client);
+registerPlayerEvents(client.player);
 
 client.login(config.options.token);
