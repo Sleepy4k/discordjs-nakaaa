@@ -1,5 +1,5 @@
 const DadJokes = require("dadjokes-wrapper");
-const dj = new Dadjokes();
+const dj = new DadJokes();
 
 module.exports = {
   name: "joke",
