@@ -54,7 +54,7 @@ const loadInteraction = (client) => {
   );
 
   for (let file of interactions) {
-    let pull = require(`../interaction/${file}`);
+    let pull = require(`../interactions/${file}`);
     if (pull.name) dataMap.set(pull.name, pull);
     commands.push({
       name: pull.name,
