@@ -1,3 +1,17 @@
+/**
+ * Coding service by Sleepy4k <sarahpalastring@gmail.com>
+ *
+ * Reselling this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ *
+ * Written by:
+ * Apri Pandu Wicaksono
+ *
+ * Link: https://github.com/sleepy4k
+ *
+ * March 12, 2023
+ */
+
 const config = require("./config");
 const { Player } = require("discord-player");
 const {
@@ -31,6 +45,11 @@ const client = new Client({
     Partials.GuildMember,
     Partials.GuildScheduledEvent,
   ],
+  ws: {
+    properties: {
+      $browser: config.options.browser,
+    },
+  },
 });
 
 client.prefix = config.options.prefix;
