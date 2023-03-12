@@ -22,10 +22,10 @@
     "moment": "^2.29.4",
     "quick.db": "^9.0.8",
     "ffmpeg-static": "^5.1.0",
-    "ytdl-core": "^4.9.1",
-    "@distube/ytdl-core": "^1.0.0",
-    "play-dl": "^1.6.0",
-    "opusscript": "^0.0.7"
+    "ytdl-core": "^4.11.2",
+    "@distube/ytdl-core": "^4.11.7",
+    "play-dl": "^1.9.2",
+    "opusscript": "^0.0.8"
   },
   "repository": {
     "type": "git",
