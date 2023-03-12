@@ -51,6 +51,6 @@ client.player = new Player(client, {
 
 require("./event/handler.js").exec(client);
 require("./event/anticrash.js")(client);
-registerPlayerEvents(client.player);
+// registerPlayerEvents(client.player);
 
 client.login(config.options.token);
