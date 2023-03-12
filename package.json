@@ -27,7 +27,8 @@
     "ytdl-core": "^4.11.2",
     "@distube/ytdl-core": "^4.11.7",
     "play-dl": "^1.9.2",
-    "opusscript": "^0.0.8"
+    "opusscript": "^0.0.8",
+    "dadjokes-wrapper": "^0.1.4"
   },
   "repository": {
     "type": "git",
