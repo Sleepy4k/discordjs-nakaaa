@@ -9,6 +9,6 @@ module.exports = {
    * @param {import('discord.js').CommandInteraction} interaction
    */
   exec: async (client, interaction) => {
-    interaction.reply(config.interactions.siswa2.message(client));
+    await interaction.reply(config.interactions.siswa2.message(client));
   },
 };
