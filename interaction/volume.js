@@ -4,7 +4,6 @@ module.exports = {
   name: "volume",
   description: "Adjust music volume.",
   cooldown: 1,
-  voiceChannel: true,
   options: [
     {
       name: "volume",

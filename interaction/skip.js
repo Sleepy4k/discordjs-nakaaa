@@ -4,7 +4,6 @@ module.exports = {
   name: "skip",
   description: "skip a song.",
   cooldown: 1,
-  voiceChannel: true,
   options: [],
 
   /**

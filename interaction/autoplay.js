@@ -4,7 +4,6 @@ module.exports = {
   name: "autoplay",
   description: "Modo Autoplay.",
   cooldown: 1,
-  voiceChannel: true,
   options: [],
 
   /**

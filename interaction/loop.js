@@ -4,7 +4,6 @@ module.exports = {
   name: "loop",
   description: "Enable or disable looping for the song or the entire queue.",
   cooldown: 1,
-  voiceChannel: true,
   options: [],
 
   /**

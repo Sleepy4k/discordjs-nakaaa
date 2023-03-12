@@ -4,7 +4,6 @@ module.exports = {
   name: "resume",
   description: "Play the song.",
   cooldown: 1,
-  voiceChannel: true,
   options: [],
 
   /**

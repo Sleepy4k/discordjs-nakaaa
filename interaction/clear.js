@@ -4,7 +4,6 @@ module.exports = {
   name: "clear",
   description: "Clear all music in queue.",
   cooldown: 1,
-  voiceChannel: true,
   options: [],
 
   /**

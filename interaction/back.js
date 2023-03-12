@@ -4,7 +4,6 @@ module.exports = {
   name: "back",
   description: "Go back to the previous song.",
   cooldown: 1,
-  voiceChannel: true,
   options: [],
 
   /**

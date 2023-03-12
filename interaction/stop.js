@@ -4,7 +4,6 @@ module.exports = {
   name: "stop",
   description: "Stop a song.",
   cooldown: 1,
-  voiceChannel: true,
   options: [],
 
   /**

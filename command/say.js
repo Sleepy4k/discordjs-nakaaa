@@ -1,6 +1,6 @@
 module.exports = {
   name: "say",
-  cooldown: 2,
+  cooldown: 2000,
 
   /**
    * @param {import('discord.js').Client} client

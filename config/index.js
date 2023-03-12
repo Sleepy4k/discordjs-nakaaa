@@ -3,7 +3,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   options: {
-    prefix: "!!",
+    prefix: "$",
     browser: "Discord iOS",
     status: {
       enable: true,

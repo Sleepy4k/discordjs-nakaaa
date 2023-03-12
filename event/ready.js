@@ -11,7 +11,7 @@ module.exports = (client) =>
 
     if (config.options.activity.enable)
       client.user.setActivity(config.options.activity.description, {
-        type: ActivityType.LISTENING,
+        type: ActivityType.WATCHING,
       });
 
     if (config.options.status.enable)

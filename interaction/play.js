@@ -6,7 +6,6 @@ module.exports = {
   description:
     "Plays the specified song from YouTube, Soundcloud, Spotify etc.",
   cooldown: 1,
-  voiceChannel: true,
   options: [
     {
       name: "search",
@@ -44,13 +43,14 @@ module.exports = {
 
     const queue = await client.player.createQueue(interaction.guild, {
       metadata: interaction.channel,
-      initialVolume: 100,
+      initialVolume: 75,
       autoSelfDeaf: true,
-      leaveOnEnd: true,
+      leaveOnEnd: false,
       leaveOnEndCooldown: 60000,
-      leaveOnStop: true,
+      leaveOnStop: false,
       leaveOnEmpty: true,
       leaveOnEmptyCooldown: 60000,
+      spotifyBridge: true,
     });
 
     try {

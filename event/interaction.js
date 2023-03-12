@@ -9,5 +9,6 @@ module.exports = (client) =>
 
     const commandName = interaction.commandName;
     const command = await dataMap.get(commandName);
+
     if (command) command.exec(client, interaction);
   });

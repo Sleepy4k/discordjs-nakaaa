@@ -2,7 +2,7 @@ const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
   name: "ping",
-  cooldown: 2,
+  cooldown: 2000,
 
   /**
    * @param {import('discord.js').Client} client

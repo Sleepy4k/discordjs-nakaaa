@@ -3,7 +3,7 @@ const { parseDur } = require("../utils/parseDur");
 
 module.exports = {
   name: "uptime",
-  cooldown: 2,
+  cooldown: 2000,
 
   /**
    * @param {import('discord.js').Client} client

@@ -2,7 +2,7 @@ const config = require("../config");
 
 module.exports = {
   name: "verify",
-  cooldown: 2,
+  cooldown: 2000,
 
   /**
    * @param {import('discord.js').Client} client

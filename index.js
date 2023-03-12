@@ -1,6 +1,5 @@
 const config = require("./config");
 const { Player } = require("discord-player");
-const { registerPlayerEvents } = require("./utils/botEvent.js");
 const {
   Client,
   Partials,

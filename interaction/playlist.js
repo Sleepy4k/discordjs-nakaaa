@@ -4,7 +4,6 @@ module.exports = {
   name: "playlist",
   description: "See the playlist.",
   cooldown: 1,
-  voiceChannel: true,
   options: [],
 
   /**

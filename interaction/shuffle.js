@@ -4,7 +4,6 @@ module.exports = {
   name: "shuffle",
   description: "Activate random mode.",
   cooldown: 1,
-  voiceChannel: true,
   options: [],
 
   /**

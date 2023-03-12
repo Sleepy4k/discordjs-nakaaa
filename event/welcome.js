@@ -26,7 +26,7 @@ module.exports = (client) => {
         `Hi ${user} Welcome To Our Server **__${server_name}__** \n\nSebelum itu, silahkan membuka <#${ruleId}> untuk membaca peraturan server kami \n\nDilanjutkan ke <#${announcementId}> untuk melihat berita terkini \n\nGood Luck!`
       )
       .addFields(
-        { name: "Ketua Kelas", value: "Adhitya Eka R", inline: true },
+        { name: "Ketua Kelas", value: "Aditya Eka R", inline: true },
         { name: "Wakil Ketua kelas", value: "Ahmad Ichsan M", inline: true }
       )
       .setFooter({
