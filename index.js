@@ -1,9 +1,21 @@
 const config = require("./config");
 const { Player } = require("discord-player");
-const { Client, Collection, GatewayIntentBits } = require("discord.js");
+const {
+  Client,
+  Partials,
+  Collection,
+  GatewayIntentBits,
+} = require("discord.js");
 
 const client = new Client({
+  restTimeOffset: 0,
+  autoReconnect: true,
   fetchAllMembers: true,
+  disabledEvents: ["TYPING_START"],
+  allowedMentions: {
+    parse: ["users", "roles"],
+    repliedUser: true,
+  },
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMembers,
@@ -11,11 +23,14 @@ const client = new Client({
     GatewayIntentBits.GuildVoiceStates,
     GatewayIntentBits.GuildPresences,
   ],
-  ws: {
-    properties: {
-      $browser: config.options.browser,
-    },
-  },
+  partials: [
+    Partials.User,
+    Partials.Channel,
+    Partials.Message,
+    Partials.Reaction,
+    Partials.GuildMember,
+    Partials.GuildScheduledEvent,
+  ],
 });
 
 client.commands = new Collection();

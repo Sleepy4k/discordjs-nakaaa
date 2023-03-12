@@ -35,7 +35,7 @@ module.exports = {
           })
           .setTimestamp();
 
-        interaction.reply({ embeds: [embed] }).then((msg) => {
+        await interaction.reply({ embeds: [embed] }).then((msg) => {
           setTimeout(() => {
             msg.delete();
           }, 5000);
@@ -52,7 +52,7 @@ module.exports = {
           })
           .setTimestamp();
 
-        interaction
+        await interaction
           .reply({ embeds: [embed] })
           .then((message) => {
             const sent = message;
