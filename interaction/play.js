@@ -23,10 +23,10 @@ module.exports = {
     if (!channel)
       return interaction.reply("You are not connected to a voice channel!"); // make sure we have a voice channel
     const query = interaction.options.getString("search", true); // we need input/query to play
-    // const results = await client.player.search(query);
+    const results = await client.player.search(query);
 
-    // if (!results || !results.hasTracks())
-    //   return interaction.reply("No tracks were found for your query");
+    if (!results || !results.hasTracks())
+      return interaction.reply("No tracks were found for your query");
 
     await interaction.deferReply();
     await interaction.editReply({
