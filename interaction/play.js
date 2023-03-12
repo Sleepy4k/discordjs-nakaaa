@@ -1,3 +1,4 @@
+const playdl = require("play-dl");
 const { QueryType } = require("discord-player");
 
 module.exports = {
@@ -20,36 +21,79 @@ module.exports = {
    */
   exec: async (client, interaction) => {
     const channel = interaction.member.voice.channel;
+
     if (!channel)
-      return interaction.reply("You are not connected to a voice channel!"); // make sure we have a voice channel
-    const query = interaction.options.getString("search", true); // we need input/query to play
-    const results = await client.player.search(query);
+      return interaction.reply("You are not connected to a voice channel!");
 
-    if (!results || !results.hasTracks())
-      return interaction.reply("No tracks were found for your query");
-
-    await interaction.deferReply();
-    await interaction.editReply({
-      content: `⏳ | Loading ${
-        results.playlist ? "a playlist..." : "a track..."
-      }`,
+    const song = interaction.options.getString("search", true);
+    const result = await interaction.client.player.search(song, {
+      requestedBy: interaction.user,
+      searchEngine: QueryType.AUTO,
     });
 
+    if (!result || !result.tracks.length) {
+      return interaction.reply("No tracks were found for your query");
+    }
+
     try {
-      const { track } = await client.player.play(channel, query, {
-        nodeOptions: {
+      const queue = await interaction.client.player.createQueue(
+        interaction.guild,
+        {
           metadata: interaction,
-        },
-      });
+          guild: interaction.guildId,
+          selfDeaf: true,
+          leaveOnEmptyCooldown: 300000,
+          leaveOnEnd: false,
+          leaveOnStop: true,
+
+          async onBeforeCreateStream(track, source, _queue) {
+            if (track.url.includes("youtube.com")) {
+              return (
+                await playdl.stream(track.url, {
+                  discordPlayerCompatibility: true,
+                })
+              ).stream;
+            } else if (track.url.includes("spotify.com")) {
+              return (
+                await playdl.stream(
+                  await playdl
+                    .search(`${track.author} ${track.title} lyric`, {
+                      limit: 1,
+                      source: { youtube: "video" },
+                    })
+                    .then((x) => x[0].url),
+                  { discordPlayerCompatibility: true }
+                )
+              ).stream;
+            }
+          },
+        }
+      );
+
+      try {
+        if (!queue.connection) await queue.connect(channel);
+      } catch (error) {
+        console.error(err);
+        await queue.destroy();
+        return await interaction.editReply(
+          "Could not join your voice channel!"
+        );
+      }
+
+      result.playlist
+        ? queue.addTracks(result.tracks)
+        : queue.addTrack(result.tracks[0]);
 
       await interaction.editReply({
-        content: `Successfully enqueued${
-          track.playlist
-            ? ` **multiple tracks** from: **${track.playlist.title}**`
-            : `: **${track.title}**`
-        }`,
+        content: `🎶 | Enqueued **${
+          result.playlist ? result.tracks.length : 1
+        }** ${result.playlist ? "tracks" : "track"} from **${
+          result.playlist ? result.playlist.name : result.tracks[0].title
+        }**`,
       });
-    } catch (e) {
+
+      if (!queue.playing) await queue.play();
+    } catch (error) {
       return interaction.followUp(`Something went wrong: ${e}`);
     }
   },
