@@ -14,7 +14,7 @@ module.exports = {
     const data = response.data;
 
     const embed = new EmbedBuilder()
-      .setColor("RANDOM")
+      .setColor("Random")
       .setTitle(`Requested by ${message.author.tag}`)
       .setImage(data.link)
       .setFooter({

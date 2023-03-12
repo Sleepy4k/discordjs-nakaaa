@@ -13,7 +13,7 @@ module.exports = {
    */
   exec: async (client, interaction) => {
     const embed = new EmbedBuilder()
-      .setColor("RANDOM")
+      .setColor("Random")
       .setTitle("Pong! 🏓")
       .setDescription(
         `Latency : ${Math.floor(

@@ -17,7 +17,7 @@ module.exports = {
     const data = response.data;
 
     const embed = new EmbedBuilder()
-      .setColor("RANDOM")
+      .setColor("Random")
       .setTitle("Cute Cat! 🐱")
       .setImage(data.link)
       .setFooter({

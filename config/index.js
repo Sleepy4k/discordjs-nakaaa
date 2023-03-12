@@ -36,7 +36,7 @@ module.exports = {
                 )} detik lagi sebelum menggunakan ${command}`
               )
               .setTitle("Cooldown")
-              .setColor("RANDOM")
+              .setColor("Random")
               .setTimestamp(),
           ],
         };
@@ -103,7 +103,7 @@ module.exports = {
        */
       message: (client) => {
         const embed = new EmbedBuilder()
-          .setColor("RANDOM")
+          .setColor("Random")
           .setTitle("XII RPL 1 Profile")
           .setDescription("Ordanary Profile of XII RPL 1")
           .addFields({
@@ -156,7 +156,7 @@ module.exports = {
        */
       message: (client) => {
         const embed = new EmbedBuilder()
-          .setColor("RANDOM")
+          .setColor("Random")
           .setTitle("XII RPL 1 Students")
           .setDescription("List of XII RPL 1 Students")
           .addFields(
@@ -314,7 +314,7 @@ module.exports = {
        */
       message: (client) => {
         const embed = new EmbedBuilder()
-          .setColor("RANDOM")
+          .setColor("Random")
           .setTitle("XII RPL 1 Students")
           .setDescription("List of XII RPL 1 Students")
           .addFields(

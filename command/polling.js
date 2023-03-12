@@ -9,7 +9,6 @@ module.exports = {
    * @param {import('discord.js').Message} message
    */
   exec: async (client, message, args) => {
-    var randomColor = Math.floor(Math.random() * 16777215).toString(16);
     let poll = args.join(" ");
     if (!poll) {
       let emptyEmbed = new EmbedBuilder()
@@ -31,7 +30,7 @@ module.exports = {
       message.delete();
     } else {
       let embed = new EmbedBuilder()
-        .setColor(randomColor)
+        .setColor("Random")
         .setTitle("Polling baru")
         .setDescription("```fix\n " + poll + "\n```")
         .setFooter({

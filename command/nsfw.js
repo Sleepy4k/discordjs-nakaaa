@@ -20,7 +20,7 @@ module.exports = {
         const porn = response.data;
 
         const embed = new EmbedBuilder()
-          .setColor("RANDOM")
+          .setColor("Random")
           .setTitle(`Requested by ${message.author.tag}`)
           .setImage(porn.url)
           .setFooter({
@@ -36,7 +36,7 @@ module.exports = {
         const porn = response.data;
 
         const embed = new EmbedBuilder()
-          .setColor("RANDOM")
+          .setColor("Random")
           .setTitle(`Requested by ${message.author.tag}`)
           .setImage(porn.url)
           .setFooter({
@@ -52,7 +52,7 @@ module.exports = {
         const jav = response.data;
 
         const embed = new EmbedBuilder()
-          .setColor("RANDOM")
+          .setColor("Random")
           .setTitle(`Requested by ${message.author.tag}`)
           .setImage(jav.url)
           .setFooter({

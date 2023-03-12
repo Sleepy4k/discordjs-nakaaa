@@ -19,7 +19,7 @@ module.exports = (client) => {
 
     const message = `${user}`;
     const embed = new EmbedBuilder()
-      .setColor("RANDOM")
+      .setColor("Random")
       .setTitle(`Hello, ${username}!`)
       .setImage(user_avatar)
       .setDescription(

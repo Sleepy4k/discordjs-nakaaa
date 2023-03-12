@@ -16,7 +16,7 @@ module.exports = {
     const duration = parseDur(client.uptime);
 
     const embed = new EmbedBuilder()
-      .setColor("RANDOM")
+      .setColor("Random")
       .setTitle("Uptime")
       .setDescription(`Bot has been online for ${duration}`)
       .setFooter({
