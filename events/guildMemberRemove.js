@@ -30,3 +30,5 @@ export default {
     return channel.send(client.config.goodbye.message(member));
   },
 };
+
+// Path: events\guildMemberRemove.js

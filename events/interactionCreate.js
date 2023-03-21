@@ -67,3 +67,5 @@ export default {
     }
   },
 };
+
+// Path: events\interactionCreate.js

@@ -98,3 +98,5 @@ export default {
 function escapeRegex(newprefix) {
   return newprefix?.replace(/[.*+?^${}()|[\]\\]/g, `\\$&`);
 }
+
+// Path: events\messageCreate.js

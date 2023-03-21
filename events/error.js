@@ -42,3 +42,5 @@ export default {
     return webhook.send({ embeds: [embed] });
   },
 };
+
+// Path: events\error.js

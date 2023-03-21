@@ -30,3 +30,5 @@ export default {
     return channel.send(client.config.welcome.message(member));
   },
 };
+
+// Path: events\guildMemberAdd.js

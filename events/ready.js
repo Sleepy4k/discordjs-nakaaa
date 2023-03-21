@@ -32,3 +32,5 @@ export default {
     });
   },
 };
+
+// Path: events\ready.js

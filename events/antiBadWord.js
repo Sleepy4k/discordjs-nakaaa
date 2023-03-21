@@ -44,3 +44,5 @@ export default {
     }
   },
 };
+
+// Path: events\antiBadWord.js
