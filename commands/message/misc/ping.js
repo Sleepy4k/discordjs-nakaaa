@@ -36,3 +36,5 @@ export default {
     });
   },
 };
+
+// Path: commands\message\misc\ping.js

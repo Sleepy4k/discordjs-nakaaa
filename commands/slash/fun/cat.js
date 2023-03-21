@@ -41,3 +41,5 @@ export default {
     );
   },
 };
+
+// Path: commands\slash\fun\cat.js

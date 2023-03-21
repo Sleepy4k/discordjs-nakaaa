@@ -40,3 +40,5 @@ export default {
     );
   },
 };
+
+// Path: commands\slash\misc\ping.js

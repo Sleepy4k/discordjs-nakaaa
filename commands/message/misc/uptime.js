@@ -38,3 +38,5 @@ export default {
     });
   },
 };
+
+// Path: commands\message\misc\uptime.js

@@ -60,3 +60,5 @@ export default {
     );
   },
 };
+
+// Path: commands\slash\fun\joke.js

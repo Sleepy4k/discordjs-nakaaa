@@ -37,3 +37,5 @@ export default {
     });
   },
 };
+
+// Path: commands\message\fun\cat.js

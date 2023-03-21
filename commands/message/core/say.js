@@ -45,3 +45,5 @@ export default {
     });
   },
 };
+
+// Path: commands\message\core\say.js

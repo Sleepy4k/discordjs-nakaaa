@@ -43,3 +43,5 @@ export default {
     });
   },
 };
+
+// Path: commands\slash\core\say.js

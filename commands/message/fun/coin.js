@@ -52,3 +52,5 @@ export default {
     });
   },
 };
+
+// Path: commands\message\fun\coin.js
