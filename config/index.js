@@ -133,3 +133,5 @@ const config = {
 };
 
 export default config;
+
+// Path: config\index.js
