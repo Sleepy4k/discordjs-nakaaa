@@ -47,3 +47,5 @@ export default async (client) => {
     console.log(error);
   }
 };
+
+// Path: handlers\messageHandler.js

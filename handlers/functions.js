@@ -61,3 +61,5 @@ export function logStatus(name, isLoaded, type) {
     `[${date} ${time}] ${type} : ${name} | Status: ${statusIcon} ${statusText}`
   );
 }
+
+// Path: handlers\functions.js

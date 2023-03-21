@@ -59,3 +59,5 @@ export default async (client) => {
     console.log(error);
   }
 };
+
+// Path: handlers\slashHandler.js

@@ -34,20 +34,31 @@ export class Bot extends Client {
         parse: ["users", "roles"],
       },
       intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.GuildPresences,
-        GatewayIntentBits.MessageContent,
-        GatewayIntentBits.GuildVoiceStates,
+        GatewayIntentBits.Guilds, // for guild related things
+        GatewayIntentBits.GuildBans, // for manage guild bans
+        GatewayIntentBits.GuildMembers, // for guild members related things
+        GatewayIntentBits.GuildInvites, // for guild invite managing
+        GatewayIntentBits.GuildMessages, // for guild messages things
+        GatewayIntentBits.GuildWebhooks, // for discord webhooks
+        GatewayIntentBits.MessageContent, // enable if you need message content things
+        GatewayIntentBits.DirectMessages, // for dm messages
+        GatewayIntentBits.GuildPresences, // for user presence things
+        GatewayIntentBits.GuildVoiceStates, // for voice related things
+        GatewayIntentBits.GuildIntegrations, // for discord Integrations
+        GatewayIntentBits.GuildMessageTyping, // for message typing things
+        GatewayIntentBits.DirectMessageTyping, // for dm message typinh
+        GatewayIntentBits.GuildMessageReactions, // for message reactions things
+        GatewayIntentBits.GuildEmojisAndStickers, // for manage emojis and stickers
+        GatewayIntentBits.DirectMessageReactions, // for dm message reaction
       ],
       partials: [
-        Partials.User,
-        Partials.Channel,
-        Partials.Message,
-        Partials.Reaction,
-        Partials.GuildMember,
-        Partials.GuildScheduledEvent,
+        Partials.User, // for discord user
+        Partials.Message, // for message
+        Partials.Channel, // for text channel
+        Partials.Reaction, // for message reaction
+        Partials.GuildMember, // for guild member
+        Partials.ThreadMember, // for thread member
+        Partials.GuildScheduledEvent, // for guild events
       ],
       ws: {
         properties: {
@@ -66,7 +77,9 @@ export class Bot extends Client {
 
   async build(token) {
     await loadHandlers(this);
-    this.login(token);
+    this.login(token).catch((e) => {
+      console.log("The bot token is invalid!");
+    });
   }
 
   async sendEmbed(interaction, data, ephemeral = false) {
@@ -139,3 +152,5 @@ async function loadHandlers(client) {
     await handler(client);
   });
 }
+
+// Path: handlers\client.js
