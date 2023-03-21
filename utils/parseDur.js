@@ -11,8 +11,7 @@
  *
  * March 12, 2023
  */
-
-const parseDur = (ms) => {
+export default function parseDur(ms) {
   let seconds = ms / 1000;
 
   const days = parseInt(seconds / 86400);
@@ -31,9 +30,6 @@ const parseDur = (ms) => {
   } else if (minutes) {
     return `\`${minutes}\` minutes, \`${seconds}\` seconds`;
   }
-  return `\`${seconds}\` second(s)`;
-};
 
-module.exports = {
-  parseDur,
-};
+  return `\`${seconds}\` second(s)`;
+}
