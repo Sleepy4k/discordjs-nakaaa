@@ -33,3 +33,5 @@ export default function parseDur(ms) {
 
   return `\`${seconds}\` second(s)`;
 }
+
+// Path: utils\parseDur.js
