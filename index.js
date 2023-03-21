@@ -12,7 +12,12 @@
  * March 12, 2023
  */
 import { Bot } from "./handlers/client.js";
+import createServer from "./dashboard/bin/www.js";
 
 export const client = new Bot();
 
+createServer(client);
+
 client.build(client.config.options.token);
+
+// Path: index.js
