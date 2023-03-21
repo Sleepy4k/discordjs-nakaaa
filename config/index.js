@@ -26,8 +26,8 @@ const config = {
     author: "Nakaaaa#8558",
     icon: "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
     token:
-      // "ODA1NDgyNDc0MDc0NjY5MDc2.GcxYpo.ecOfIRlz-SE53z8A_c-7M_KDpx5hzTMO2465_E", // Benjamin4k Bot
-      "NzUyMTc5NTkwNzc2MDk0Nzgw.GClmrt.TKYejBs-OxncsHMarkODRwmQ8a0fZHvCnsYdw8", // Zooane Bot
+      "ODA1NDgyNDc0MDc0NjY5MDc2.GcxYpo.ecOfIRlz-SE53z8A_c-7M_KDpx5hzTMO2465_E", // Benjamin4k Bot
+    // "NzUyMTc5NTkwNzc2MDk0Nzgw.GClmrt.TKYejBs-OxncsHMarkODRwmQ8a0fZHvCnsYdw8", // Zooane Bot
   },
   emoji: {
     success: "✅",
