@@ -24,11 +24,11 @@ export default {
     client.user.setPresence({
       activities: [
         {
-          name: client.config.options.activity.description,
+          name: client.config.activity.description,
           type: ActivityType.Watching,
         },
       ],
-      status: client.config.options.activity.type,
+      status: client.config.activity.type,
     });
   },
 };
