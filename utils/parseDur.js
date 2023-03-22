@@ -24,14 +24,14 @@ export default function parseDur(ms) {
   seconds = parseInt(seconds % 60);
 
   if (days) {
-    return `\`${days}\` day, \`${hours}\` hours, \`${minutes}\` minutes`;
+    return `${days} day, ${hours} hours, ${minutes} minutes`;
   } else if (hours) {
-    return `\`${hours}\` hours, \`${minutes}\` minutes, \`${seconds}\` seconds`;
+    return `${hours} hours, ${minutes} minutes, ${seconds} seconds`;
   } else if (minutes) {
-    return `\`${minutes}\` minutes, \`${seconds}\` seconds`;
+    return `${minutes} minutes, ${seconds} seconds`;
   }
 
-  return `\`${seconds}\` second(s)`;
+  return `${seconds} second(s)`;
 }
 
 // Path: utils\parseDur.js
