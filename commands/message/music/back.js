@@ -31,7 +31,7 @@ export default {
       return client.sendEmbed(message, {
         color: "Red",
         title: "Error",
-        description: "```No music currently playing.```",
+        description: "```There is no music currently playing.```",
         footer: client.getFooter(message),
       });
 

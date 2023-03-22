@@ -35,7 +35,15 @@ export default {
         footer: client.getFooter(message),
       });
 
-    await queue.delete();
+    const success = await queue.delete();
+
+    if (!success)
+      return client.sendEmbed(message, {
+        color: "Red",
+        title: "Error",
+        description: "```Failed to stop the current song.```",
+        footer: client.getFooter(message),
+      });
 
     return client.sendEmbed(message, {
       color: "Blue",

@@ -31,7 +31,7 @@ export default {
       return client.sendEmbed(message, {
         color: "Red",
         title: "Error",
-        description: "```Please specify a song.```",
+        description: "```Please provide a song name.```",
         footer: client.getFooter(message),
       });
 
@@ -96,7 +96,7 @@ export default {
       title: "Success",
       description: `\`\`\`Added ${
         results.playlist ? "playlist" : "song"
-      } to queue.\`\`\``,
+      } to the queue.\`\`\``,
       footer: client.getFooter(message),
     });
   },

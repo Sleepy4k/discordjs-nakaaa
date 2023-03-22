@@ -55,6 +55,7 @@ export default {
         break;
       case "all":
         mode = 2;
+        break;
       default:
         return client.sendEmbed(message, {
           color: "Red",
