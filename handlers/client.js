@@ -19,23 +19,25 @@ import {
   GatewayIntentBits,
 } from "discord.js";
 import config from "../config/index.js";
-// import config from "@config/index.js";
+import { Player } from "discord-player";
 
 export class Bot extends Client {
   constructor() {
     super({
       shards: "auto",
+      restTimeOffset: 0,
+      autoReconnect: true,
+      fetchAllMembers: true,
       failIfNotExists: false,
       disabledEvents: ["TYPING_START"],
       allowedMentions: {
         users: [],
         roles: [],
-        repliedUser: false,
+        repliedUser: true,
         parse: ["users", "roles"],
       },
       intents: [
         GatewayIntentBits.Guilds, // for guild related things
-        GatewayIntentBits.GuildBans, // for manage guild bans
         GatewayIntentBits.GuildMembers, // for guild members related things
         GatewayIntentBits.GuildInvites, // for guild invite managing
         GatewayIntentBits.GuildMessages, // for guild messages things
@@ -73,6 +75,14 @@ export class Bot extends Client {
     this.mcommands = new Collection();
     this.cooldowns = new Collection();
     this.prefix = config.options.prefix;
+
+    this.player = new Player(this, {
+      ytdlOptions: {
+        filter: "audioonly",
+        quality: "highestaudio",
+        highWaterMark: 1 << 27,
+      },
+    });
   }
 
   async build(token) {
