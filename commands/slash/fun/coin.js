@@ -53,11 +53,11 @@ export default {
           {
             color: "Green",
             title: ":coin: Coin flip",
-            description: `
-              **Result:** ${result === 0 ? "Heads" : "Tails"}
-              **Guess:** ${guess === 0 ? "Heads" : "Tails"}
-              **Status:** You win!
-            `,
+            description: `\`\`\`Result: ${
+              result === 0 ? "Heads" : "Tails"
+            } \nGuess: ${
+              guess === 0 ? "Heads" : "Tails"
+            } \nStatus: You win!\`\`\``,
             footer: client.getFooter(interaction, "interaction"),
           },
           true
@@ -68,11 +68,11 @@ export default {
           {
             color: "DarkGreen",
             title: ":coin: Coin flip",
-            description: `
-              **Result:** ${result === 0 ? "Heads" : "Tails"}
-              **Guess:** ${guess === 0 ? "Heads" : "Tails"}
-              **Status:** You lose!
-            `,
+            description: `\`\`\`Result: ${
+              result === 0 ? "Heads" : "Tails"
+            } \nGuess: ${
+              guess === 0 ? "Heads" : "Tails"
+            } \nStatus: You lose!\`\`\``,
             footer: client.getFooter(interaction, "interaction"),
           },
           true
@@ -84,9 +84,7 @@ export default {
         {
           color: "Red",
           title: ":x: Error",
-          description: `
-            **Something went wrong:** ${error.message}
-          `,
+          description: `\`\`\`Something went wrong: ${error.message}\`\`\``,
           footer: client.getFooter(interaction, "interaction"),
         },
         true

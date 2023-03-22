@@ -33,9 +33,7 @@ export default {
       {
         color: "Yellow",
         title: ":inbox_tray: Bot Uptime",
-        description: `
-          **Uptime:** ${uptime}
-        `,
+        description: `\`\`\`Uptime: ${uptime}\`\`\``,
         footer: client.getFooter(interaction, "interaction"),
       },
       true

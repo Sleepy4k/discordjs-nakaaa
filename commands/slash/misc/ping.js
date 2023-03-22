@@ -30,10 +30,9 @@ export default {
       {
         color: "Blue",
         title: "🏓 Pong",
-        description: `
-          **Latency**: \`${client.ws.ping}\`ms
-          **API Latency**: \`${interaction.createdTimestamp - Date.now()}\`ms
-        `,
+        description: `\`\`\`Latency: ${client.ws.ping}ms \nAPI Latency: ${
+          interaction.createdTimestamp - Date.now()
+        }ms\`\`\``,
         footer: client.getFooter(interaction, "interaction"),
       },
       true

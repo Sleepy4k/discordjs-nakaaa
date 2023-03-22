@@ -39,7 +39,7 @@ export default {
 
     return client.sendEmbed(message, {
       color: "Random",
-      title: "Here your gif",
+      title: "Here your anal gif",
       image: gif,
       footer: client.getFooter(message),
     });

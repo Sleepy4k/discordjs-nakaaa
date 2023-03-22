@@ -19,7 +19,7 @@ import { PermissionFlagsBits } from "discord.js";
  */
 export default {
   name: "pthigh",
-  description: "Show random thigh.",
+  description: "Show random thigh image.",
   userPermissions: PermissionFlagsBits.SendMessages,
   botPermissions: PermissionFlagsBits.SendMessages,
   category: "nsfw",
@@ -37,12 +37,12 @@ export default {
     const response = await axios.get(
       "https://nekobot.xyz/api/image?type=thigh"
     );
-    const thigh = response.data.message;
+    const image = response.data.message;
 
     return client.sendEmbed(message, {
       color: "Random",
-      title: "Here your thigh",
-      image: thigh,
+      title: "Here your thigh image.",
+      image: image,
       footer: client.getFooter(message),
     });
   },
