@@ -11,23 +11,21 @@
  *
  * March 12, 2023
  */
+import "dotenv/config.js";
 import { EmbedBuilder } from "discord.js";
 
 const config = {
   options: {
-    prefix: "$",
-    browser: "Discord iOS",
-    activity: {
-      type: "dnd",
-      enable: true,
-      description: "On XII RPL 1 Discord Server",
-    },
-    name: "XII RPL 1",
-    author: "Nakaaaa#8558",
-    icon: "https://cdn.discordapp.com/icons/1083339991331131392/495bb6b9a8bd90d2c09627ce2bec9a45.webp",
-    token:
-      "ODA1NDgyNDc0MDc0NjY5MDc2.GcxYpo.ecOfIRlz-SE53z8A_c-7M_KDpx5hzTMO2465_E", // Benjamin4k Bot
-    // "NzUyMTc5NTkwNzc2MDk0Nzgw.GClmrt.TKYejBs-OxncsHMarkODRwmQ8a0fZHvCnsYdw8", // Zooane Bot
+    name: process.env.BOT_NAME || "Sleepy4k",
+    icon: process.env.BOT_ICON || "https://i.imgur.com/8Q9ZQ2M.png",
+    token: process.env.BOT_TOKEN || "your-bot-token",
+    prefix: process.env.BOT_PREFIX || "$",
+    author: process.env.BOT_AUTHOR || "Nakaaaa#8558",
+    browser: process.env.BOT_BROWSER || "Discord iOS",
+  },
+  activity: {
+    type: process.env.ACTIVITY_TYPE || "dnd",
+    description: process.env.ACTIVITY_NAME || "Bot Status",
   },
   emoji: {
     success: "✅",
@@ -43,12 +41,14 @@ const config = {
   anti_crash: {
     enable: true,
     webhook: {
-      url: "https://discord.com/api/webhooks/1084337532105392148/cQsOCefThG_am0tZ4fKi9gcr3WhPBlrB347WYGsfrcz5iUv7dEzLUhT2f9wgO0MEXbXs",
+      url:
+        process.env.ANTI_CRASH_URL ||
+        "https://discord.com/api/webhooks/1084337532105392148/cQsOCefThG_am0tZ4fKi9gcr3WhPBlrB347WYGsfrcz5iUv7dEzLUhT2f9wgO0MEXbXs",
     },
   },
   welcome: {
     enable: true,
-    channel_id: "1083339991884767354",
+    channel_id: process.env.WELCOME_CHANNEL || "1083339991884767354",
     message: (member) => {
       const server_icon = member.guild.iconURL({ dynamic: true, size: 512 });
       const user_avatar = member.user.displayAvatarURL({
@@ -87,7 +87,7 @@ const config = {
   },
   goodbye: {
     enable: true,
-    channel_id: "1084131071886635058",
+    channel_id: process.env.GOODBYE_CHANNEL || "1084131071886635058",
     message: (member) => {
       const server_icon = member.guild.iconURL({ dynamic: true, size: 512 });
       const user_avatar = member.user.displayAvatarURL({
