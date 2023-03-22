@@ -37,9 +37,7 @@ export default {
         {
           color: "DarkAqua",
           title: "Dad Joke",
-          description: `
-            \`Looks like the dad is too tired to tell you some jokes, please try again later.\`
-          `,
+          description: `\`\`\`Looks like the dad is too tired to tell you some jokes, please try again later.\`\`\``,
           footer: client.getFooter(message),
         },
         true
@@ -49,9 +47,7 @@ export default {
     return client.sendEmbed(message, {
       color: "DarkAqua",
       title: "Dad Joke",
-      description: `
-        \`${joke}\`
-      `,
+      description: `\`\`\`${joke}\`\`\``,
       footer: client.getFooter(message),
     });
   },

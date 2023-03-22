@@ -30,9 +30,7 @@ export default {
       return client.sendEmbed(message, {
         color: "Red",
         title: "Polling something!",
-        description: `
-          **Usage:** \`${prefix}polling <text>\`
-        `,
+        description: `\`\`\`Usage: ${prefix}polling <text>\`\`\``,
         footer: client.getFooter(message),
       });
     }

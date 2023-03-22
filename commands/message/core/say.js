@@ -30,9 +30,7 @@ export default {
       return client.sendEmbed(message, {
         color: "Red",
         title: "Say something!",
-        description: `
-          **Usage:** \`${prefix}say <text>\`
-        `,
+        description: `\`\`\`Usage: ${prefix}say <text>\`\`\``,
         footer: client.getFooter(message),
       });
     }

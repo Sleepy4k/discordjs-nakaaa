@@ -31,9 +31,7 @@ export default {
     return client.sendEmbed(message, {
       color: "Yellow",
       title: ":inbox_tray: Bot Uptime",
-      description: `
-        **Uptime:** ${uptime}
-      `,
+      description: `\`\`\`Uptime: ${uptime}\`\`\``,
       footer: client.getFooter(message),
     });
   },

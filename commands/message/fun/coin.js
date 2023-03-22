@@ -27,15 +27,13 @@ export default {
   run: async (client, message, args, prefix) => {
     let result = Math.floor(Math.random() * 2) + 1;
     let coin = result === 1 ? "Heads" : "Tails";
-
     let answer = args.slice(0).join(" ");
+
     if (!answer) {
       return client.sendEmbed(message, {
         color: "Red",
         title: "Coin flip",
-        description: `
-          **Usage:** \`${prefix}coin <Heads/Tails>\`
-        `,
+        description: `\`\`\`Usage: ${prefix}coin <Heads/Tails>\`\`\``,
         footer: client.getFooter(message),
       });
     }
@@ -43,11 +41,9 @@ export default {
     return client.sendEmbed(message, {
       color: "Green",
       title: "Coin flip",
-      description: `
-        **Result:** ${coin}
-        **Guess:** ${answer}
-        **Status:** ${coin === answer ? "You win!" : "You lose!"}
-      `,
+      description: `\`\`\`Result: ${coin} \nGuess: ${answer} \nStatus: ${
+        coin === answer ? "You win!" : "You lose!"
+      }\`\`\``,
       footer: client.getFooter(message),
     });
   },

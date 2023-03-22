@@ -28,10 +28,9 @@ export default {
     return client.sendEmbed(message, {
       color: "Blue",
       title: "🏓 Pong",
-      description: `
-        **Latency**: \`${client.ws.ping}\`ms
-        **API Latency**: \`${message.createdTimestamp - Date.now()}\`ms
-      `,
+      description: `\`\`\`Latency: ${client.ws.ping}ms \nAPI Latency: ${
+        message.createdTimestamp - Date.now()
+      }ms\`\`\``,
       footer: client.getFooter(message),
     });
   },
