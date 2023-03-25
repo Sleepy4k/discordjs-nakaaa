@@ -24,6 +24,16 @@ Copy file .env.example menjadi .env, dan isi data seperti token etc
 jika sudah, isi detail data pada index.js dalam folder config. dan jalankan bot
 
     npm start
+    
+### Endpoint
+
+    - localhost:3000
+    - localhost:3000/api
+    - localhost:3000/api/ping
+    - localhost:3000/api/users
+    - localhost:3000/api/uptime
+    - localhost:3000/api/guilds
+    - localhost:3000/api/channels
 
 ### Note
 
@@ -53,6 +63,16 @@ Copy the .env.example file to .env, and fill in data such as tokens etc
 if so, fill in the data details in index.js in the config folder. and run bots
 
     npm start
+
+### Endpoint
+
+    - localhost:3000
+    - localhost:3000/api
+    - localhost:3000/api/ping
+    - localhost:3000/api/users
+    - localhost:3000/api/uptime
+    - localhost:3000/api/guilds
+    - localhost:3000/api/channels
 
 ### Note
 
