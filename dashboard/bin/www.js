@@ -4,12 +4,6 @@
 import http from "http";
 import debugLib from "debug";
 import app from "../express.js";
-import { url, port as pt } from "../config/app.config.js";
-
-/**
- * Setup debug
- */
-const debug = debugLib("adjex-project:server");
 
 /**
  * Create server
@@ -18,6 +12,12 @@ const debug = debugLib("adjex-project:server");
  */
 export default function createServer(client) {
   /**
+   * Setup debug
+   */
+  const name = slugify(client.config.options.name);
+  const debug = debugLib(`${name}:server`);
+
+  /**
    * Set client to express app
    */
   app.set("client", client);
@@ -25,7 +25,7 @@ export default function createServer(client) {
   /**
    * Get port from environment and store in Express.
    */
-  const port = normalizePort(pt || "3000");
+  const port = normalizePort(client.config.web.port || "3000");
   app.set("port", port);
 
   /**
@@ -39,6 +39,18 @@ export default function createServer(client) {
   server.listen(port);
   server.on("error", onError);
   server.on("listening", onListening);
+
+  /**
+   * Make slug from string
+   * @param {string} str
+   * @returns {string}
+   */
+  function slugify(str) {
+    return str
+      .toLowerCase()
+      .replace(/ /g, "-")
+      .replace(/[^\w-]+/g, "");
+  }
 
   /**
    * Normalize a port into a number, string, or false.
