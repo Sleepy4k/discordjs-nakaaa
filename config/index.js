@@ -23,6 +23,12 @@ const config = {
     author: process.env.BOT_AUTHOR || "Nakaaaa#8558",
     browser: process.env.BOT_BROWSER || "Discord iOS",
   },
+  web: {
+    name: process.env.WEB_NAME || "Sleepy4k",
+    env: process.env.WEB_ENV || "production",
+    port: process.env.PORT || 3000,
+    url: process.env.URL || "http://localhost:3000",
+  },
   activity: {
     type: process.env.ACTIVITY_TYPE || "dnd",
     description: process.env.ACTIVITY_NAME || "Bot Status",
