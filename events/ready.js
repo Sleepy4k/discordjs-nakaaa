@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import print from "../utils/print.js";
 import { ActivityType } from "discord.js";
 
 /**
@@ -20,16 +21,22 @@ export default {
   name: "ready",
 
   run: async (client) => {
-    console.log(`> ${client.user.tag} is Ready !!`);
-    client.user.setPresence({
-      activities: [
-        {
-          name: client.config.activity.description,
-          type: ActivityType.Watching,
-        },
-      ],
-      status: client.config.activity.type,
-    });
+    print(
+      `${client.user.tag} : Ready to serve ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`
+    );
+    try {
+      client.user.setPresence({
+        activities: [
+          {
+            name: client.config.activity.description,
+            type: ActivityType.Watching,
+          },
+        ],
+        status: client.config.activity.type,
+      });
+    } catch (error) {
+      print(`Error: ${error.message}`);
+    }
   },
 };
 

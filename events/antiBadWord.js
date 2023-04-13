@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import print from "../utils/print.js";
 import config from "../config/index.js";
 
 /**
@@ -38,7 +39,9 @@ export default {
                 msg.delete();
               }, 5000);
             })
-            .catch((error) => console.log(error));
+            .catch((error) => {
+              print(`Error: ${error.message}`);
+            });
         }
       });
     }

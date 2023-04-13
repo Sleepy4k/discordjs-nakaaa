@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import print from "../utils/print.js";
 
 /**
  * @type {import("..").EventHandler}
@@ -27,7 +28,11 @@ export default {
 
     if (!channel) return;
 
-    return channel.send(client.config.goodbye.message(member));
+    return channel
+      .send(client.config.goodbye.message(member))
+      .catch((error) => {
+        print(`Error: ${error.message}`);
+      });
   },
 };
 

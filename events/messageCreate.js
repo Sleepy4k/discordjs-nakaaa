@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import print from "../utils/print.js";
 import { PermissionsBitField } from "discord.js";
 import { cooldown } from "../handlers/functions.js";
 
@@ -37,11 +38,15 @@ export default {
 
     if (cmd.length === 0) {
       if (nprefix.includes(client.user.id)) {
-        return client.sendEmbed(message, {
-          title: "Help",
-          description: `${client.config.emoji.success} To See My All Commands Type  \`/help\` or \`${prefix}help\``,
-          footer: client.getFooter(message),
-        });
+        return client
+          .sendEmbed(message, {
+            title: "Help",
+            description: `${client.config.emoji.success} To See My All Commands Type  \`/help\` or \`${prefix}help\``,
+            footer: client.getFooter(message),
+          })
+          .catch((err) => {
+            print(`SendEmbed Error: ${err.message}`);
+          });
       }
     }
 
@@ -63,31 +68,43 @@ export default {
           PermissionsBitField.resolve(command.userPermissions)
         )
       ) {
-        return client.sendEmbed(message, {
-          title: "Permission Error",
-          description: "You don't have enough Permissions !!",
-          footer: client.getFooter(message),
-        });
+        return client
+          .sendEmbed(message, {
+            title: "Permission Error",
+            description: "You don't have enough Permissions !!",
+            footer: client.getFooter(message),
+          })
+          .catch((err) => {
+            print(`SendEmbed Error: ${err.message}`);
+          });
       } else if (
         command.botPermissions &&
         !message.guild.members.me.permissions.has(
           PermissionsBitField.resolve(command.botPermissions)
         )
       ) {
-        return client.sendEmbed(message, {
-          title: "Permission Error",
-          description: "I don't have enough Permissions !!",
-          footer: client.getFooter(message),
-        });
+        return client
+          .sendEmbed(message, {
+            title: "Permission Error",
+            description: "I don't have enough Permissions !!",
+            footer: client.getFooter(message),
+          })
+          .catch((err) => {
+            print(`SendEmbed Error: ${err.message}`);
+          });
       } else if (cooldown(message, command)) {
-        return client.sendEmbed(message, {
-          title: "Cooldown",
-          description: `You are On Cooldown , wait \`${cooldown(
-            message,
-            command
-          ).toFixed()}\` Seconds`,
-          footer: client.getFooter(message),
-        });
+        return client
+          .sendEmbed(message, {
+            title: "Cooldown",
+            description: `You are On Cooldown , wait \`${cooldown(
+              message,
+              command
+            ).toFixed()}\` Seconds`,
+            footer: client.getFooter(message),
+          })
+          .catch((err) => {
+            print(`SendEmbed Error: ${err.message}`);
+          });
       } else {
         command.run(client, message, args, prefix);
       }
