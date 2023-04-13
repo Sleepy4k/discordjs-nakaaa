@@ -45,7 +45,7 @@ export default {
           color: "Red",
           title: "Error",
           description: "```There is no music currently playing.```",
-          footer: client.getFooter(interaction),
+          footer: client.getFooter(interaction, "interaction"),
         },
         true
       );
@@ -59,7 +59,7 @@ export default {
           color: "Red",
           title: "Error",
           description: `\`\`\`Current volume: ${queue.volume} / ${maxVolume} to change the volume, please enter a number between 1 and 100. example: ${prefix}volume 50\`\`\``,
-          footer: client.getFooter(interaction),
+          footer: client.getFooter(interaction, "interaction"),
         },
         true
       );
@@ -71,7 +71,7 @@ export default {
           color: "Red",
           title: "Error",
           description: `\`\`\`The maximum volume is ${maxVolume}.\`\`\``,
-          footer: client.getFooter(interaction),
+          footer: client.getFooter(interaction, "interaction"),
         },
         true
       );
@@ -83,7 +83,7 @@ export default {
           color: "Red",
           title: "Error",
           description: `\`\`\`The minimum volume is ${minVolume}.\`\`\``,
-          footer: client.getFooter(interaction),
+          footer: client.getFooter(interaction, "interaction"),
         },
         true
       );
@@ -95,7 +95,7 @@ export default {
           color: "Red",
           title: "Error",
           description: `\`\`\`The volume is already set to ${vol}.\`\`\``,
-          footer: client.getFooter(interaction),
+          footer: client.getFooter(interaction, "interaction"),
         },
         true
       );
@@ -109,7 +109,7 @@ export default {
           color: "Red",
           title: "Error",
           description: `\`\`\`Failed to set the volume.\`\`\``,
-          footer: client.getFooter(interaction),
+          footer: client.getFooter(interaction, "interaction"),
         },
         true
       );
@@ -120,7 +120,7 @@ export default {
         color: "Blue",
         title: "Success",
         description: `\`\`\`Volume has been set to ${vol}.\`\`\``,
-        footer: client.getFooter(interaction),
+        footer: client.getFooter(interaction, "interaction"),
       },
       true
     );

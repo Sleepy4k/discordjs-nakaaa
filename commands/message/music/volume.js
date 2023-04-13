@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import print from "../../../utils/print.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -28,66 +29,100 @@ export default {
     const minVolume = 0;
     const maxVolume = 100;
     const volume = args[0];
-    const queue = client.player.nodes.get(message.guild.id);
+    const queue = await client.player.nodes.get(message.guild.id);
 
     if (!queue || !queue.isPlaying())
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Error",
-        description: "```There is no music currently playing.```",
-        footer: client.getFooter(message),
-      });
+      return client
+        .sendEmbed(message, {
+          color: "Red",
+          title: "Error",
+          description: "```There is no music currently playing.```",
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
 
     const vol = parseInt(volume, 10);
 
     if (!vol)
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Error",
-        description: `\`\`\`Current volume: ${queue.volume} / ${maxVolume} to change the volume, please enter a number between 1 and 100. example: ${prefix}volume 50\`\`\``,
-        footer: client.getFooter(message),
-      });
+      return client
+        .sendEmbed(message, {
+          color: "Red",
+          title: "Error",
+          description: `\`\`\`Current volume: ${queue.volume} / ${maxVolume} to change the volume, please enter a number between 1 and 100. example: ${prefix}volume 50\`\`\``,
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
 
     if (vol > maxVolume)
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Error",
-        description: `\`\`\`The maximum volume is ${maxVolume}.\`\`\``,
-        footer: client.getFooter(message),
-      });
+      return client
+        .sendEmbed(message, {
+          color: "Red",
+          title: "Error",
+          description: `\`\`\`The maximum volume is ${maxVolume}.\`\`\``,
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
 
     if (vol < minVolume)
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Error",
-        description: `\`\`\`The minimum volume is ${minVolume}.\`\`\``,
-        footer: client.getFooter(message),
-      });
+      return client
+        .sendEmbed(message, {
+          color: "Red",
+          title: "Error",
+          description: `\`\`\`The minimum volume is ${minVolume}.\`\`\``,
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
 
     if (vol === queue.volume)
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Error",
-        description: `\`\`\`The volume is already ${vol}.\`\`\``,
-        footer: client.getFooter(message),
-      });
+      return client
+        .sendEmbed(message, {
+          color: "Red",
+          title: "Error",
+          description: `\`\`\`The volume is already ${vol}.\`\`\``,
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
 
-    const success = await queue.node.setVolume(vol);
+    let success = false;
+
+    try {
+      success = await queue.node.setVolume(vol);
+    } catch (error) {
+      print(`SetVolume Error: ${error.message}`);
+    }
 
     if (!success)
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Error",
-        description: "```Failed to set the volume.```",
-        footer: client.getFooter(message),
-      });
+      return client
+        .sendEmbed(message, {
+          color: "Red",
+          title: "Error",
+          description: "```Failed to set the volume.```",
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
 
-    return client.sendEmbed(message, {
-      color: "Blue",
-      title: "Success",
-      description: `\`\`\`Volume has been set to ${vol}.\`\`\``,
-      footer: client.getFooter(message),
-    });
+    return client
+      .sendEmbed(message, {
+        color: "Blue",
+        title: "Success",
+        description: `\`\`\`Volume has been set to ${vol}.\`\`\``,
+        footer: client.getFooter(message),
+      })
+      .catch((err) => {
+        print(`SendEmbed Error: ${err.message}`);
+      });
   },
 };
 

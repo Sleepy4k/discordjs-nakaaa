@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import print from "../../../utils/print.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -30,22 +31,30 @@ export default {
     let answer = args.slice(0).join(" ");
 
     if (!answer) {
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Coin flip",
-        description: `\`\`\`Usage: ${prefix}coin <Heads/Tails>\`\`\``,
-        footer: client.getFooter(message),
-      });
+      return client
+        .sendEmbed(message, {
+          color: "Red",
+          title: "Coin flip",
+          description: `\`\`\`Usage: ${prefix}coin <Heads/Tails>\`\`\``,
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
     }
 
-    return client.sendEmbed(message, {
-      color: "Green",
-      title: "Coin flip",
-      description: `\`\`\`Result: ${coin} \nGuess: ${answer} \nStatus: ${
-        coin === answer ? "You win!" : "You lose!"
-      }\`\`\``,
-      footer: client.getFooter(message),
-    });
+    return client
+      .sendEmbed(message, {
+        color: "Green",
+        title: "Coin flip",
+        description: `\`\`\`Result: ${coin} \nGuess: ${answer} \nStatus: ${
+          coin === answer ? "You win!" : "You lose!"
+        }\`\`\``,
+        footer: client.getFooter(message),
+      })
+      .catch((err) => {
+        print(`SendEmbed Error: ${err.message}`);
+      });
   },
 };
 

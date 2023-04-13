@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import print from "../../../utils/print.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -25,32 +26,44 @@ export default {
   cooldown: 5,
 
   run: async (client, message, args, prefix) => {
-    const queue = client.player.nodes.get(message.guild.id);
+    const queue = await client.player.nodes.get(message.guild.id);
 
     if (!queue || !queue.isPlaying())
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Error",
-        description: "```There is no music currently playing.```",
-        footer: client.getFooter(message),
-      });
+      return client
+        .sendEmbed(message, {
+          color: "Red",
+          title: "Error",
+          description: "```There is no music currently playing.```",
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
 
     const success = await queue.node.pause();
 
     if (!success)
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Error",
-        description: "```Failed to pause the current song.```",
-        footer: client.getFooter(message),
-      });
+      return client
+        .sendEmbed(message, {
+          color: "Red",
+          title: "Error",
+          description: "```Failed to pause the current song.```",
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
 
-    return client.sendEmbed(message, {
-      color: "Blue",
-      title: "Success",
-      description: "```Paused the current song.```",
-      footer: client.getFooter(message),
-    });
+    return client
+      .sendEmbed(message, {
+        color: "Blue",
+        title: "Success",
+        description: "```Paused the current song.```",
+        footer: client.getFooter(message),
+      })
+      .catch((err) => {
+        print(`SendEmbed Error: ${err.message}`);
+      });
   },
 };
 

@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import print from "../../../utils/print.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -26,13 +27,18 @@ export default {
 
   run: async (client, message, args, prefix) => {
     let polling = args.slice(0).join(" ");
+
     if (!polling) {
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Polling something!",
-        description: `\`\`\`Usage: ${prefix}polling <text>\`\`\``,
-        footer: client.getFooter(message),
-      });
+      return client
+        .sendEmbed(message, {
+          color: "Red",
+          title: "Polling something!",
+          description: `\`\`\`Usage: ${prefix}polling <text>\`\`\``,
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
     }
 
     return client
@@ -47,7 +53,7 @@ export default {
         msg.react("👎");
       })
       .catch((err) => {
-        console.log(err);
+        print(`SendEmbed Error: ${err.message}`);
       });
   },
 };

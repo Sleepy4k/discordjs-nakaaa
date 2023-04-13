@@ -34,24 +34,12 @@ export default {
           color: "Red",
           title: "Error",
           description: "```There is no music currently playing.```",
-          footer: client.getFooter(interaction),
+          footer: client.getFooter(interaction, "interaction"),
         },
         true
       );
 
-    const success = await queue.delete();
-
-    if (!success)
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "Red",
-          title: "Error",
-          description: "```Failed to stop the current song.```",
-          footer: client.getFooter(interaction),
-        },
-        true
-      );
+    await queue.delete();
 
     return client.sendEmbed(
       interaction,
@@ -59,7 +47,7 @@ export default {
         color: "Blue",
         title: "Success",
         description: "```Stopped the current song.```",
-        footer: client.getFooter(interaction),
+        footer: client.getFooter(interaction, "interaction"),
       },
       true
     );

@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import print from "../../../utils/print.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -28,77 +29,126 @@ export default {
     const song = args.slice(0).join(" ");
 
     if (!song)
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Error",
-        description: "```Please provide a song name.```",
-        footer: client.getFooter(message),
-      });
+      return client
+        .sendEmbed(message, {
+          color: "Red",
+          title: "Error",
+          description: "```Please provide a song name.```",
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
 
     const results = await client.player.search(song).catch((error) => {
-      console.log(error);
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Error",
-        description:
-          "```The service is experiencing some problems, please try again.```",
-        footer: client.getFooter(message),
-      });
+      print(`Search Error: ${error.message}`);
+
+      return client
+        .sendEmbed(message, {
+          color: "Red",
+          title: "Error",
+          description:
+            "```The service is experiencing some problems, please try again.```",
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
     });
 
     if (!results || !results.hasTracks()) {
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Error",
-        description: "```No results found.```",
-        footer: client.getFooter(message),
-      });
+      return client
+        .sendEmbed(message, {
+          color: "Red",
+          title: "Error",
+          description: "```No results found.```",
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
     }
 
-    const queue = await client.player.nodes.create(message.guild, {
-      volume: 75,
-      selfDeaf: true,
-      selfMute: false,
-      leaveOnEnd: false,
-      leaveOnEmpty: true,
-      leaveOnEndCooldown: 60000,
-      leaveOnEmptyCooldown: 60000,
-      metadata: {
-        channel: message.channel,
-        client: message.guild.members.me,
-        requestedBy: message.user,
-      },
-    });
+    if (!message.member.voice.channel)
+      return client
+        .sendEmbed(message, {
+          color: "Red",
+          title: "Error",
+          description: "```You're not in a voice channel.```",
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
+
+    let queue;
 
     try {
-      if (!queue.connection) await queue.connect(message.member.voice.channel);
-    } catch (error) {
-      console.log(error);
-
-      if (!queue?.deleted) await queue?.delete();
-
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Error",
-        description: "```I can't join audio channel.```",
-        footer: client.getFooter(message),
+      queue = await client.player.nodes.create(message.guild, {
+        volume: 75,
+        selfDeaf: true,
+        selfMute: false,
+        leaveOnEnd: false,
+        leaveOnEmpty: true,
+        leaveOnEndCooldown: 60000,
+        leaveOnEmptyCooldown: 60000,
+        metadata: {
+          channel: message.channel,
+          client: message.guild.members.me,
+          requestedBy: message.user,
+        },
       });
+    } catch (error) {
+      print(`Create Error: ${error.message}`);
     }
 
-    results.playlist
-      ? queue.addTracks(results.tracks)
-      : queue.addTrack(results.tracks[0]);
+    try {
+      if (!queue.connection)
+        await queue.connect(message.member.voice.channel).catch((error) => {
+          print(`Connect Error: ${error.message}`);
+        });
+    } catch (error) {
+      print(`Connect Error: ${error.message}`);
 
-    if (!queue.isPlaying()) await queue.node.play();
+      if (!queue?.deleted)
+        await queue?.delete().catch((error) => {
+          print(`Delete Error: ${error.message}`);
+        });
 
-    return client.sendEmbed(message, {
-      color: "Blue",
-      title: "Success",
-      description: `\`\`\`Added ${
-        results.playlist ? "playlist" : "song"
-      } to the queue.\`\`\``,
-      footer: client.getFooter(message),
-    });
+      return client
+        .sendEmbed(message, {
+          color: "Red",
+          title: "Error",
+          description: "```I can't join audio channel.```",
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
+    }
+
+    try {
+      results.playlist
+        ? queue.addTracks(results.tracks)
+        : queue.addTrack(results.tracks[0]);
+
+      if (!queue.isPlaying()) await queue.node.play();
+    } catch (error) {
+      print(`Add Error: ${error.message}`);
+    }
+
+    return client
+      .sendEmbed(message, {
+        color: "Blue",
+        title: "Success",
+        description: `\`\`\`Added ${
+          results.playlist ? "playlist" : "song"
+        } to the queue.\`\`\``,
+        footer: client.getFooter(message),
+      })
+      .catch((err) => {
+        print(`SendEmbed Error: ${err.message}`);
+      });
   },
 };
 

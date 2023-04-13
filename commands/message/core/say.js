@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import print from "../../../utils/print.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -26,21 +27,29 @@ export default {
 
   run: async (client, message, args, prefix) => {
     let say = args.slice(0).join(" ");
+
     if (!say) {
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Say something!",
-        description: `\`\`\`Usage: ${prefix}say <text>\`\`\``,
-        footer: client.getFooter(message),
-      });
+      return client
+        .sendEmbed(message, {
+          color: "Red",
+          title: "Say something!",
+          description: `\`\`\`Usage: ${prefix}say <text>\`\`\``,
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
     }
 
-    return client.sendEmbed(message, {
-      color: "Navy",
-      title: "Say",
-      description: `\`\`\`${say}\`\`\``,
-      footer: client.getFooter(message),
-    });
+    return client
+      .sendEmbed(message, {
+        color: "Navy",
+        description: `\`\`\`${say}\`\`\``,
+        footer: client.getFooter(message),
+      })
+      .catch((err) => {
+        print(`SendEmbed Error: ${err.message}`);
+      });
   },
 };
 

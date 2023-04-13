@@ -34,7 +34,7 @@ export default {
           color: "Red",
           title: "Error",
           description: "```There is no music currently playing.```",
-          footer: client.getFooter(interaction),
+          footer: client.getFooter(interaction, "interaction"),
         },
         true
       );
@@ -68,7 +68,7 @@ export default {
         title: "Playlist",
         fields: { name: nowPlaying, value: tracksQueue },
         description: `\nLoop: ${loopStatus}`,
-        footer: client.getFooter(interaction),
+        footer: client.getFooter(interaction, "interaction"),
       },
       true
     );

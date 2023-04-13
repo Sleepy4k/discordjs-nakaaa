@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import print from "../../../utils/print.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -37,6 +38,9 @@ export default {
           setTimeout(() => {
             msg.delete();
           }, 5000);
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
         });
 
     const amount = parseInt(args[0]) + 1;
@@ -53,6 +57,9 @@ export default {
           setTimeout(() => {
             msg.delete();
           }, 5000);
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
         });
 
     if (amount <= 1 || amount > 100)
@@ -67,18 +74,29 @@ export default {
           setTimeout(() => {
             msg.delete();
           }, 5000);
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
         });
 
-    message.channel.bulkDelete(amount, true).catch((err) => {
-      console.error(err);
+    try {
+      message.channel.bulkDelete(amount, true).catch((err) => {
+        console.error(err);
 
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "❌ Error",
-        description: `\`\`\`There was an error trying to clear messages in this channel!\`\`\``,
-        footer: client.getFooter(message),
+        return client
+          .sendEmbed(message, {
+            color: "Red",
+            title: "❌ Error",
+            description: `\`\`\`There was an error trying to clear messages in this channel!\`\`\``,
+            footer: client.getFooter(message),
+          })
+          .catch((err) => {
+            print(`SendEmbed Error: ${err.message}`);
+          });
       });
-    });
+    } catch (error) {
+      print(`Clear Error: ${error.message}`);
+    }
 
     return client
       .sendEmbed(message, {
@@ -91,6 +109,9 @@ export default {
         setTimeout(() => {
           msg.delete();
         }, 5000);
+      })
+      .catch((err) => {
+        print(`SendEmbed Error: ${err.message}`);
       });
   },
 };

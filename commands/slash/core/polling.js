@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import print from "../../../utils/print.js";
 import { ApplicationCommandType, PermissionFlagsBits } from "discord.js";
 
 /**
@@ -33,7 +34,19 @@ export default {
   ],
 
   run: async (client, interaction) => {
-    const polling = interaction.options.getString("polling");
+    const polling = await interaction.options.getString("polling");
+
+    if (!polling)
+      return client.sendEmbed(
+        interaction,
+        {
+          color: "Red",
+          title: "Error",
+          description: "```Please provide a polling text.```",
+          footer: client.getFooter(interaction, "interaction"),
+        },
+        true
+      );
 
     return client
       .sendEmbed(interaction, {
@@ -42,13 +55,12 @@ export default {
         description: `\`\`\`${polling}\`\`\``,
         footer: client.getFooter(interaction, "interaction"),
       })
-      .then(async (msg) => {
-        message = await msg.fetch();
-        await message.add_reaction("👍");
-        await message.add_reaction("👎");
+      .then((msg) => {
+        msg.react("👍");
+        msg.react("👎");
       })
       .catch((err) => {
-        console.log(err);
+        print(`SendEmbed Error: ${err.message}`);
       });
   },
 };

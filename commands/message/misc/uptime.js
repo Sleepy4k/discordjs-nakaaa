@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import print from "../../../utils/print.js";
 import { PermissionFlagsBits } from "discord.js";
 import parseDur from "../../../utils/parseDur.js";
 
@@ -28,12 +29,16 @@ export default {
   run: async (client, message, args, prefix) => {
     const uptime = parseDur(client.uptime);
 
-    return client.sendEmbed(message, {
-      color: "Yellow",
-      title: ":inbox_tray: Bot Uptime",
-      description: `\`\`\`Uptime: ${uptime}\`\`\``,
-      footer: client.getFooter(message),
-    });
+    return client
+      .sendEmbed(message, {
+        color: "Yellow",
+        title: ":inbox_tray: Bot Uptime",
+        description: `\`\`\`Uptime: ${uptime}\`\`\``,
+        footer: client.getFooter(message),
+      })
+      .catch((err) => {
+        print(`SendEmbed Error: ${err.message}`);
+      });
   },
 };
 

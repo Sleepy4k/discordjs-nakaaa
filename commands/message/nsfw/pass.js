@@ -12,6 +12,7 @@
  * March 12, 2023
  */
 import axios from "axios";
+import print from "../../../utils/print.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -27,22 +28,38 @@ export default {
 
   run: async (client, message, args, prefix) => {
     if (!message.channel.nsfw)
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Warning",
-        description: "```This channel is not NSFW channel.```",
+      return client
+        .sendEmbed(message, {
+          color: "Red",
+          title: "Warning",
+          description: "```This channel is not NSFW channel.```",
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
+
+    let image;
+
+    try {
+      const response = await axios.get(
+        "https://nekobot.xyz/api/image?type=ass"
+      );
+      image = response.data.message;
+    } catch (error) {
+      print(`Pass Error: ${error.message}`);
+    }
+
+    return client
+      .sendEmbed(message, {
+        color: "Random",
+        title: "Here your ass image",
+        image: image,
         footer: client.getFooter(message),
+      })
+      .catch((err) => {
+        print(`SendEmbed Error: ${err.message}`);
       });
-
-    const response = await axios.get("https://nekobot.xyz/api/image?type=ass");
-    const image = response.data.message;
-
-    return client.sendEmbed(message, {
-      color: "Random",
-      title: "Here your ass image",
-      image: image,
-      footer: client.getFooter(message),
-    });
   },
 };
 

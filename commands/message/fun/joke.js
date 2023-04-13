@@ -12,6 +12,7 @@
  * March 12, 2023
  */
 import DadJokes from "dadjokes-wrapper";
+import print from "../../../utils/print.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -32,24 +33,34 @@ export default {
     try {
       joke = await dj.randomJoke();
     } catch (error) {
-      return client.sendEmbed(
-        message,
-        {
-          color: "DarkAqua",
-          title: "Dad Joke",
-          description: `\`\`\`Looks like the dad is too tired to tell you some jokes, please try again later.\`\`\``,
-          footer: client.getFooter(message),
-        },
-        true
-      );
+      print(`Dad Joke Error: ${error.message}`);
+
+      return client
+        .sendEmbed(
+          message,
+          {
+            color: "DarkAqua",
+            title: "Dad Joke",
+            description: `\`\`\`Looks like the dad is too tired to tell you some jokes, please try again later.\`\`\``,
+            footer: client.getFooter(message),
+          },
+          true
+        )
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
     }
 
-    return client.sendEmbed(message, {
-      color: "DarkAqua",
-      title: "Dad Joke",
-      description: `\`\`\`${joke}\`\`\``,
-      footer: client.getFooter(message),
-    });
+    return client
+      .sendEmbed(message, {
+        color: "DarkAqua",
+        title: "Dad Joke",
+        description: `\`\`\`${joke}\`\`\``,
+        footer: client.getFooter(message),
+      })
+      .catch((err) => {
+        print(`SendEmbed Error: ${err.message}`);
+      });
   },
 };
 

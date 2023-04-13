@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import print from "../../../utils/print.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -47,9 +48,12 @@ export default {
             description: `\`\`\`Restarted the bot.\`\`\``,
             footer: client.getFooter(message),
           })
-        );
+        )
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
     } catch (error) {
-      console.log(error);
+      print(`Restart Error: ${error.message}`);
 
       return client
         .sendEmbed(message, {
@@ -62,6 +66,9 @@ export default {
           setTimeout(() => {
             msg.delete();
           }, 5000);
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
         });
     }
   },

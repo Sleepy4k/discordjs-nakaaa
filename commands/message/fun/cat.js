@@ -12,6 +12,7 @@
  * March 12, 2023
  */
 import axios from "axios";
+import print from "../../../utils/print.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -26,15 +27,34 @@ export default {
   cooldown: 5,
 
   run: async (client, message, args, prefix) => {
-    const response = await axios.get("https://some-random-api.ml/img/cat");
-    const { link } = response.data;
+    try {
+      const response = await axios.get("https://some-random-api.ml/img/cat");
+      const { link } = response.data;
 
-    return client.sendEmbed(message, {
-      color: "Aqua",
-      title: "Cute cat!",
-      image: link,
-      footer: client.getFooter(message),
-    });
+      return client
+        .sendEmbed(message, {
+          color: "Aqua",
+          title: "Cute cat!",
+          image: link,
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
+    } catch (error) {
+      print(`Cat Error: ${error.message}`);
+
+      return client
+        .sendEmbed(message, {
+          color: "Red",
+          title: "Cat Error",
+          description: `\`\`\`Error: ${error.message}\`\`\``,
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
+    }
   },
 };
 

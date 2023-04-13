@@ -34,7 +34,7 @@ export default {
           color: "Red",
           title: "Error",
           description: "```There is no music currently playing.```",
-          footer: client.getFooter(interaction),
+          footer: client.getFooter(interaction, "interaction"),
         },
         true
       );
@@ -48,7 +48,7 @@ export default {
           color: "Red",
           title: "Error",
           description: "```Failed to resume the current song.```",
-          footer: client.getFooter(interaction),
+          footer: client.getFooter(interaction, "interaction"),
         },
         true
       );
@@ -59,7 +59,7 @@ export default {
         color: "Blue",
         title: "Success",
         description: "```Resumed the current song.```",
-        footer: client.getFooter(interaction),
+        footer: client.getFooter(interaction, "interaction"),
       },
       true
     );

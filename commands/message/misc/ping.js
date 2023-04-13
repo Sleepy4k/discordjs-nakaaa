@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import print from "../../../utils/print.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -25,14 +26,18 @@ export default {
   cooldown: 5,
 
   run: async (client, message, args, prefix) => {
-    return client.sendEmbed(message, {
-      color: "Blue",
-      title: "🏓 Pong",
-      description: `\`\`\`Latency: ${client.ws.ping}ms \nAPI Latency: ${
-        message.createdTimestamp - Date.now()
-      }ms\`\`\``,
-      footer: client.getFooter(message),
-    });
+    return client
+      .sendEmbed(message, {
+        color: "Blue",
+        title: "🏓 Pong",
+        description: `\`\`\`Latency: ${client.ws.ping}ms \nAPI Latency: ${
+          message.createdTimestamp - Date.now()
+        }ms\`\`\``,
+        footer: client.getFooter(message),
+      })
+      .catch((err) => {
+        print(`SendEmbed Error: ${err.message}`);
+      });
   },
 };
 

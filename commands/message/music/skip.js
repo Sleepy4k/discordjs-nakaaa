@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import print from "../../../utils/print.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -25,31 +26,43 @@ export default {
   cooldown: 5,
 
   run: async (client, message, args, prefix) => {
-    const queue = client.player.nodes.get(message.guild.id);
+    const queue = await client.player.nodes.get(message.guild.id);
 
     if (!queue || !queue.isPlaying())
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Error",
-        description: "```There is no music currently playing.```",
-        footer: client.getFooter(message),
-      });
+      return client
+        .sendEmbed(message, {
+          color: "Red",
+          title: "Error",
+          description: "```There is no music currently playing.```",
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
 
-    if (queue.repeatMode === 1) {
-      queue.setRepeatMode(0);
-      queue.node.skip();
-      await wait(1000);
-      queue.setRepeatMode(1);
-    } else {
-      queue.node.skip();
+    try {
+      if (queue.repeatMode === 1) {
+        queue.setRepeatMode(0);
+        queue.node.skip();
+        await wait(1000);
+        queue.setRepeatMode(1);
+      } else {
+        queue.node.skip();
+      }
+    } catch (error) {
+      print(`Skip Error: ${error.message}`);
     }
 
-    return client.sendEmbed(message, {
-      color: "Blue",
-      title: "Success",
-      description: "```Skipped the current song.```",
-      footer: client.getFooter(message),
-    });
+    return client
+      .sendEmbed(message, {
+        color: "Blue",
+        title: "Success",
+        description: "```Skipped the current song.```",
+        footer: client.getFooter(message),
+      })
+      .catch((err) => {
+        print(`SendEmbed Error: ${err.message}`);
+      });
   },
 };
 

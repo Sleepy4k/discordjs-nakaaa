@@ -59,7 +59,7 @@ export default {
           color: "Red",
           title: "Error",
           description: "```There is no music currently playing.```",
-          footer: client.getFooter(interaction),
+          footer: client.getFooter(interaction, "interaction"),
         },
         true
       );
@@ -71,7 +71,7 @@ export default {
           color: "Red",
           title: "Error",
           description: "```Please specify a mode. (off, single, all)```",
-          footer: client.getFooter(interaction),
+          footer: client.getFooter(interaction, "interaction"),
         },
         true
       );
@@ -93,7 +93,7 @@ export default {
             color: "Red",
             title: "Error",
             description: "```Please specify a mode. (off, single, all)```",
-            footer: client.getFooter(interaction),
+            footer: client.getFooter(interaction, "interaction"),
           },
           true
         );
@@ -108,7 +108,7 @@ export default {
         color: "Green",
         title: "Success",
         description: `\`\`\`Loop mode has been set to ${methods[mode]}.\`\`\``,
-        footer: client.getFooter(interaction),
+        footer: client.getFooter(interaction, "interaction"),
       },
       true
     );

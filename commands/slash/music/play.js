@@ -25,7 +25,7 @@ export default {
   type: ApplicationCommandType.ChatInput,
   options: [
     {
-      name: "song",
+      name: "search",
       description: "The song you want to play.",
       type: 3,
       required: true,
@@ -33,7 +33,7 @@ export default {
   ],
 
   run: async (client, interaction) => {
-    const song = interaction.options.getString("song");
+    const song = await interaction.options.getString("search");
 
     if (!song)
       return client.sendEmbed(
@@ -42,7 +42,7 @@ export default {
           color: "Red",
           title: "Error",
           description: "```Please provide a song name.```",
-          footer: client.getFooter(interaction),
+          footer: client.getFooter(interaction, "interaction"),
         },
         true
       );
@@ -56,7 +56,7 @@ export default {
           title: "Error",
           description:
             "```The service is experiencing some problems, please try again.```",
-          footer: client.getFooter(interaction),
+          footer: client.getFooter(interaction, "interaction"),
         },
         true
       );
@@ -69,7 +69,7 @@ export default {
           color: "Red",
           title: "Error",
           description: "```No results found.```",
-          footer: client.getFooter(interaction),
+          footer: client.getFooter(interaction, "interaction"),
         },
         true
       );
@@ -84,9 +84,9 @@ export default {
       leaveOnEndCooldown: 60000,
       leaveOnEmptyCooldown: 60000,
       metadata: {
-        channel: message.channel,
-        client: message.guild.members.me,
-        requestedBy: message.user,
+        channel: interaction.channel,
+        client: interaction.guild.members.me,
+        requestedBy: interaction.user,
       },
     });
 
@@ -94,7 +94,7 @@ export default {
       if (!queue.connection)
         await queue.connect(interaction.member.voice.channel);
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
 
       if (!queue?.deleted) await queue.delete();
 
@@ -104,7 +104,7 @@ export default {
           color: "Red",
           title: "Error",
           description: "```Failed to connect to the voice channel.```",
-          footer: client.getFooter(interaction),
+          footer: client.getFooter(interaction, "interaction"),
         },
         true
       );
@@ -124,7 +124,7 @@ export default {
         description: `\`\`\`Added ${
           results.playlist ? "playlist" : "song"
         } to the queue.\`\`\``,
-        footer: client.getFooter(interaction),
+        footer: client.getFooter(interaction, "interaction"),
       },
       true
     );

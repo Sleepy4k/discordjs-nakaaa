@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import print from "../../../utils/print.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -25,24 +26,36 @@ export default {
   cooldown: 5,
 
   run: async (client, message, args, prefix) => {
-    const queue = client.player.nodes.get(message.guild.id);
+    const queue = await client.player.nodes.get(message.guild.id);
 
     if (!queue || !queue.isPlaying())
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Error",
-        description: "```There is no music currently playing.```",
+      return client
+        .sendEmbed(message, {
+          color: "Red",
+          title: "Error",
+          description: "```There is no music currently playing.```",
+          footer: client.getFooter(message),
+        })
+        .catch((err) => {
+          print(`SendEmbed Error: ${err.message}`);
+        });
+
+    try {
+      if (!queue.deleted) queue.delete();
+    } catch (error) {
+      print(`Leave Error: ${error.message}`);
+    }
+
+    return client
+      .sendEmbed(message, {
+        color: "Blue",
+        title: "Success",
+        description: "```Left the voice channel.```",
         footer: client.getFooter(message),
+      })
+      .catch((err) => {
+        print(`SendEmbed Error: ${err.message}`);
       });
-
-    if (!queue.deleted) queue.delete();
-
-    return client.sendEmbed(message, {
-      color: "Blue",
-      title: "Success",
-      description: "```Left the voice channel.```",
-      footer: client.getFooter(message),
-    });
   },
 };
 
