@@ -18,6 +18,7 @@ import {
   EmbedBuilder,
   GatewayIntentBits,
 } from "discord.js";
+import print from "../utils/print.js";
 import config from "../config/index.js";
 import { Player } from "discord-player";
 
@@ -88,52 +89,78 @@ export class Bot extends Client {
   async build(token) {
     await loadHandlers(this);
     this.login(token).catch((e) => {
-      console.log("The bot token is invalid!");
+      print(`Bot Error: ${e.message}`);
     });
   }
 
   async sendEmbed(interaction, data, ephemeral = false) {
-    const embed = new EmbedBuilder();
-    if (data.url) embed.setURL(data.url);
-    if (data.title) embed.setTitle(data.title);
-    if (data.color) embed.setColor(data.color);
-    if (data.image) embed.setImage(data.image);
-    if (data.footer) embed.setFooter(data.footer);
-    if (data.author) embed.setAuthor(data.author);
-    if (data.fields) embed.addFields(data.fields);
-    if (data.thumbnail) embed.setThumbnail(data.thumbnail);
-    if (data.description) embed.setDescription(data.description);
-    embed.setTimestamp();
+    try {
+      const embed = new EmbedBuilder();
 
-    return await this.send(interaction, {
-      embeds: [embed],
-      ephemeral: ephemeral,
-    });
+      if (data.url) embed.setURL(data.url);
+      if (data.title) embed.setTitle(data.title);
+      if (data.color) embed.setColor(data.color);
+      if (data.image) embed.setImage(data.image);
+      if (data.footer) embed.setFooter(data.footer);
+      if (data.author) embed.setAuthor(data.author);
+      if (data.fields) embed.addFields(data.fields);
+      if (data.thumbnail) embed.setThumbnail(data.thumbnail);
+      if (data.description) embed.setDescription(data.description);
+
+      embed.setTimestamp();
+
+      return await this.send(interaction, {
+        embeds: [embed],
+        ephemeral: ephemeral,
+      });
+    } catch (error) {
+      print(`Send Embed Error: ${error.message}`);
+
+      if (interaction) {
+        return await this.send(interaction, {
+          content: "Error: " + error.message,
+          ephemeral: ephemeral,
+        });
+      } else {
+        return await interaction.channel.send({
+          content: "Error: " + error.message,
+          ephemeral: ephemeral,
+        });
+      }
+    }
   }
 
   getFooter(client, type = "message") {
-    if (!client) {
+    try {
+      if (!client) {
+        return {
+          text: `${config.options.name} | Bot by ${config.options.author}`,
+          iconURL: config.options.icon,
+        };
+      }
+
+      if (type === "message") {
+        return {
+          text: `Requested by ${client.author.username} | Bot by ${config.options.author}`,
+          iconURL: client.author.displayAvatarURL({
+            dynamic: true,
+            format: "png",
+          }),
+        };
+      } else {
+        return {
+          text: `Requested by ${client.user.username} | Bot by ${config.options.author}`,
+          iconURL: client.user.displayAvatarURL({
+            dynamic: true,
+            format: "png",
+          }),
+        };
+      }
+    } catch (error) {
+      print(`Get Footer Error: ${error.message}`);
       return {
         text: `${config.options.name} | Bot by ${config.options.author}`,
         iconURL: config.options.icon,
-      };
-    }
-
-    if (type === "message") {
-      return {
-        text: `Requested by ${client.author.username} | Bot by ${config.options.author}`,
-        iconURL: client.author.displayAvatarURL({
-          dynamic: true,
-          format: "png",
-        }),
-      };
-    } else {
-      return {
-        text: `Requested by ${client.user.username} | Bot by ${config.options.author}`,
-        iconURL: client.user.displayAvatarURL({
-          dynamic: true,
-          format: "png",
-        }),
       };
     }
   }
@@ -146,10 +173,18 @@ export class Bot extends Client {
       if (interaction.replied || interaction.deferred) {
         return await interaction.editReply(data);
       } else {
-        return await interaction.reply(data);
+        return await interaction
+          .reply({
+            embeds: data.embeds,
+            ephemeral: data.ephemeral,
+          })
+          .catch((e) => {
+            print(`Send Error: ${e.message}`);
+            return interaction.editReply(data);
+          });
       }
     } catch (error) {
-      console.log(error);
+      print(`Send Error: ${error.message}`);
       await interaction.deferReply().catch((e) => {});
       return await interaction.editReply(data);
     }

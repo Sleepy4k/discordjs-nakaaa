@@ -12,6 +12,7 @@
  * March 12, 2023
  */
 import { Bot } from "./client.js";
+import print from "../utils/print.js";
 import { readdir } from "node:fs/promises";
 import { logStatus } from "./functions.js";
 
@@ -56,7 +57,7 @@ export default async (client) => {
       }
     });
   } catch (error) {
-    console.log(error);
+    print(`Error: ${error.message}`);
   }
 };
 
