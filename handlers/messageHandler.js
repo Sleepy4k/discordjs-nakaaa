@@ -24,6 +24,10 @@ export default async (client) => {
     const commandsDir = await readdir(`./commands/message`);
     const items = await Promise.all(
       commandsDir.map(async (dir) => {
+        if (!client.config.nsfw.enable) {
+          if (dir === client.config.nsfw.directory) return;
+        };
+
         const commands = await readdir(`./commands/message/${dir}`);
         let filterCommands = commands.filter((f) => f.endsWith(".js"));
         for (const cmd of filterCommands) {
