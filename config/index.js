@@ -23,6 +23,10 @@ const config = {
     author: process.env.BOT_AUTHOR || "Nakaaaa#8558",
     browser: process.env.BOT_BROWSER || "Discord iOS",
   },
+  nsfw: {
+    enable: process.env.NSFW_ENABLE || false,
+    directory: process.env.NSFW_DIRECTORY || "nsfw",
+  },
   web: {
     name: process.env.WEB_NAME || "Sleepy4k",
     env: process.env.WEB_ENV || "production",
@@ -41,11 +45,11 @@ const config = {
     info: "ℹ️",
   },
   slash: {
-    global: true,
+    global: process.env.SLASH_GLOBAL || true,
     guild_id: ["1083959134602412164"],
   },
   anti_crash: {
-    enable: true,
+    enable: process.env.ANTI_CRASH_ENABLE || true,
     webhook: {
       url:
         process.env.ANTI_CRASH_URL ||
