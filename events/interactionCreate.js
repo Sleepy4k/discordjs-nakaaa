@@ -25,8 +25,9 @@ export default {
 
     if (interaction.type == InteractionType.ApplicationCommand) {
       const command = client.scommands.get(interaction.commandName);
+
       if (!command) {
-        return client
+        return await client
           .send(interaction, {
             content: `\`${interaction.commandName}\` is not valid command !!`,
             ephemeral: true,
@@ -41,7 +42,7 @@ export default {
             PermissionsBitField.resolve(command.userPermissions)
           )
         ) {
-          return client
+          return await client
             .sendEmbed(
               interaction,
               {
@@ -60,7 +61,7 @@ export default {
             PermissionsBitField.resolve(command.botPermissions)
           )
         ) {
-          return client
+          return await client
             .sendEmbed(
               interaction,
               {
