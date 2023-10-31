@@ -36,7 +36,7 @@ export default {
     const song = await interaction.options.getString("search");
 
     if (!song)
-      return client.sendEmbed(
+      return await client.sendEmbed(
         interaction,
         {
           color: "Red",
@@ -45,12 +45,14 @@ export default {
           footer: client.getFooter(interaction, "interaction"),
         },
         true
-      );
+      ).catch((error) => {
+        print(`123: ${error.message}`);
+      });
 
-    const results = await client.player.search(song).catch((error) => {
+    const results = await client.player.search(song).catch(async (error) => {
       print(`Search Error: ${error.message}`);
 
-      return client.sendEmbed(
+      return await client.sendEmbed(
         interaction,
         {
           color: "Red",
@@ -60,11 +62,13 @@ export default {
           footer: client.getFooter(interaction, "interaction"),
         },
         true
-      );
+      ).catch((error) => {
+        print(`456: ${error.message}`);
+      });
     });
 
     if (!results || !results.hasTracks()) {
-      return client.sendEmbed(
+      return await client.sendEmbed(
         interaction,
         {
           color: "Red",
@@ -73,7 +77,9 @@ export default {
           footer: client.getFooter(interaction, "interaction"),
         },
         true
-      );
+      ).catch((error) => {
+        print(`789: ${error.message}`);
+      });
     }
 
     let queue;
@@ -111,7 +117,7 @@ export default {
         });
       }
 
-      return client.sendEmbed(
+      return await client.sendEmbed(
         interaction,
         {
           color: "Red",
@@ -120,7 +126,9 @@ export default {
           footer: client.getFooter(interaction, "interaction"),
         },
         true
-      );
+      ).catch((error) => {
+        print(`011: ${error.message}`);
+      });
     }
 
     try {
@@ -133,7 +141,7 @@ export default {
       print(`Add Error: ${error.message}`);
     }
 
-    return client.sendEmbed(
+    return await client.sendEmbed(
       interaction,
       {
         color: "Green",
@@ -144,7 +152,9 @@ export default {
         footer: client.getFooter(interaction, "interaction"),
       },
       true
-    );
+    ).catch((error) => {
+      print(`121: ${error.message}`);
+    });
   },
 };
 
