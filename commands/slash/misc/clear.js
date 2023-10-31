@@ -23,8 +23,18 @@ export default {
   botPermissions: PermissionFlagsBits.SendMessages,
   category: "misc",
   type: ApplicationCommandType.ChatInput,
+  options: [
+    {
+      name: "message",
+      description: "The message that you want delete.",
+      type: 4,
+      required: true,
+    },
+  ],
 
   run: async (client, interaction) => {
+    const message = interaction.options.getInteger("message");
+
     if (!interaction.member.permissions.has(PermissionFlagsBits.ManageMessages))
       return client.sendEmbed(
         interaction,
@@ -37,7 +47,7 @@ export default {
         true
       );
 
-    const amount = parseInt(args[0]) + 1;
+    const amount = parseInt(message) + 1;
 
     if (isNaN(amount))
       return client.sendEmbed(

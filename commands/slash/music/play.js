@@ -48,7 +48,8 @@ export default {
       );
 
     const results = await client.player.search(song).catch((error) => {
-      console.log(error);
+      print(`Search Error: ${error.message}`);
+
       return client.sendEmbed(
         interaction,
         {
@@ -75,28 +76,40 @@ export default {
       );
     }
 
-    const queue = await client.player.nodes.create(interaction.guild, {
-      volume: 75,
-      selfDeaf: true,
-      selfMute: false,
-      leaveOnEnd: false,
-      leaveOnEmpty: true,
-      leaveOnEndCooldown: 60000,
-      leaveOnEmptyCooldown: 60000,
-      metadata: {
-        channel: interaction.channel,
-        client: interaction.guild.members.me,
-        requestedBy: interaction.user,
-      },
-    });
+    let queue;
+
+    try {
+      queue = await client.player.nodes.create(interaction.guild, {
+        volume: 75,
+        selfDeaf: true,
+        selfMute: false,
+        leaveOnEnd: false,
+        leaveOnEmpty: true,
+        leaveOnEndCooldown: 60000,
+        leaveOnEmptyCooldown: 60000,
+        metadata: {
+          channel: interaction.channel,
+          client: interaction.guild.members.me,
+          requestedBy: interaction.user,
+        },
+      });
+    } catch (error) {
+      print(`Create Error: ${error.interaction}`);
+    }
 
     try {
       if (!queue.connection)
-        await queue.connect(interaction.member.voice.channel);
+        await queue?.connect(interaction.member.voice.channel).catch((error) => {
+          print(`Connect Error: ${error.message}`);
+        });
     } catch (error) {
-      console.log(error.message);
+      print(`Connect Error: ${error.message}`);
 
-      if (!queue?.deleted) await queue.delete();
+      if (!queue?.deleted) {
+        await queue?.delete().catch((error) => {
+          print(`Delete Error: ${error.message}`);
+        });
+      }
 
       return client.sendEmbed(
         interaction,
@@ -110,11 +123,15 @@ export default {
       );
     }
 
-    results.playlist
+    try {
+      results.playlist
       ? queue.addTracks(results.tracks)
       : queue.addTrack(results.tracks[0]);
 
-    if (!queue.isPlaying()) await queue.node.play();
+      if (!queue.isPlaying()) await queue.node.play();
+    } catch (error) {
+      print(`Add Error: ${error.message}`);
+    }
 
     return client.sendEmbed(
       interaction,

@@ -162,7 +162,7 @@ export default {
                 },
                 {
                   name: "📅 Prefix",
-                  value: `\`\`\`${prefix}\`\`\``,
+                  value: `\`\`\`${client.config.options.prefix}\`\`\``,
                   inline: false,
                 },
                 {

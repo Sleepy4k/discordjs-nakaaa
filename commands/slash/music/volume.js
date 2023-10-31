@@ -100,7 +100,13 @@ export default {
         true
       );
 
-    const success = await client.node.setVolume(vol);
+    let success = false;
+
+    try {
+      success = await queue.node.setVolume(vol);
+    } catch (error) {
+      print(`SetVolume Error: ${error.message}`);
+    }
 
     if (!success)
       return client.sendEmbed(
