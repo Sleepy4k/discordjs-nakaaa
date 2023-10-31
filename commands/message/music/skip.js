@@ -44,8 +44,9 @@ export default {
       if (queue.repeatMode === 1) {
         queue.setRepeatMode(0);
         queue.node.skip();
-        await wait(1000);
-        queue.setRepeatMode(1);
+        setTimeout(() => {
+          queue.setRepeatMode(1);
+        }, 1500);
       } else {
         queue.node.skip();
       }
