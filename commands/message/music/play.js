@@ -69,7 +69,7 @@ export default {
         });
     }
 
-    if (!message.member.voice.channel)
+    if (!message.member.voice.channel) {
       return client
         .sendEmbed(message, {
           color: "Red",
@@ -80,6 +80,7 @@ export default {
         .catch((err) => {
           print(`SendEmbed Error: ${err.message}`);
         });
+    }
 
     let queue;
 
@@ -104,16 +105,17 @@ export default {
 
     try {
       if (!queue.connection)
-        await queue.connect(message.member.voice.channel).catch((error) => {
+        await queue?.connect(message.member.voice.channel).catch((error) => {
           print(`Connect Error: ${error.message}`);
         });
     } catch (error) {
       print(`Connect Error: ${error.message}`);
 
-      if (!queue?.deleted)
+      if (!queue?.deleted) {
         await queue?.delete().catch((error) => {
           print(`Delete Error: ${error.message}`);
         });
+      }
 
       return client
         .sendEmbed(message, {
