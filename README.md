@@ -24,7 +24,7 @@ Copy file .env.example menjadi .env, dan isi data seperti token etc
 jika sudah, isi detail data pada index.js dalam folder config. dan jalankan bot
 
     npm start
-    
+
 ### Endpoint
 
     - localhost:3000
