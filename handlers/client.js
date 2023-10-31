@@ -113,6 +113,8 @@ export class Bot extends Client {
       return await this.send(interaction, {
         embeds: [embed],
         ephemeral: ephemeral,
+      }).catch((error) => {
+        print(`Send Error: ${error.message}`);
       });
     } catch (error) {
       print(`Send Embed Error: ${error.message}`);
@@ -171,21 +173,21 @@ export class Bot extends Client {
    */
   async send(interaction, data) {
     try {
-      if (interaction.replied || interaction.deferred) {
-        return await interaction.send(data).catch((e) => {
-          print(`Send Error: ${e.message}`);
-          return interaction.deferReply().catch((e) => {});
+      if (interaction.deferred) {
+        return await interaction.editReply({
+          embeds: data.embeds,
+          ephemeral: data.ephemeral,
+        });
+      } else if (interaction.replied) {
+        return await interaction.deferReply({
+          embeds: data.embeds,
+          ephemeral: data.ephemeral,
         });
       } else {
-        return await interaction
-          .reply({
-            embeds: data.embeds,
-            ephemeral: data.ephemeral,
-          })
-          .catch((e) => {
-            print(`Send Error: ${e.message}`);
-            return interaction.deferReply().catch((e) => {});
-          });
+        return await interaction.reply({
+          embeds: data.embeds,
+          ephemeral: data.ephemeral,
+        });
       }
     } catch (error) {
       print(`Send Error: ${error.message}`);
