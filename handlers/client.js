@@ -88,6 +88,7 @@ export class Bot extends Client {
 
   async build(token) {
     await loadHandlers(this);
+    await this.player.extractors.loadDefault();
     this.login(token).catch((e) => {
       print(`Bot Error: ${e.message}`);
     });
@@ -171,7 +172,10 @@ export class Bot extends Client {
   async send(interaction, data) {
     try {
       if (interaction.replied || interaction.deferred) {
-        return await interaction.editReply(data);
+        return await interaction.send(data).catch((e) => {
+          print(`Send Error: ${e.message}`);
+          return interaction.deferReply().catch((e) => {});
+        });
       } else {
         return await interaction
           .reply({
@@ -180,13 +184,12 @@ export class Bot extends Client {
           })
           .catch((e) => {
             print(`Send Error: ${e.message}`);
-            return interaction.editReply(data);
+            return interaction.deferReply().catch((e) => {});
           });
       }
     } catch (error) {
       print(`Send Error: ${error.message}`);
       await interaction.deferReply().catch((e) => {});
-      return await interaction.editReply(data);
     }
   }
 }
