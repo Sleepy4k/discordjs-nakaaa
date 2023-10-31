@@ -66,7 +66,7 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("pages/error", {
     sub_title: "Error",
-    title: req.app.get("client").config.options.name,
+    title: req.app.get("client").config.web.name,
   });
 });
 
