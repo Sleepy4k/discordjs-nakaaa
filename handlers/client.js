@@ -75,7 +75,7 @@ export class Bot extends Client {
     this.scommands = new Collection();
     this.mcommands = new Collection();
     this.cooldowns = new Collection();
-    this.prefix = config.bot.prefix;
+    this.prefix = this.config.bot.prefix;
 
     this.player = new Player(this, {
       ytdlOptions: {
