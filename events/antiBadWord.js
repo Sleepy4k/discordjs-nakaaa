@@ -12,7 +12,6 @@
  * March 12, 2023
  */
 import print from "../utils/print.js";
-import config from "../config/index.js";
 
 /**
  * @type {import("..").EventHandler}
@@ -23,8 +22,8 @@ export default {
   run: async (client, message) => {
     if (message.author.bot || !message.guild || !message.id) return;
 
-    if (config.bad_words.enable) {
-      config.bad_words.list.forEach(async (badword) => {
+    if (client.config.bad_words.enable) {
+      client.config.bad_words.list.forEach(async (badword) => {
         if (message.content.match(badword)) {
           await message.delete().catch((e) => {});
 

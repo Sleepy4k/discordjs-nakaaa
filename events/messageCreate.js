@@ -24,7 +24,7 @@ export default {
   run: async (client, message) => {
     if (message.author.bot || !message.guild || !message.id) return;
 
-    let prefix = client.config.options.prefix;
+    let prefix = client.config.bot.prefix;
 
     let mentionprefix = new RegExp(
       `^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`
