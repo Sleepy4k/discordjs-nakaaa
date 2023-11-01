@@ -14,7 +14,7 @@ export default function createServer(client) {
   /**
    * Setup debug
    */
-  const name = slugify(client.config.options.name);
+  const name = slugify(client.config.bot.name);
   const debug = debugLib(`${name}:server`);
 
   /**

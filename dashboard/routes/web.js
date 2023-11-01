@@ -16,7 +16,7 @@ router.get("/", function (req, res, next) {
     discord: version,
     node: process.version,
     title: req.app.get("client").config.web.name,
-    author: req.app.get("client").config.options.author,
+    author: req.app.get("client").config.bot.author,
   });
 });
 

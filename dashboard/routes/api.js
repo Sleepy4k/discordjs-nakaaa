@@ -19,6 +19,7 @@ router.get("/", function (req, res, next) {
       discord: `v${version}`,
       node: process.version,
       title: req.app.get("client").config.web.name,
+      events: req.app.get("client").events,
     },
   });
 });
@@ -86,6 +87,19 @@ router.get("/invite", function (req, res, next) {
     message: `Invite me to your server!`,
     data: {
       invite: `https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8`,
+    },
+  });
+});
+
+/* GET github page. */
+router.get("/github", function (req, res, next) {
+  const client = req.app.get("client");
+
+  res.status(200).send({
+    status: "success",
+    message: `Check out our github!`,
+    data: {
+      github: `https://github.com/sleepy4k/discordjs-nakaaa`,
     },
   });
 });
