@@ -17,7 +17,11 @@ import { readdir } from "node:fs/promises";
 import { logStatus } from "./functions.js";
 
 /**
+ * Register all message commands
+ *
  * @param {Bot} client
+ *
+ * @returns {Promise<void>}
  */
 export default async (client) => {
   try {

@@ -15,8 +15,12 @@ import print from "../utils/print.js";
 import { Collection, CommandInteraction } from "discord.js";
 
 /**
+ * Handle cooldown for commands
+ *
  * @param {CommandInteraction} interaction
  * @param {String} cmd
+ *
+ * @returns {Boolean}
  */
 export function cooldown(interaction, cmd) {
   if (!interaction || !cmd) return;
@@ -36,8 +40,7 @@ export function cooldown(interaction, cmd) {
 
     if (now < expirationTime) {
       const timeLeft = (expirationTime - now) / 1000; //get the lefttime
-      //return true
-      return timeLeft;
+      return true;
     } else {
       timestamps.set(member.id, now);
       setTimeout(() => timestamps.delete(member.id), cooldownAmount);
@@ -50,6 +53,15 @@ export function cooldown(interaction, cmd) {
   }
 }
 
+/**
+ * Set log status for console log
+ *
+ * @param {String} name
+ * @param {Boolean} isLoaded
+ * @param {String} type
+ *
+ * @returns {void}
+ */
 export function logStatus(name, isLoaded, type) {
   const statusIcon = isLoaded ? "\x1b[32m✅\x1b[0m" : "\x1b[31m❌\x1b[0m";
   const statusText = isLoaded ? "Loaded" : "Not Loaded";

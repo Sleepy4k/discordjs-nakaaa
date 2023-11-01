@@ -19,7 +19,7 @@ import {
   GatewayIntentBits,
 } from "discord.js";
 import print from "../utils/print.js";
-import config from "../config/index.js";
+import config from "../config/_index.js";
 import { Player } from "discord-player";
 
 export class Bot extends Client {
@@ -65,7 +65,7 @@ export class Bot extends Client {
       ],
       ws: {
         properties: {
-          $browser: config.options.browser,
+          $browser: config.bot.browser,
         },
       },
     });
@@ -75,7 +75,7 @@ export class Bot extends Client {
     this.scommands = new Collection();
     this.mcommands = new Collection();
     this.cooldowns = new Collection();
-    this.prefix = config.options.prefix;
+    this.prefix = config.bot.prefix;
 
     this.player = new Player(this, {
       ytdlOptions: {
@@ -86,6 +86,13 @@ export class Bot extends Client {
     });
   }
 
+  /**
+   * Build the bot with token
+   *
+   * @param {string} token
+   *
+   * @returns {Promise<void>}
+   */
   async build(token) {
     await loadHandlers(this);
     await this.player.extractors.loadDefault();
@@ -94,6 +101,15 @@ export class Bot extends Client {
     });
   }
 
+  /**
+   * Send embed to interaction
+   *
+   * @param {import("discord.js").CommandInteraction} interaction
+   * @param {object} data
+   * @param {boolean} ephemeral
+   *
+   * @returns {Promise<import("discord.js").Message>}
+   */
   async sendEmbed(interaction, data, ephemeral = false) {
     try {
       const embed = new EmbedBuilder();
@@ -133,18 +149,26 @@ export class Bot extends Client {
     }
   }
 
+  /**
+   * Get footer for embed
+   *
+   * @param {import("discord.js").CommandInteraction} client
+   * @param {string} type
+   *
+   * @returns {object}
+   */
   getFooter(client, type = "message") {
     try {
       if (!client) {
         return {
-          text: `${config.options.name} | Bot by ${config.options.author}`,
-          iconURL: config.options.icon,
+          text: `${config.bot.name} | Bot by ${config.bot.author}`,
+          iconURL: config.bot.icon,
         };
       }
 
       if (type === "message") {
         return {
-          text: `Requested by ${client.author.username} | Bot by ${config.options.author}`,
+          text: `Requested by ${client.author.username} | Bot by ${config.bot.author}`,
           iconURL: client.author.displayAvatarURL({
             dynamic: true,
             format: "png",
@@ -152,7 +176,7 @@ export class Bot extends Client {
         };
       } else {
         return {
-          text: `Requested by ${client.user.username} | Bot by ${config.options.author}`,
+          text: `Requested by ${client.user.username} | Bot by ${config.bot.author}`,
           iconURL: client.user.displayAvatarURL({
             dynamic: true,
             format: "png",
@@ -162,14 +186,19 @@ export class Bot extends Client {
     } catch (error) {
       print(`Get Footer Error: ${error.message}`);
       return {
-        text: `${config.options.name} | Bot by ${config.options.author}`,
-        iconURL: config.options.icon,
+        text: `${config.bot.name} | Bot by ${config.bot.author}`,
+        iconURL: config.bot.icon,
       };
     }
   }
 
   /**
-   * @type {import("../index.js").send}
+   * Send message to interaction
+   *
+   * @param {import("discord.js").CommandInteraction} interaction
+   * @param {object} data
+   *
+   * @returns {Promise<import("discord.js").Message>}
    */
   async send(interaction, data) {
     try {
@@ -196,6 +225,13 @@ export class Bot extends Client {
   }
 }
 
+/**
+ * Load all handlers
+ *
+ * @param {Bot} client
+ *
+ * @returns {Promise<void>}
+ */
 async function loadHandlers(client) {
   ["messageHandler", "slashHandler", "eventHandler"].forEach(async (file) => {
     let handler = await import(`./${file}.js`).then((r) => r.default);
