@@ -2,8 +2,8 @@
 
 ## ID
 
-Kalo liat error "The application did not respond" itu karena ada interaction limit time yang hanya 3 detik, jadi kalo prosesnya lebih dari 3 detik, maka akan muncul error tersebut.
+Kalo liat error "The application did not respond" itu karena ada kendala pada server yang beberapa kemungkinan nya karena jaringan server kurang stabil atau kode yang error
 
 ## EN
 
-If you see the error "The application did not respond" it is because there is an interaction limit time of only 3 seconds, so if the process is more than 3 seconds, the error will appear.
+If you see the error "The application did not respond" it is because there is a problem with the server, some of which could be because the server network is unstable or the code has an error.
