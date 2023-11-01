@@ -24,71 +24,50 @@ export default {
   botPermissions: PermissionFlagsBits.SendMessages,
   category: "music",
   type: ApplicationCommandType.ChatInput,
-  options: [
-    {
-      name: "search",
-      description: "The song you want to play, you can use a link or song name.",
-      type: 3,
-      required: true,
-    },
-  ],
+  options: [{
+    name: "search",
+    description: "The song you want to play, you can use a link or song name.",
+    type: 3,
+    required: true,
+  }],
 
   run: async (client, interaction) => {
     const song = await interaction.options.getString("search");
 
     if (!song)
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "Red",
-          title: "Error",
-          description: "```Please provide a song name.```",
-          footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
+      return client.sendEmbed(interaction, {
+        color: "Red",
+        title: "Error",
+        description: "```Please provide a song name.```",
+        footer: client.getFooter(interaction, "interaction"),
+      }, true);
 
     const results = await client.player.search(song).catch(async (error) => {
       print(`Search Error: ${error.message}`);
 
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "Red",
-          title: "Error",
-          description:
-            "```The service is experiencing some problems, please try again.```",
-          footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
+      return client.sendEmbed(interaction, {
+        color: "Red",
+        title: "Error",
+        description: "```The service is experiencing some problems, please try again.```",
+        footer: client.getFooter(interaction, "interaction"),
+      }, true);
     });
 
-    if (!results || !results.hasTracks()) {
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "Red",
-          title: "Error",
-          description: "```No results found.```",
-          footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
-    }
+    if (!results || !results.hasTracks())
+      return client.sendEmbed(interaction, {
+        color: "Red",
+        title: "Error",
+        description: "```No results found.```",
+        footer: client.getFooter(interaction, "interaction"),
+      }, true);
 
-    if (!interaction.member.voice.channel) {
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "Red",
-          title: "Error",
-          description: "```You're not in a voice channel.```",
-          footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
-    }
+    if (!interaction.member.voice.channel)
+      return client.sendEmbed(interaction, {
+        color: "Red",
+        title: "Error",
+        description: "```You're not in a voice channel.```",
+        footer: client.getFooter(interaction, "interaction"),
+      }, true);
 
     let queue;
 
@@ -96,29 +75,21 @@ export default {
       print(`Defer Error: ${error.message}`);
     });
 
-    await client.sendEmbed(
-      interaction,
-      {
-        color: "Green",
-        title: "Success",
-        description: `\`\`\`Searching for ${results.playlist ? "playlist" : "song"}...\`\`\``,
-        footer: client.getFooter(interaction, "interaction"),
-      },
-      true
-    );
+    await client.sendEmbed(interaction, {
+      color: "Green",
+      title: "Success",
+      description: `\`\`\`Searching for ${results.playlist ? "playlist" : "song"}...\`\`\``,
+      footer: client.getFooter(interaction, "interaction"),
+    }, true);
 
     try {
       if (!client.player.nodes.has(interaction.guild.id)) {
-        await client.sendEmbed(
-          interaction,
-          {
-            color: "Green",
-            title: "Success",
-            description: `\`\`\`Creating queue for ${interaction.member.voice.channel.name}...\`\`\``,
-            footer: client.getFooter(interaction, "interaction"),
-          },
-          true
-        );
+        await client.sendEmbed(interaction, {
+          color: "Green",
+          title: "Success",
+          description: `\`\`\`Creating queue for ${interaction.member.voice.channel.name}...\`\`\``,
+          footer: client.getFooter(interaction, "interaction"),
+        }, true);
 
         queue = await client.player.nodes.create(interaction.guild, {
           volume: 75,
@@ -143,16 +114,12 @@ export default {
 
     try {
       if (!queue.connection) {
-        await client.sendEmbed(
-          interaction,
-          {
-            color: "Green",
-            title: "Success",
-            description: `\`\`\`Connecting to ${interaction.member.voice.channel.name}...\`\`\``,
-            footer: client.getFooter(interaction, "interaction"),
-          },
-          true
-        );
+        await client.sendEmbed(interaction, {
+          color: "Green",
+          title: "Success",
+          description: `\`\`\`Connecting to ${interaction.member.voice.channel.name}...\`\`\``,
+          footer: client.getFooter(interaction, "interaction"),
+        }, true);
 
         await queue?.connect(interaction.member.voice.channel).catch((error) => {
           print(`Connect Error: ${error.message}`);
@@ -161,59 +128,40 @@ export default {
     } catch (error) {
       print(`Connect Error: ${error.message}`);
 
-      if (!queue?.deleted) {
+      if (!queue?.deleted)
         await queue?.delete().catch((error) => {
           print(`Delete Error: ${error.message}`);
         });
-      }
 
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "Red",
-          title: "Error",
-          description: "```Failed to connect to the voice channel.```",
-          footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
+      return client.sendEmbed(interaction, {
+        color: "Red",
+        title: "Error",
+        description: "```Failed to connect to the voice channel.```",
+        footer: client.getFooter(interaction, "interaction"),
+      }, true);
     }
 
     try {
-      results.playlist
-      ? queue.addTracks(results.tracks)
-      : queue.addTrack(results.tracks[0]);
+      results.playlist ? await queue?.addTrack(results.tracks) : await queue?.addTrack(results.tracks[0]);
 
       if (!queue.isPlaying()) await queue.node.play();
     } catch (error) {
       print(`Add Error: ${error.message}`);
+
+      return client.sendEmbed(interaction, {
+        color: "Red",
+        title: "Error",
+        description: "```Failed to play song.```",
+        footer: client.getFooter(interaction, "interaction"),
+      }, true);
     }
 
-    if (queue.isPlaying()) {
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "Blue",
-          title: "Success",
-          description: `\`\`\`Added ${
-            results.playlist ? "playlist" : "song"
-          } to the queue.\`\`\``,
-          footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
-    } else {
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "Red",
-          title: "Error",
-          description: "```Failed to play song.```",
-          footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
-    }
+    return client.sendEmbed(interaction, {
+      color: "Blue",
+      title: "Success",
+      description: `\`\`\`Added ${results.playlist ? "playlist" : "song"} to the queue.\`\`\``,
+      footer: client.getFooter(interaction, "interaction"),
+    }, true);
   },
 };
 

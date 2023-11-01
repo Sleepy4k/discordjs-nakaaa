@@ -31,29 +31,21 @@ export default {
       const response = await axios.get("https://api.dadjokes.io/api/random/joke");
       const joke = response.data.body[0];
 
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "DarkAqua",
-          title: "Dad Joke",
-          description: `\`\`\`${joke.setup}\n\n${joke.punchline}\`\`\``,
-          footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
+      return client.sendEmbed(interaction, {
+        color: "DarkAqua",
+        title: "Dad Joke",
+        description: `\`\`\`${joke.setup}\n\n${joke.punchline}\`\`\``,
+        footer: client.getFooter(interaction, "interaction"),
+      }, true);
     } catch (error) {
       print(`DadJokes Error: ${error.message}`);
 
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "DarkAqua",
-          title: "Dad Joke",
-          description: `\`\`\`Looks like the dad is too tired to tell you some jokes, please try again later.\`\`\``,
-          footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
+      return client.sendEmbed(interaction, {
+        color: "DarkAqua",
+        title: "Dad Joke",
+        description: `\`\`\`Looks like the dad is too tired to tell you some jokes, please try again later.\`\`\``,
+        footer: client.getFooter(interaction, "interaction"),
+      }, true);
     }
   },
 };

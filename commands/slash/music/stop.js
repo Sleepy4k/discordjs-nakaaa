@@ -28,29 +28,21 @@ export default {
     const queue = client.player.nodes.get(interaction.guild.id);
 
     if (!queue)
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "Red",
-          title: "Error",
-          description: "```There is no music currently playing.```",
-          footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
+      return client.sendEmbed(interaction, {
+        color: "Red",
+        title: "Error",
+        description: "```There is no music currently playing.```",
+        footer: client.getFooter(interaction, "interaction"),
+      }, true);
 
     await queue.delete();
 
-    return client.sendEmbed(
-      interaction,
-      {
-        color: "Blue",
-        title: "Success",
-        description: "```Stopped the current song.```",
-        footer: client.getFooter(interaction, "interaction"),
-      },
-      true
-    );
+    return client.sendEmbed(interaction, {
+      color: "Blue",
+      title: "Success",
+      description: "```Stopped the current song.```",
+      footer: client.getFooter(interaction, "interaction"),
+    }, true);
   },
 };
 

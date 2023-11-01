@@ -36,13 +36,11 @@ app.use(express.static(join(__dirname, "public")));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  cookieSession({
-    name: "session",
-    secret: "secret",
-    httpOnly: true,
-  })
-);
+app.use(cookieSession({
+  name: "session",
+  secret: "secret",
+  httpOnly: true
+}));
 
 /**
  * Routes initialization

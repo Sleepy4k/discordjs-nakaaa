@@ -28,20 +28,14 @@ export default {
     const queue = client.player.nodes.get(interaction.guild.id);
 
     if (!queue || !queue.currentTrack)
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "Red",
-          title: "Error",
-          description: "```There is no music currently playing.```",
-          footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
+      return client.sendEmbed(interaction, {
+        color: "Red",
+        title: "Error",
+        description: "```There is no music currently playing.```",
+        footer: client.getFooter(interaction, "interaction"),
+      }, true);
 
-    const tracks = queue.tracks.map(
-      (track, index) => `${++index}. ${track.title}`
-    );
+    const tracks = queue.tracks.map((track, index) => `${++index}. ${track.title}`);
 
     let nowPlaying = `Now Playing: ${queue.currentTrack.title}\n\n`;
     let tracksQueue = "";
@@ -55,23 +49,15 @@ export default {
       tracksQueue = tracks.join("\n");
     }
 
-    let loopStatus = queue.repeatMode
-      ? queue.repeatMode === 2
-        ? "All"
-        : "One"
-      : "Off";
+    let loopStatus = queue.repeatMode ? (queue.repeatMode === 2 ? "All" : "One") : "Off";
 
-    return client.sendEmbed(
-      interaction,
-      {
-        color: "Blue",
-        title: "Playlist",
-        fields: { name: nowPlaying, value: tracksQueue },
-        description: `\nLoop: ${loopStatus}`,
-        footer: client.getFooter(interaction, "interaction"),
-      },
-      true
-    );
+    return client.sendEmbed(interaction, {
+      color: "Blue",
+      title: "Playlist",
+      fields: { name: nowPlaying, value: tracksQueue },
+      description: `\nLoop: ${loopStatus}`,
+      footer: client.getFooter(interaction, "interaction"),
+    }, true);
   },
 };
 

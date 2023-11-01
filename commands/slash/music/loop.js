@@ -23,28 +23,26 @@ export default {
   botPermissions: PermissionFlagsBits.SendMessages,
   category: "music",
   type: ApplicationCommandType.ChatInput,
-  options: [
-    {
-      name: "mode",
-      description: "Loop mode.",
-      type: 3,
-      required: true,
-      choices: [
-        {
-          name: "Off",
-          value: "off",
-        },
-        {
-          name: "Single",
-          value: "single",
-        },
-        {
-          name: "All",
-          value: "all",
-        },
-      ],
-    },
-  ],
+  options: [{
+    name: "mode",
+    description: "Loop mode.",
+    type: 3,
+    required: true,
+    choices: [
+      {
+        name: "Off",
+        value: "off",
+      },
+      {
+        name: "Single",
+        value: "single",
+      },
+      {
+        name: "All",
+        value: "all",
+      },
+    ],
+  }],
 
   run: async (client, interaction) => {
     let mode = null;
@@ -53,28 +51,20 @@ export default {
     const queue = client.player.nodes.get(interaction.guild.id);
 
     if (!queue || !queue.isPlaying())
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "Red",
-          title: "Error",
-          description: "```There is no music currently playing.```",
-          footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
+      return client.sendEmbed(interaction, {
+        color: "Red",
+        title: "Error",
+        description: "```There is no music currently playing.```",
+        footer: client.getFooter(interaction, "interaction"),
+      }, true);
 
     if (!arg)
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "Red",
-          title: "Error",
-          description: "```Please specify a mode. (off, single, all)```",
-          footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
+      return client.sendEmbed(interaction, {
+        color: "Red",
+        title: "Error",
+        description: "```Please specify a mode. (off, single, all)```",
+        footer: client.getFooter(interaction, "interaction"),
+      }, true);
 
     switch (arg.toLowerCase()) {
       case "off":
@@ -87,31 +77,22 @@ export default {
         mode = 2;
         break;
       default:
-        return client.sendEmbed(
-          interaction,
-          {
-            color: "Red",
-            title: "Error",
-            description: "```Please specify a mode. (off, single, all)```",
-            footer: client.getFooter(interaction, "interaction"),
-          },
-          true
-        );
-        break;
+        return client.sendEmbed(interaction, {
+          color: "Red",
+          title: "Error",
+          description: "```Please specify a mode. (off, single, all)```",
+          footer: client.getFooter(interaction, "interaction"),
+        }, true);
     }
 
     await queue.setRepeatMode(mode);
 
-    return client.sendEmbed(
-      interaction,
-      {
-        color: "Green",
-        title: "Success",
-        description: `\`\`\`Loop mode has been set to ${methods[mode]}.\`\`\``,
-        footer: client.getFooter(interaction, "interaction"),
-      },
-      true
-    );
+    return client.sendEmbed(interaction, {
+      color: "Green",
+      title: "Success",
+      description: `\`\`\`Loop mode has been set to ${methods[mode]}.\`\`\``,
+      footer: client.getFooter(interaction, "interaction"),
+    }, true);
   },
 };
 

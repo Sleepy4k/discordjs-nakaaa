@@ -28,28 +28,20 @@ export default {
     const queue = client.player.nodes.get(interaction.guild.id);
 
     if (!queue || !queue.isPlaying())
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "Red",
-          title: "Error",
-          description: "```There is no music currently playing.```",
-          footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
+      return client.sendEmbed(interaction, {
+        color: "Red",
+        title: "Error",
+        description: "```There is no music currently playing.```",
+        footer: client.getFooter(interaction, "interaction"),
+      }, true);
 
     if (!queue.history.previousTrack)
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "Red",
-          title: "Error",
-          description: "```There was no music playing before.```",
-          footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
+      return client.sendEmbed(interaction, {
+        color: "Red",
+        title: "Error",
+        description: "```There was no music playing before.```",
+        footer: client.getFooter(interaction, "interaction"),
+      }, true);
 
     await interaction.deferReply({ ephemeral: true }).catch((error) => {
       print(`Defer Error: ${error.message}`);
@@ -57,16 +49,12 @@ export default {
 
     await queue.history.back();
 
-    return client.sendEmbed(
-      interaction,
-      {
-        color: "Blue",
-        title: "Success",
-        description: "```Playing the previous song.```",
-        footer: client.getFooter(interaction, "interaction"),
-      },
-      true
-    );
+    return client.sendEmbed(interaction, {
+      color: "Blue",
+      title: "Success",
+      description: "```Playing the previous song.```",
+      footer: client.getFooter(interaction, "interaction"),
+    }, true);
   },
 };
 

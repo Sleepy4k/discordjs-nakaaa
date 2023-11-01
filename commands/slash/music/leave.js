@@ -28,16 +28,12 @@ export default {
     const queue = client.player.nodes.get(interaction.guild.id);
 
     if (!queue || !queue.isPlaying())
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "Red",
-          title: "Error",
-          description: "```There is no music currently playing.```",
-          footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
+      return client.sendEmbed(interaction, {
+        color: "Red",
+        title: "Error",
+        description: "```There is no music currently playing.```",
+        footer: client.getFooter(interaction, "interaction"),
+      }, true);
 
     await interaction.deferReply({ ephemeral: true }).catch((error) => {
       print(`Defer Error: ${error.message}`);
@@ -45,16 +41,12 @@ export default {
 
     if (!queue.deleted) queue.delete();
 
-    return client.sendEmbed(
-      interaction,
-      {
-        color: "Blue",
-        title: "Success",
-        description: "```Left the voice channel.```",
-        footer: client.getFooter(interaction, "interaction"),
-      },
-      true
-    );
+    return client.sendEmbed(interaction, {
+      color: "Blue",
+      title: "Success",
+      description: "```Left the voice channel.```",
+      footer: client.getFooter(interaction, "interaction"),
+    }, true);
   },
 };
 

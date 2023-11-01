@@ -23,72 +23,57 @@ export default {
   botPermissions: PermissionFlagsBits.SendMessages,
   category: "fun",
   type: ApplicationCommandType.ChatInput,
-  options: [
-    {
-      name: "guess",
-      description: "Guess the coin side.",
-      type: 4,
-      choices: [
-        {
-          name: "Heads",
-          value: 0,
-        },
-        {
-          name: "Tails",
-          value: 1,
-        },
-      ],
-      required: true,
-    },
-  ],
+  options: [{
+    name: "guess",
+    description: "Guess the coin side.",
+    type: 4,
+    choices: [
+      {
+        name: "Heads",
+        value: 0,
+      },
+      {
+        name: "Tails",
+        value: 1,
+      }
+    ],
+    required: true,
+  }],
 
   run: async (client, interaction) => {
     try {
       const result = Math.floor(Math.random() * 2);
       const guess = interaction.options.getInteger("guess");
 
-      if (result === guess) {
-        return client.sendEmbed(
-          interaction,
-          {
-            color: "Green",
-            title: ":coin: Coin flip",
-            description: `\`\`\`Result: ${
-              result === 0 ? "Heads" : "Tails"
-            } \nGuess: ${
-              guess === 0 ? "Heads" : "Tails"
-            } \nStatus: You win!\`\`\``,
-            footer: client.getFooter(interaction, "interaction"),
-          },
-          true
-        );
-      } else {
-        return client.sendEmbed(
-          interaction,
-          {
-            color: "DarkGreen",
-            title: ":coin: Coin flip",
-            description: `\`\`\`Result: ${
-              result === 0 ? "Heads" : "Tails"
-            } \nGuess: ${
-              guess === 0 ? "Heads" : "Tails"
-            } \nStatus: You lose!\`\`\``,
-            footer: client.getFooter(interaction, "interaction"),
-          },
-          true
-        );
-      }
-    } catch (error) {
-      return client.sendEmbed(
-        interaction,
-        {
+      if (!["Heads", "Tails"].includes(guess))
+        return client.sendEmbed(interaction, {
           color: "Red",
           title: ":x: Error",
-          description: `\`\`\`Something went wrong: ${error.message}\`\`\``,
+          description: `\`\`\`Usage: ${client.prefix}coin <Heads/Tails>\`\`\``,
           footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
+        }, true);
+
+      if (result === guess)
+        return client.sendEmbed(interaction, {
+          color: "Green",
+          title: ":coin: Coin flip",
+          description: `\`\`\`Result: ${result === 0 ? "Heads" : "Tails"} \nGuess: ${guess === 0 ? "Heads" : "Tails"} \nStatus: You win!\`\`\``,
+          footer: client.getFooter(interaction, "interaction"),
+        }, true);
+
+      return client.sendEmbed(interaction, {
+        color: "DarkGreen",
+        title: ":coin: Coin flip",
+        description: `\`\`\`Result: ${result === 0 ? "Heads" : "Tails"} \nGuess: ${guess === 0 ? "Heads" : "Tails"} \nStatus: You lose!\`\`\``,
+        footer: client.getFooter(interaction, "interaction"),
+      }, true);
+    } catch (error) {
+      return client.sendEmbed(interaction, {
+        color: "Red",
+        title: ":x: Error",
+        description: `\`\`\`Something went wrong: ${error.message}\`\`\``,
+        footer: client.getFooter(interaction, "interaction"),
+      }, true);
     }
   },
 };

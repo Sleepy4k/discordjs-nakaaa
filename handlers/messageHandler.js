@@ -26,6 +26,7 @@ import { logStatus } from "./functions.js";
 export default async (client) => {
   try {
     const commandsDir = await readdir(`./commands/message`);
+
     const items = await Promise.all(
       commandsDir.map(async (dir) => {
         if (!client.config.nsfw.enable) {
@@ -34,13 +35,13 @@ export default async (client) => {
 
         const commands = await readdir(`./commands/message/${dir}`);
         let filterCommands = commands.filter((f) => f.endsWith(".js"));
+
         for (const cmd of filterCommands) {
           /**
            * @type {import("../index.js").Scommand}
            */
-          const command = await import(
-            `../commands/message/${dir}/${cmd}`
-          ).then((r) => r.default);
+          const command = await import(`../commands/message/${dir}/${cmd}`).then((r) => r.default);
+
           if (command.name) {
             client.mcommands.set(command.name, command);
             logStatus(command.name, true, "Message");

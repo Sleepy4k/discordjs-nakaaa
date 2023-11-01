@@ -11,7 +11,6 @@
  *
  * March 12, 2023
  */
-import print from "../../../utils/print.js";
 import { ApplicationCommandType, PermissionFlagsBits } from "discord.js";
 
 /**
@@ -24,44 +23,35 @@ export default {
   botPermissions: PermissionFlagsBits.SendMessages,
   category: "core",
   type: ApplicationCommandType.ChatInput,
-  options: [
-    {
-      name: "polling",
-      description: "Polling text",
-      type: 3,
-      required: true,
-    },
-  ],
+  options: [{
+    name: "polling",
+    description: "Polling text",
+    type: 3,
+    required: true,
+  }],
 
   run: async (client, interaction) => {
     const polling = await interaction.options.getString("polling");
 
     if (!polling)
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "Red",
-          title: "Error",
-          description: "```Please provide a polling text.```",
-          footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
-
-    return client
-      .sendEmbed(interaction, {
-        color: "Gold",
-        title: "Polling",
-        description: `\`\`\`${polling}\`\`\``,
+      return client.sendEmbed(interaction, {
+        color: "Red",
+        title: "Error",
+        description: "```Please provide a polling text.```",
         footer: client.getFooter(interaction, "interaction"),
-      })
-      .then((msg) => {
-        msg.react("👍");
-        msg.react("👎");
-      })
-      .catch((err) => {
-        print(`SendEmbed Error: ${err.message}`);
-      });
+      }, true);
+
+    const poll = await client.sendEmbed(interaction, {
+      color: "Gold",
+      title: "Polling",
+      description: `\`\`\`${polling}\`\`\``,
+      footer: client.getFooter(interaction, "interaction"),
+    }, false, true);
+
+    await poll.react("👍");
+    await poll.react("👎");
+
+    return poll;
   },
 };
 

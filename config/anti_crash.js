@@ -16,9 +16,7 @@ import "dotenv/config.js";
 const anti_crash = {
   enable: process.env.ANTI_CRASH_ENABLE || true,
   webhook: {
-    url:
-      process.env.ANTI_CRASH_URL ||
-      "https://discord.com/api/webhooks/1084337532105392148/cQsOCefThG_am0tZ4fKi9gcr3WhPBlrB347WYGsfrcz5iUv7dEzLUhT2f9wgO0MEXbXs",
+    url: process.env.ANTI_CRASH_URL || "https://discord.com/api/webhooks/1084337532105392148/cQsOCefThG_am0tZ4fKi9gcr3WhPBlrB347WYGsfrcz5iUv7dEzLUhT2f9wgO0MEXbXs",
   }
 }
 

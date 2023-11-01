@@ -23,14 +23,12 @@ export default {
   botPermissions: PermissionFlagsBits.SendMessages,
   category: "core",
   type: ApplicationCommandType.ChatInput,
-  options: [
-    {
-      name: "text",
-      description: "Text to say",
-      type: 3,
-      required: true,
-    },
-  ],
+  options: [{
+    name: "text",
+    description: "Text to say",
+    type: 3,
+    required: true,
+  }],
 
   run: async (client, interaction) => {
     const say = interaction.options.getString("text");

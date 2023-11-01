@@ -110,7 +110,7 @@ export class Bot extends Client {
    *
    * @returns {Promise<import("discord.js").Message>}
    */
-  async sendEmbed(interaction, data, ephemeral = false) {
+  async sendEmbed(interaction, data, ephemeral = false, fetchReply = false) {
     try {
       const embed = new EmbedBuilder();
 
@@ -129,23 +129,23 @@ export class Bot extends Client {
       return await this.send(interaction, {
         embeds: [embed],
         ephemeral: ephemeral,
-      }).catch((error) => {
-        print(`Send Error: ${error.message}`);
+        fetchReply: fetchReply
       });
     } catch (error) {
       print(`Send Embed Error: ${error.message}`);
 
-      if (interaction) {
+      if (interaction)
         return await this.send(interaction, {
           content: "Error: " + error.message,
           ephemeral: ephemeral,
+          fetchReply: fetchReply
         });
-      } else {
-        return await interaction.channel.send({
-          content: "Error: " + error.message,
-          ephemeral: ephemeral,
-        });
-      }
+
+      return await interaction.channel.send({
+        content: "Error: " + error.message,
+        ephemeral: ephemeral,
+        fetchReply: fetchReply
+      });
     }
   }
 
@@ -159,12 +159,11 @@ export class Bot extends Client {
    */
   getFooter(client, type = "message") {
     try {
-      if (!client) {
+      if (!client)
         return {
           text: `${config.bot.name} | Bot by ${config.bot.author}`,
           iconURL: config.bot.icon,
         };
-      }
 
       if (type === "message") {
         return {
@@ -174,17 +173,18 @@ export class Bot extends Client {
             format: "png",
           }),
         };
-      } else {
-        return {
-          text: `Requested by ${client.user.username} | Bot by ${config.bot.author}`,
-          iconURL: client.user.displayAvatarURL({
-            dynamic: true,
-            format: "png",
-          }),
-        };
       }
+
+      return {
+        text: `Requested by ${client.user.username} | Bot by ${config.bot.author}`,
+        iconURL: client.user.displayAvatarURL({
+          dynamic: true,
+          format: "png",
+        }),
+      };
     } catch (error) {
       print(`Get Footer Error: ${error.message}`);
+
       return {
         text: `${config.bot.name} | Bot by ${config.bot.author}`,
         iconURL: config.bot.icon,
@@ -206,16 +206,19 @@ export class Bot extends Client {
         return await interaction.editReply({
           embeds: data.embeds,
           ephemeral: data.ephemeral,
+          fetchReply: data.fetchReply
         });
       } else if (interaction.replied) {
         return await interaction.deferReply({
           embeds: data.embeds,
           ephemeral: data.ephemeral,
+          fetchReply: data.fetchReply
         });
       } else {
         return await interaction.reply({
           embeds: data.embeds,
           ephemeral: data.ephemeral,
+          fetchReply: data.fetchReply
         });
       }
     } catch (error) {

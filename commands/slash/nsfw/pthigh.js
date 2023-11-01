@@ -32,33 +32,25 @@ export default {
         title: "Warning",
         description: "```This channel is not NSFW channel.```",
         footer: client.getFooter(interaction, "interaction"),
-      });
+      }, true);
 
     try {
       const response = await axios.get("https://nekobot.xyz/api/image?type=thigh");
       const image = response.data.message;
 
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "Random",
-          title: "Here your thigh image",
-          image: image,
-          footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
+      return client.sendEmbed(interaction, {
+        color: "Random",
+        title: "Here your thigh image",
+        image: image,
+        footer: client.getFooter(interaction, "interaction"),
+      }, true);
     } catch (error) {
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "Red",
-          title: "Error",
-          description: `\`\`\`${error.message}\`\`\``,
-          footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
+      return client.sendEmbed(interaction, {
+        color: "Red",
+        title: "Error",
+        description: `\`\`\`${error.message}\`\`\``,
+        footer: client.getFooter(interaction, "interaction"),
+      }, true);
     }
   },
 };

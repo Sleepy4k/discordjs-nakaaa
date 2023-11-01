@@ -34,9 +34,7 @@ export default {
               footer: client.getFooter(message),
             })
             .then((msg) => {
-              setTimeout(() => {
-                msg.delete();
-              }, 5000);
+              setTimeout(() => msg.delete(), 2500);
             })
             .catch((error) => {
               print(`Error: ${error.message}`);

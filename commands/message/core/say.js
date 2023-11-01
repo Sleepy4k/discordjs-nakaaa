@@ -29,27 +29,19 @@ export default {
     let say = args.slice(0).join(" ");
 
     if (!say) {
-      return client
-        .sendEmbed(message, {
-          color: "Red",
-          title: "Say something!",
-          description: `\`\`\`Usage: ${prefix}say <text>\`\`\``,
-          footer: client.getFooter(message),
-        })
-        .catch((err) => {
-          print(`SendEmbed Error: ${err.message}`);
-        });
+      return client.sendEmbed(message, {
+        color: "Red",
+        title: "Say something!",
+        description: `\`\`\`Usage: ${prefix}say <text>\`\`\``,
+        footer: client.getFooter(message),
+      });
     }
 
-    return client
-      .sendEmbed(message, {
-        color: "Navy",
-        description: `\`\`\`${say}\`\`\``,
-        footer: client.getFooter(message),
-      })
-      .catch((err) => {
-        print(`SendEmbed Error: ${err.message}`);
-      });
+    return client.sendEmbed(message, {
+      color: "Navy",
+      description: `\`\`\`${say}\`\`\``,
+      footer: client.getFooter(message),
+    });
   },
 };
 

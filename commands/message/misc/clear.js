@@ -27,92 +27,52 @@ export default {
 
   run: async (client, message, args, prefix) => {
     if (!message.member.permissions.has(PermissionFlagsBits.ManageMessages))
-      return client
-        .sendEmbed(message, {
-          color: "Red",
-          title: "❌ You don't have permission to use this command",
-          description: `\`\`\`You need Manage Messages permission to use this command.\`\`\``,
-          footer: client.getFooter(message),
-        })
-        .then((msg) => {
-          setTimeout(() => {
-            msg.delete();
-          }, 5000);
-        })
-        .catch((err) => {
-          print(`SendEmbed Error: ${err.message}`);
-        });
+      return client.sendEmbed(message, {
+        color: "Red",
+        title: "❌ You don't have permission to use this command",
+        description: `\`\`\`You need Manage Messages permission to use this command.\`\`\``,
+        footer: client.getFooter(message),
+      }).then((msg) => setTimeout(() => msg.delete(), 5000)).catch((err) => print(`SendEmbed Error: ${err.message}`));
 
     const amount = parseInt(args[0]) + 1;
 
     if (isNaN(amount))
-      return client
-        .sendEmbed(message, {
-          color: "Red",
-          title: "❌ Invalid number",
-          description: `\`\`\`Please provide a valid number.\`\`\``,
-          footer: client.getFooter(message),
-        })
-        .then((msg) => {
-          setTimeout(() => {
-            msg.delete();
-          }, 5000);
-        })
-        .catch((err) => {
-          print(`SendEmbed Error: ${err.message}`);
-        });
+      return client.sendEmbed(message, {
+        color: "Red",
+        title: "❌ Invalid number",
+        description: `\`\`\`Please provide a valid number.\`\`\``,
+        footer: client.getFooter(message),
+      }).then((msg) => setTimeout(() => msg.delete(), 5000)).catch((err) => print(`SendEmbed Error: ${err.message}`));
 
     if (amount <= 1 || amount > 100)
-      return client
-        .sendEmbed(message, {
-          color: "Red",
-          title: "❌ Invalid number",
-          description: `\`\`\`Please provide a number between 1 and 99.\`\`\``,
-          footer: client.getFooter(message),
-        })
-        .then((msg) => {
-          setTimeout(() => {
-            msg.delete();
-          }, 5000);
-        })
-        .catch((err) => {
-          print(`SendEmbed Error: ${err.message}`);
-        });
+      return client.sendEmbed(message, {
+        color: "Red",
+        title: "❌ Invalid number",
+        description: `\`\`\`Please provide a number between 1 and 99.\`\`\``,
+        footer: client.getFooter(message),
+      }).then((msg) => setTimeout(() => msg.delete(), 5000)).catch((err) => print(`SendEmbed Error: ${err.message}`));
 
     try {
       message.channel.bulkDelete(amount, true).catch((err) => {
         console.error(err);
 
-        return client
-          .sendEmbed(message, {
-            color: "Red",
-            title: "❌ Error",
-            description: `\`\`\`There was an error trying to clear messages in this channel!\`\`\``,
-            footer: client.getFooter(message),
-          })
-          .catch((err) => {
-            print(`SendEmbed Error: ${err.message}`);
-          });
+        return client.sendEmbed(message, {
+          color: "Red",
+          title: "❌ Error",
+          description: `\`\`\`There was an error trying to clear messages in this channel!\`\`\``,
+          footer: client.getFooter(message),
+        });
       });
     } catch (error) {
       print(`Clear Error: ${error.message}`);
     }
 
-    return client
-      .sendEmbed(message, {
-        color: "Blue",
-        title: "🗑️ Cleared messages",
-        description: `\`\`\`Successfully cleared ${amount - 1} messages.\`\`\``,
-        footer: client.getFooter(message),
-      })
-      .then((msg) => {
-        setTimeout(() => {
-          msg.delete();
-        }, 5000);
-      })
-      .catch((err) => {
-        print(`SendEmbed Error: ${err.message}`);
-      });
+    return client.sendEmbed(message, {
+      color: "Blue",
+      title: "🗑️ Cleared messages",
+      description: `\`\`\`Successfully cleared ${amount - 1} messages.\`\`\``,
+      footer: client.getFooter(message),
+    }).then((msg) => setTimeout(() => msg.delete(), 5000)).catch((err) => print(`SendEmbed Error: ${err.message}`));
   },
 };
 

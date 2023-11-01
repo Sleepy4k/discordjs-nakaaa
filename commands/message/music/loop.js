@@ -32,28 +32,20 @@ export default {
     const queue = await client.player.nodes.get(message.guild.id);
 
     if (!queue || !queue.isPlaying())
-      return client
-        .sendEmbed(message, {
-          color: "Red",
-          title: "Error",
-          description: "```There is no music currently playing.```",
-          footer: client.getFooter(message),
-        })
-        .catch((err) => {
-          print(`SendEmbed Error: ${err.message}`);
-        });
+      return client.sendEmbed(message, {
+        color: "Red",
+        title: "Error",
+        description: "```There is no music currently playing.```",
+        footer: client.getFooter(message),
+      });
 
     if (!arg)
-      return client
-        .sendEmbed(message, {
-          color: "Red",
-          title: "Error",
-          description: "```Please specify a mode. (off, single, all)```",
-          footer: client.getFooter(message),
-        })
-        .catch((err) => {
-          print(`SendEmbed Error: ${err.message}`);
-        });
+      return client.sendEmbed(message, {
+        color: "Red",
+        title: "Error",
+        description: "```Please specify a mode. (off, single, all)```",
+        footer: client.getFooter(message),
+      });
 
     try {
       switch (arg.toLowerCase()) {
@@ -73,7 +65,6 @@ export default {
             description: "```Please specify a mode. (off, single, all)```",
             footer: client.getFooter(message),
           });
-          break;
       }
 
       await queue.setRepeatMode(mode);
@@ -81,16 +72,12 @@ export default {
       print(`Loop Error: ${error.message}`);
     }
 
-    return client
-      .sendEmbed(message, {
-        color: "Blue",
-        title: "Success",
-        description: `\`\`\`Loop mode has been set to ${methods[mode]}.\`\`\``,
-        footer: client.getFooter(message),
-      })
-      .catch((err) => {
-        print(`SendEmbed Error: ${err.message}`);
-      });
+    return client.sendEmbed(message, {
+      color: "Blue",
+      title: "Success",
+      description: `\`\`\`Loop mode has been set to ${methods[mode]}.\`\`\``,
+      footer: client.getFooter(message),
+    });
   },
 };
 

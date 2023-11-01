@@ -28,16 +28,12 @@ export default {
   run: async (client, interaction) => {
     const uptime = parseDur(client.uptime);
 
-    return client.sendEmbed(
-      interaction,
-      {
-        color: "Yellow",
-        title: ":inbox_tray: Bot Uptime",
-        description: `\`\`\`Uptime: ${uptime}\`\`\``,
-        footer: client.getFooter(interaction, "interaction"),
-      },
-      true
-    );
+    return client.sendEmbed(interaction, {
+      color: "Yellow",
+      title: ":inbox_tray: Bot Uptime",
+      description: `\`\`\`Uptime: ${uptime}\`\`\``,
+      footer: client.getFooter(interaction, "interaction"),
+    }, true);
   },
 };
 

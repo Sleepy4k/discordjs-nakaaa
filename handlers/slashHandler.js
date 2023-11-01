@@ -29,6 +29,7 @@ export default async (client) => {
   try {
     let allCommands = [];
     const commandsDir = await readdir(`./commands/slash`);
+
     const items = await Promise.all(
       commandsDir.map(async (dir) => {
         if (!client.config.nsfw.enable) {
@@ -37,13 +38,13 @@ export default async (client) => {
 
         const commands = await readdir(`./commands/slash/${dir}`);
         let filterCommands = commands.filter((f) => f.endsWith(".js"));
+
         for (const cmd of filterCommands) {
           /**
            * @type {import("../index.js").Scommand}
            */
-          const command = await import(`../commands/slash/${dir}/${cmd}`).then(
-            (r) => r.default
-          );
+          const command = await import(`../commands/slash/${dir}/${cmd}`).then((r) => r.default);
+
           if (command.name) {
             client.scommands.set(command.name, command);
             allCommands.push(command);

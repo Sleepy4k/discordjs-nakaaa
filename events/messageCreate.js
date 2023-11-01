@@ -24,11 +24,7 @@ export default {
   run: async (client, message) => {
     if (message.author.bot || !message.guild || !message.id) return;
 
-    let prefix = client.config.bot.prefix;
-
-    let mentionprefix = new RegExp(
-      `^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`
-    );
+    let mentionprefix = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(client.prefix)})\\s*`);
 
     if (!mentionprefix.test(message.content)) return;
 
@@ -38,83 +34,57 @@ export default {
 
     if (cmd.length === 0) {
       if (nprefix.includes(client.user.id)) {
-        return client
-          .sendEmbed(message, {
-            title: "Help",
-            description: `${client.config.emoji.success} To See My All Commands Type  \`/help\` or \`${prefix}help\``,
-            footer: client.getFooter(message),
-          })
-          .catch((err) => {
-            print(`SendEmbed Error: ${err.message}`);
-          });
+        return client.sendEmbed(message, {
+          title: "Help",
+          description: `${client.config.emoji.success} To See My All Commands Type  \`/help\` or \`${prefix}help\``,
+          footer: client.getFooter(message),
+        });
       }
     }
 
     /**
      * @type {import("..").Mcommand}
      */
-    const command =
-      client.mcommands.get(cmd) ||
-      client.mcommands.find(
-        (cmds) => cmds.aliases && cmds.aliases.includes(cmd)
-      );
+    const command = client.mcommands.get(cmd) || client.mcommands.find((cmds) => cmds.aliases && cmds.aliases.includes(cmd));
+    if (!command)
+      return client.sendEmbed(message, {
+        title: "Invalid Command",
+        description: `\`${cmd}\` is not valid command !!`,
+        footer: client.getFooter(message),
+      });
 
-    if (!command) return;
-
-    if (command) {
-      if (
-        command.userPermissions &&
-        !message.member.permissions.has(
-          PermissionsBitField.resolve(command.userPermissions)
-        )
-      ) {
-        return client
-          .sendEmbed(message, {
-            title: "Permission Error",
-            description: "You don't have enough Permissions !!",
-            footer: client.getFooter(message),
-          })
-          .catch((err) => {
-            print(`SendEmbed Error: ${err.message}`);
-          });
-      } else if (
-        command.botPermissions &&
-        !message.guild.members.me.permissions.has(
-          PermissionsBitField.resolve(command.botPermissions)
-        )
-      ) {
-        return client
-          .sendEmbed(message, {
-            title: "Permission Error",
-            description: "I don't have enough Permissions !!",
-            footer: client.getFooter(message),
-          })
-          .catch((err) => {
-            print(`SendEmbed Error: ${err.message}`);
-          });
-      } else if (cooldown(message, command)) {
-        return client
-          .sendEmbed(message, {
-            title: "Cooldown",
-            description: `You are On Cooldown , wait \`${cooldown(
-              message,
-              command
-            ).toFixed()}\` Seconds`,
-            footer: client.getFooter(message),
-          })
-          .catch((err) => {
-            print(`SendEmbed Error: ${err.message}`);
-          });
-      } else {
-        print(
-          `${message.author.tag} (${message.author.id}) ran command ${command.name} in ${message.guild.name} (${message.guild.id})`
-        );
-        command.run(client, message, args, prefix);
-      }
+    if (command.userPermissions &&!message.member.permissions.has(PermissionsBitField.resolve(command.userPermissions))) {
+      return client.sendEmbed(message, {
+        title: "Permission Error",
+        description: "You don't have enough Permissions !!",
+        footer: client.getFooter(message),
+      });
+    } else if (command.botPermissions && !message.guild.members.me.permissions.has(PermissionsBitField.resolve(command.botPermissions))) {
+      return client.sendEmbed(message, {
+        title: "Permission Error",
+        description: "I don't have enough Permissions !!",
+        footer: client.getFooter(message),
+      });
+    } else if (cooldown(message, command)) {
+      return client.sendEmbed(message, {
+        title: "Cooldown",
+        description: `You are On Cooldown , wait \`${cooldown(message, command).toFixed()}\` Seconds`,
+        footer: client.getFooter(message),
+      });
+    } else {
+      print(`${message.author.tag} (${message.author.id}) ran command ${command.name} in ${message.guild.name} (${message.guild.id})`);
+      command.run(client, message, args, client.prefix);
     }
   },
 };
 
+/**
+ * Escape regex
+ *
+ * @param {string} newprefix
+ *
+ * @returns {string}
+ */
 function escapeRegex(newprefix) {
   return newprefix?.replace(/[.*+?^${}()|[\]\\]/g, `\\$&`);
 }

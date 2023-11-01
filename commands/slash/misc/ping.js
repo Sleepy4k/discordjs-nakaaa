@@ -25,18 +25,12 @@ export default {
   type: ApplicationCommandType.ChatInput,
 
   run: async (client, interaction) => {
-    return client.sendEmbed(
-      interaction,
-      {
-        color: "Blue",
-        title: "🏓 Pong",
-        description: `\`\`\`Latency: ${client.ws.ping}ms \nAPI Latency: ${
-          interaction.createdTimestamp - Date.now()
-        }ms\`\`\``,
-        footer: client.getFooter(interaction, "interaction"),
-      },
-      true
-    );
+    return client.sendEmbed(interaction, {
+      color: "Blue",
+      title: "🏓 Pong",
+      description: `\`\`\`Latency: ${client.ws.ping}ms \nAPI Latency: ${interaction.createdTimestamp - Date.now()}ms\`\`\``,
+      footer: client.getFooter(interaction, "interaction"),
+    }, true);
   },
 };
 

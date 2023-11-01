@@ -26,10 +26,7 @@ export function cooldown(interaction, cmd) {
   if (!interaction || !cmd) return;
 
   let { client, member } = interaction;
-
-  if (!client.cooldowns.has(cmd.name)) {
-    client.cooldowns.set(cmd.name, new Collection());
-  }
+  if (!client.cooldowns.has(cmd.name)) client.cooldowns.set(cmd.name, new Collection());
 
   const now = Date.now();
   const timestamps = client.cooldowns.get(cmd.name);
@@ -39,18 +36,19 @@ export function cooldown(interaction, cmd) {
     const expirationTime = timestamps.get(member.id) + cooldownAmount;
 
     if (now < expirationTime) {
-      const timeLeft = (expirationTime - now) / 1000; //get the lefttime
+      const timeLeft = (expirationTime - now) / 1000;
+      print(`${member.user.tag} : ${cmd.name} | Cooldown: ${timeLeft.toFixed(1)} seconds.`);
       return true;
-    } else {
-      timestamps.set(member.id, now);
-      setTimeout(() => timestamps.delete(member.id), cooldownAmount);
-      return false;
     }
-  } else {
+
     timestamps.set(member.id, now);
     setTimeout(() => timestamps.delete(member.id), cooldownAmount);
     return false;
   }
+
+  timestamps.set(member.id, now);
+  setTimeout(() => timestamps.delete(member.id), cooldownAmount);
+  return false;
 }
 
 /**

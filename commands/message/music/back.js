@@ -29,28 +29,20 @@ export default {
     const queue = await client.player.nodes.get(message.guild.id);
 
     if (!queue || !queue.isPlaying())
-      return client
-        .sendEmbed(message, {
-          color: "Red",
-          title: "Error",
-          description: "```There is no music currently playing.```",
-          footer: client.getFooter(message),
-        })
-        .catch((err) => {
-          print(`SendEmbed Error: ${err.message}`);
-        });
+      return client.sendEmbed(message, {
+        color: "Red",
+        title: "Error",
+        description: "```There is no music currently playing.```",
+        footer: client.getFooter(message),
+      });
 
     if (!queue.history.previousTrack)
-      return client
-        .sendEmbed(message, {
-          color: "Red",
-          title: "Error",
-          description: "```There was no music playing before.```",
-          footer: client.getFooter(message),
-        })
-        .catch((err) => {
-          print(`SendEmbed Error: ${err.message}`);
-        });
+      return client.sendEmbed(message, {
+        color: "Red",
+        title: "Error",
+        description: "```There was no music playing before.```",
+        footer: client.getFooter(message),
+      });
 
     try {
       await queue.history.back();
@@ -58,16 +50,12 @@ export default {
       print(`Back Error: ${error.message}`);
     }
 
-    return client
-      .sendEmbed(message, {
-        color: "Blue",
-        title: "Success",
-        description: "```Playing the previous song.```",
-        footer: client.getFooter(message),
-      })
-      .catch((err) => {
-        print(`SendEmbed Error: ${err.message}`);
-      });
+    return client.sendEmbed(message, {
+      color: "Blue",
+      title: "Success",
+      description: "```Playing the previous song.```",
+      footer: client.getFooter(message),
+    });
   },
 };
 

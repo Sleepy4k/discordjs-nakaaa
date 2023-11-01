@@ -29,24 +29,18 @@ export default {
     const queue = await client.player.nodes.get(message.guild.id);
 
     if (!queue || !queue.isPlaying())
-      return client
-        .sendEmbed(message, {
-          color: "Red",
-          title: "Error",
-          description: "```There is no music currently playing.```",
-          footer: client.getFooter(message),
-        })
-        .catch((err) => {
-          print(`SendEmbed Error: ${err.message}`);
-        });
+      return client.sendEmbed(message, {
+        color: "Red",
+        title: "Error",
+        description: "```There is no music currently playing.```",
+        footer: client.getFooter(message),
+      });
 
     try {
       if (queue.repeatMode === 1) {
         queue.setRepeatMode(0);
         queue.node.skip();
-        setTimeout(() => {
-          queue.setRepeatMode(1);
-        }, 1500);
+        setTimeout(() => queue.setRepeatMode(1), 1500);
       } else {
         queue.node.skip();
       }
@@ -54,16 +48,12 @@ export default {
       print(`Skip Error: ${error.message}`);
     }
 
-    return client
-      .sendEmbed(message, {
-        color: "Blue",
-        title: "Success",
-        description: "```Skipped the current song.```",
-        footer: client.getFooter(message),
-      })
-      .catch((err) => {
-        print(`SendEmbed Error: ${err.message}`);
-      });
+    return client.sendEmbed(message, {
+      color: "Blue",
+      title: "Success",
+      description: "```Skipped the current song.```",
+      footer: client.getFooter(message),
+    });
   },
 };
 

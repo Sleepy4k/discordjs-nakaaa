@@ -28,37 +28,27 @@ export default {
     const queue = client.player.nodes.get(interaction.guild.id);
 
     if (!queue || !queue.isPlaying())
-      return client.sendEmbed(
-        interaction,
-        {
-          color: "Red",
-          title: "Error",
-          description: "```There is no music currently playing.```",
-          footer: client.getFooter(interaction, "interaction"),
-        },
-        true
-      );
+      return client.sendEmbed(interaction, {
+        color: "Red",
+        title: "Error",
+        description: "```There is no music currently playing.```",
+        footer: client.getFooter(interaction, "interaction"),
+      }, true);
 
     if (queue.repeatMode === 1) {
       queue.setRepeatMode(0);
       queue.node.skip();
-      setTimeout(() => {
-        queue.setRepeatMode(1);
-      }, 1500);
+      setTimeout(() => queue.setRepeatMode(1), 1500);
     } else {
       queue.node.skip();
     }
 
-    return client.sendEmbed(
-      interaction,
-      {
-        color: "Blue",
-        title: "Success",
-        description: "```Skipped the current song.```",
-        footer: client.getFooter(interaction, "interaction"),
-      },
-      true
-    );
+    return client.sendEmbed(interaction, {
+      color: "Blue",
+      title: "Success",
+      description: "```Skipped the current song.```",
+      footer: client.getFooter(interaction, "interaction"),
+    }, true);
   },
 };
 

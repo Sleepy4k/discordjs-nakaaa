@@ -29,28 +29,20 @@ export default {
     const queue = await client.player.nodes.get(message.guild.id);
 
     if (!queue)
-      return client
-        .sendEmbed(message, {
-          color: "Red",
-          title: "Error",
-          description: "```There is no queue.```",
-          footer: client.getFooter(message),
-        })
-        .catch((err) => {
-          print(`SendEmbed Error: ${err.message}`);
-        });
+      return client.sendEmbed(message, {
+        color: "Red",
+        title: "Error",
+        description: "```There is no queue.```",
+        footer: client.getFooter(message),
+      });
 
     if (!queue.isPlaying())
-      return client
-        .sendEmbed(message, {
-          color: "Red",
-          title: "Error",
-          description: "```There is no music currently playing.```",
-          footer: client.getFooter(message),
-        })
-        .catch((err) => {
-          print(`SendEmbed Error: ${err.message}`);
-        });
+      return client.sendEmbed(message, {
+        color: "Red",
+        title: "Error",
+        description: "```There is no music currently playing.```",
+        footer: client.getFooter(message),
+      });
 
     try {
       await queue.delete();
@@ -58,16 +50,12 @@ export default {
       print(`Stop Error: ${error.message}`);
     }
 
-    return client
-      .sendEmbed(message, {
-        color: "Blue",
-        title: "Success",
-        description: "```Music has been stopped.```",
-        footer: client.getFooter(message),
-      })
-      .catch((err) => {
-        print(`SendEmbed Error: ${err.message}`);
-      });
+    return client.sendEmbed(message, {
+      color: "Blue",
+      title: "Success",
+      description: "```Music has been stopped.```",
+      footer: client.getFooter(message),
+    });
   },
 };
 

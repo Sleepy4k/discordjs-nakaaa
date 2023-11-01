@@ -29,16 +29,12 @@ export default {
   run: async (client, message, args, prefix) => {
     const uptime = parseDur(client.uptime);
 
-    return client
-      .sendEmbed(message, {
-        color: "Yellow",
-        title: ":inbox_tray: Bot Uptime",
-        description: `\`\`\`Uptime: ${uptime}\`\`\``,
-        footer: client.getFooter(message),
-      })
-      .catch((err) => {
-        print(`SendEmbed Error: ${err.message}`);
-      });
+    return client.sendEmbed(message, {
+      color: "Yellow",
+      title: ":inbox_tray: Bot Uptime",
+      description: `\`\`\`Uptime: ${uptime}\`\`\``,
+      footer: client.getFooter(message),
+    });
   },
 };
 

@@ -26,15 +26,15 @@ import { logStatus } from "./functions.js";
 export default async (client) => {
   try {
     const eventFiles = await readdir("./events");
-    const eventFilesFiltered = eventFiles.filter((file) =>
-      file.endsWith(".js")
-    );
+    const eventFilesFiltered = eventFiles.filter((file) => file.endsWith(".js"));
+
     const items = await Promise.all(
       eventFilesFiltered.map(async (file) => {
         /**
          * @type {import("../index.js").EventHandler}
          */
         let event = await import(`../events/${file}`).then((r) => r.default);
+
         if (event?.name) {
           client.events.set(event.name, event);
           logStatus(event.name, true, "Event");

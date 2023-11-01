@@ -12,7 +12,7 @@
  * March 12, 2023
  */
 import { inspect } from "util";
-import config from "../config/index.js";
+import config from "../config/_index.js";
 import { WebhookClient, EmbedBuilder } from "discord.js";
 
 /**
@@ -33,9 +33,7 @@ export default {
     const embed = new EmbedBuilder()
       .setColor("Red")
       .setTitle("Error")
-      .setDescription(
-        `\`\`\`${inspect(err, { depth: 0 }).slice(0, 1000)}\`\`\``
-      )
+      .setDescription(`\`\`\`${inspect(err, { depth: 0 }).slice(0, 1000)}\`\`\``)
       .setURL("https://discordjs.guide/popular-topics/errors.html#api-errors")
       .setTimestamp();
 

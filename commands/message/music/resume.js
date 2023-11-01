@@ -29,16 +29,12 @@ export default {
     const queue = await client.player.nodes.get(message.guild.id);
 
     if (!queue)
-      return client
-        .sendEmbed(message, {
-          color: "Red",
-          title: "Error",
-          description: "```There is no music currently playing.```",
-          footer: client.getFooter(message),
-        })
-        .catch((err) => {
-          print(`SendEmbed Error: ${err.message}`);
-        });
+      return client.sendEmbed(message, {
+        color: "Red",
+        title: "Error",
+        description: "```There is no music currently playing.```",
+        footer: client.getFooter(message),
+      });
 
     let success = false;
 
@@ -49,27 +45,19 @@ export default {
     }
 
     if (!success)
-      return client
-        .sendEmbed(message, {
-          color: "Red",
-          title: "Error",
-          description: "```Failed to resume the current song.```",
-          footer: client.getFooter(message),
-        })
-        .catch((err) => {
-          print(`SendEmbed Error: ${err.message}`);
-        });
-
-    return client
-      .sendEmbed(message, {
-        color: "Blue",
-        title: "Success",
-        description: "```Resumed the current song.```",
+      return client.sendEmbed(message, {
+        color: "Red",
+        title: "Error",
+        description: "```Failed to resume the current song.```",
         footer: client.getFooter(message),
-      })
-      .catch((err) => {
-        print(`SendEmbed Error: ${err.message}`);
       });
+
+    return client.sendEmbed(message, {
+      color: "Blue",
+      title: "Success",
+      description: "```Resumed the current song.```",
+      footer: client.getFooter(message),
+    });
   },
 };
 

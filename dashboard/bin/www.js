@@ -4,6 +4,7 @@
 import http from "http";
 import debugLib from "debug";
 import app from "../express.js";
+import print from "../../utils/print.js";
 
 /**
  * Create server
@@ -110,6 +111,8 @@ export default function createServer(client) {
       typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
 
     debug("Listening on " + bind);
+
+    print(`Dashboard is running on ${addr.address}:${addr.port}`);
   }
 
   return server;

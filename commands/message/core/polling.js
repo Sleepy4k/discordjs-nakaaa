@@ -29,32 +29,25 @@ export default {
     let polling = args.slice(0).join(" ");
 
     if (!polling) {
-      return client
-        .sendEmbed(message, {
-          color: "Red",
-          title: "Polling something!",
-          description: `\`\`\`Usage: ${prefix}polling <text>\`\`\``,
-          footer: client.getFooter(message),
-        })
-        .catch((err) => {
-          print(`SendEmbed Error: ${err.message}`);
-        });
+      return client.sendEmbed(message, {
+        color: "Red",
+        title: "Polling something!",
+        description: `\`\`\`Usage: ${prefix}polling <text>\`\`\``,
+        footer: client.getFooter(message),
+      });
     }
 
-    return client
-      .sendEmbed(message, {
-        color: "Gold",
-        title: "Polling",
-        description: `\`\`\`${polling}\`\`\``,
-        footer: client.getFooter(message),
-      })
-      .then((msg) => {
-        msg.react("👍");
-        msg.react("👎");
-      })
-      .catch((err) => {
-        print(`SendEmbed Error: ${err.message}`);
-      });
+    return client.sendEmbed(message, {
+      color: "Gold",
+      title: "Polling",
+      description: `\`\`\`${polling}\`\`\``,
+      footer: client.getFooter(message),
+    }).then((msg) => {
+      msg.react("👍");
+      msg.react("👎");
+    }).catch((err) => {
+      print(`SendEmbed Error: ${err.message}`);
+    });
   },
 };
 

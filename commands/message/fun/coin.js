@@ -30,31 +30,23 @@ export default {
     let coin = result === 1 ? "Heads" : "Tails";
     let answer = args.slice(0).join(" ");
 
-    if (!answer) {
-      return client
-        .sendEmbed(message, {
-          color: "Red",
-          title: "Coin flip",
-          description: `\`\`\`Usage: ${prefix}coin <Heads/Tails>\`\`\``,
-          footer: client.getFooter(message),
-        })
-        .catch((err) => {
-          print(`SendEmbed Error: ${err.message}`);
-        });
+    if (!answer || !["Heads", "Tails"].includes(answer)) {
+      return client.sendEmbed(message, {
+        color: "Red",
+        title: "Coin flip",
+        description: `\`\`\`Usage: ${prefix}coin <Heads/Tails>\`\`\``,
+        footer: client.getFooter(message),
+      });
     }
 
-    return client
-      .sendEmbed(message, {
-        color: "Green",
-        title: "Coin flip",
-        description: `\`\`\`Result: ${coin} \nGuess: ${answer} \nStatus: ${
-          coin === answer ? "You win!" : "You lose!"
-        }\`\`\``,
-        footer: client.getFooter(message),
-      })
-      .catch((err) => {
-        print(`SendEmbed Error: ${err.message}`);
-      });
+    return client.sendEmbed(message, {
+      color: "Green",
+      title: "Coin flip",
+      description: `\`\`\`Result: ${coin} \nGuess: ${answer} \nStatus: ${
+        coin === answer ? "You win!" : "You lose!"
+      }\`\`\``,
+      footer: client.getFooter(message),
+    });
   },
 };
 
