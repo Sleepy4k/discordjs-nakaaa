@@ -51,6 +51,10 @@ export default {
         true
       );
 
+    await interaction.deferReply({ ephemeral: true }).catch((error) => {
+      print(`Defer Error: ${error.message}`);
+    });
+
     await queue.history.back();
 
     return client.sendEmbed(

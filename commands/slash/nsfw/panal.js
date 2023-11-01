@@ -34,19 +34,32 @@ export default {
         footer: client.getFooter(interaction, "interaction"),
       });
 
-    const response = await axios.get("https://nekobot.xyz/api/image?type=anal");
-    const gif = response.data.message;
+    try {
+      const response = await axios.get("https://nekobot.xyz/api/image?type=anal");
+      const gif = response.data.message;
 
-    return client.sendEmbed(
-      interaction,
-      {
-        color: "Random",
-        title: "Here your anal gif",
-        image: gif,
-        footer: client.getFooter(interaction, "interaction"),
-      },
-      true
-    );
+      return client.sendEmbed(
+        interaction,
+        {
+          color: "Random",
+          title: "Here your anal gif",
+          image: gif,
+          footer: client.getFooter(interaction, "interaction"),
+        },
+        true
+      );
+    } catch (error) {
+      return client.sendEmbed(
+        interaction,
+        {
+          color: "Red",
+          title: "Error",
+          description: `\`\`\`${error.message}\`\`\``,
+          footer: client.getFooter(interaction, "interaction"),
+        },
+        true
+      );
+    }
   },
 };
 

@@ -11,7 +11,8 @@
  *
  * March 12, 2023
  */
-import DadJokes from "dadjokes-wrapper";
+import axios from "axios";
+import print from "../../../utils/print.js";
 import { ApplicationCommandType, PermissionFlagsBits } from "discord.js";
 
 /**
@@ -26,12 +27,23 @@ export default {
   type: ApplicationCommandType.ChatInput,
 
   run: async (client, interaction) => {
-    const dj = new DadJokes();
-    let joke;
-
     try {
-      joke = await dj.random();
+      const response = await axios.get("https://api.dadjokes.io/api/random/joke");
+      const joke = response.data.body[0];
+
+      return client.sendEmbed(
+        interaction,
+        {
+          color: "DarkAqua",
+          title: "Dad Joke",
+          description: `\`\`\`${joke.setup}\n\n${joke.punchline}\`\`\``,
+          footer: client.getFooter(interaction, "interaction"),
+        },
+        true
+      );
     } catch (error) {
+      print(`DadJokes Error: ${error.message}`);
+
       return client.sendEmbed(
         interaction,
         {
@@ -43,17 +55,6 @@ export default {
         true
       );
     }
-
-    return client.sendEmbed(
-      interaction,
-      {
-        color: "DarkAqua",
-        title: "Dad Joke",
-        description: `\`\`\`${joke}\`\`\``,
-        footer: client.getFooter(interaction, "interaction"),
-      },
-      true
-    );
   },
 };
 

@@ -39,6 +39,10 @@ export default {
         true
       );
 
+    await interaction.deferReply({ ephemeral: true }).catch((error) => {
+      print(`Defer Error: ${error.message}`);
+    });
+
     if (!queue.deleted) queue.delete();
 
     return client.sendEmbed(

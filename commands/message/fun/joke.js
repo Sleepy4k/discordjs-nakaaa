@@ -11,7 +11,7 @@
  *
  * March 12, 2023
  */
-import DadJokes from "dadjokes-wrapper";
+import axios from "axios";
 import print from "../../../utils/print.js";
 import { PermissionFlagsBits } from "discord.js";
 
@@ -27,40 +27,26 @@ export default {
   cooldown: 5,
 
   run: async (client, message, args, prefix) => {
-    const dj = new DadJokes();
-    let joke;
-
     try {
-      joke = await dj.randomJoke();
+      const response = await axios.get("https://api.dadjokes.io/api/random/joke");
+      const joke = response.data.body[0];
+
+      return client.sendEmbed(message, {
+        color: "DarkAqua",
+        title: "Dad Joke",
+        description: `\`\`\`${joke.setup}\n\n${joke.punchline}\`\`\``,
+        footer: client.getFooter(message),
+      });
     } catch (error) {
       print(`Dad Joke Error: ${error.message}`);
 
-      return client
-        .sendEmbed(
-          message,
-          {
-            color: "DarkAqua",
-            title: "Dad Joke",
-            description: `\`\`\`Looks like the dad is too tired to tell you some jokes, please try again later.\`\`\``,
-            footer: client.getFooter(message),
-          },
-          true
-        )
-        .catch((err) => {
-          print(`SendEmbed Error: ${err.message}`);
-        });
-    }
-
-    return client
-      .sendEmbed(message, {
+      return client.sendEmbed(message, {
         color: "DarkAqua",
         title: "Dad Joke",
-        description: `\`\`\`${joke}\`\`\``,
+        description: `\`\`\`Looks like the dad is too tired to tell you some jokes, please try again later.\`\`\``,
         footer: client.getFooter(message),
-      })
-      .catch((err) => {
-        print(`SendEmbed Error: ${err.message}`);
       });
+    }
   },
 };
 

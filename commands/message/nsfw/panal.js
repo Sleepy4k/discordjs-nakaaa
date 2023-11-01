@@ -12,7 +12,6 @@
  * March 12, 2023
  */
 import axios from "axios";
-import print from "../../../utils/print.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -34,32 +33,26 @@ export default {
           title: "Warning",
           description: "```This channel is not NSFW channel.```",
           footer: client.getFooter(message),
-        })
-        .catch((err) => {
-          print(`SendEmbed Error: ${err.message}`);
         });
 
-    let gif;
-
     try {
-      const response = await axios.get(
-        "https://nekobot.xyz/api/image?type=anal"
-      );
-      gif = response.data.message;
-    } catch (error) {
-      print(`Panal Error: ${error.message}`);
-    }
+      const response = await axios.get("https://nekobot.xyz/api/image?type=anal");
+      const gif = response.data.message;
 
-    return client
-      .sendEmbed(message, {
+      return client.sendEmbed(message, {
         color: "Random",
         title: "Here your anal gif",
         image: gif,
         footer: client.getFooter(message),
-      })
-      .catch((err) => {
-        print(`SendEmbed Error: ${err.message}`);
       });
+    } catch (error) {
+      return client.sendEmbed(message, {
+        color: "Red",
+        title: "Error",
+        description: `\`\`\`${error.message}\`\`\``,
+        footer: client.getFooter(message),
+      });
+    }
   },
 };
 
