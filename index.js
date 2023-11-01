@@ -18,6 +18,6 @@ export const client = new Bot();
 
 createServer(client);
 
-client.build(client.config.options.token);
+client.build(client.config.bot.token);
 
 // Path: index.js
