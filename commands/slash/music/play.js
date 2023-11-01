@@ -26,7 +26,7 @@ export default {
   options: [
     {
       name: "search",
-      description: "The song you want to play.",
+      description: "The song you want to play, you can use a link or song name.",
       type: 3,
       required: true,
     },
