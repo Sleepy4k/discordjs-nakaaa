@@ -11,6 +11,14 @@
  *
  * March 12, 2023
  */
+
+/**
+ * Parse current date and time to human readable for console log with message
+ *
+ * @param {String} message
+ *
+ * @returns {void}
+ */
 export default function print(message) {
   const now = new Date();
   const date = now.toLocaleDateString();

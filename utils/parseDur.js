@@ -11,6 +11,14 @@
  *
  * March 12, 2023
  */
+
+/**
+ * Parse duration to human readable
+ *
+ * @param {Number} ms
+ *
+ * @returns {String}
+ */
 export default function parseDur(ms) {
   let seconds = ms / 1000;
 
