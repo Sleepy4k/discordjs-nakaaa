@@ -75,6 +75,9 @@ export default {
               print(`Error: ${error.message}`);
             });
         } else {
+          print(
+            `${interaction.user.tag} (${interaction.user.id}) ran command ${command.name} in ${interaction.guild.name} (${interaction.guild.id})`
+          )
           command.run(client, interaction);
         }
       }

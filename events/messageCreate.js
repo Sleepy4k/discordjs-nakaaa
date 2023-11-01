@@ -106,6 +106,9 @@ export default {
             print(`SendEmbed Error: ${err.message}`);
           });
       } else {
+        print(
+          `${message.author.tag} (${message.author.id}) ran command ${command.name} in ${message.guild.name} (${message.guild.id})`
+        );
         command.run(client, message, args, prefix);
       }
     }
