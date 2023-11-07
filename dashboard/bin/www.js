@@ -24,6 +24,12 @@ export default function createServer(client) {
   app.set("client", client);
 
   /**
+   * Get hostname from environment and store in Express.
+   */
+  const hostname = client.config.web.hostname || "localhost";
+  app.set("hostname", hostname);
+
+  /**
    * Get port from environment and store in Express.
    */
   const port = normalizePort(client.config.web.port || "3000");
@@ -37,7 +43,7 @@ export default function createServer(client) {
   /**
    * Listen on provided port, on all network interfaces.
    */
-  server.listen(port);
+  server.listen(port, hostname);
   server.on("error", onError);
   server.on("listening", onListening);
 
