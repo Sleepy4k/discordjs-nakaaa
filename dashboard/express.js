@@ -3,8 +3,10 @@
  */
 import logger from "morgan";
 import express from "express";
+import ejsMate from "ejs-mate";
 import { fileURLToPath } from "url";
 import { join, dirname } from "path";
+import { version } from "discord.js";
 import createError from "http-errors";
 import cookieSession from "cookie-session";
 
@@ -26,8 +28,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 /**
  * View engine setup
  */
-app.set("views", join(__dirname, "views"));
+app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
+app.set("views", join(__dirname, "views"));
 app.use('/public', express.static(join(__dirname, "public")));
 
 /**
@@ -41,6 +44,19 @@ app.use(cookieSession({
   secret: "secret",
   httpOnly: true
 }));
+
+/**
+ * Set locals
+ */
+app.use(function (req, res, next) {
+  res.locals.data = {};
+  res.locals.discord = version;
+  res.locals.node = process.version;
+  res.locals.title = req.app.get("client").config.web.name;
+  res.locals.author = req.app.get("client").config.bot.author;
+  res.locals.baseUrl = `${req.protocol}://${req.hostname}:${req.app.get("port")}`;
+  next();
+});
 
 /**
  * Routes initialization
@@ -62,10 +78,7 @@ app.use(function (err, req, res, next) {
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
   res.status(err.status || 500);
-  res.render("pages/error", {
-    sub_title: "Error",
-    title: req.app.get("client").config.web.name,
-  });
+  res.render("pages/error");
 });
 
 export default app;
