@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title><%= title %> | <%= sub_title %></title>
+    <title><%= title + block('subTitle').toString() %></title>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/public/css/error.css">
-    <link rel="stylesheet" href="/public/css/custome.css">
+    <link rel="stylesheet" href="<%= baseUrl %>/public/css/error.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="<%= baseUrl %>/public/css/custome.css">
   </head>
   <body class="antialiased">
+    <%- body %>
+  </body>
+</html>
