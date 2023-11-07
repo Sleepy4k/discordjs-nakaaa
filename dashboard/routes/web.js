@@ -2,7 +2,6 @@
  * Module dependencies.
  */
 import { Router } from "express";
-import { version } from "discord.js";
 
 /*
  * Initialize router.
@@ -12,12 +11,7 @@ const router = Router();
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.status(200);
-  res.render("pages/index", {
-    discord: version,
-    node: process.version,
-    title: req.app.get("client").config.web.name,
-    author: req.app.get("client").config.bot.author,
-  });
+  res.render("pages/index");
 });
 
 /* GET docs page. */
@@ -25,6 +19,10 @@ router.get("/docs", function (req, res, next) {
   res.status(200);
   res.render("pages/docs", {
     title: req.app.get("client").config.web.name + " | Docs",
+    frame: {
+      url: "https://discord.js.org/#/docs/discord.js/14.7.1/general/welcome",
+      border: "0",
+    }
   });
 });
 
@@ -33,6 +31,10 @@ router.get("/discord", function (req, res, next) {
   res.status(200);
   res.render("pages/discord", {
     title: req.app.get("client").config.web.name + " | Discord",
+    frame: {
+      url: "https://discordjs.guide/whats-new.html#site",
+      border: "0",
+    }
   });
 });
 
