@@ -14,7 +14,7 @@
 import { Bot } from "./handlers/client.js";
 import createServer from "./dashboard/bin/www.js";
 
-export const client = new Bot();
+const client = new Bot();
 
 createServer(client);
 
