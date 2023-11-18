@@ -8,7 +8,9 @@ import print from "../../utils/print.js";
 
 /**
  * Create server
+ *
  * @param {object} client
+ *
  * @returns {void}
  */
 export default function createServer(client) {
@@ -68,13 +70,8 @@ export default function createServer(client) {
   function normalizePort(val) {
     const port = parseInt(val, 10);
 
-    if (isNaN(port)) {
-      return val;
-    }
-
-    if (port >= 0) {
-      return port;
-    }
+    if (isNaN(port)) return val;
+    if (port >= 0) return port;
 
     return false;
   }
@@ -86,19 +83,17 @@ export default function createServer(client) {
    * @returns {void}
    */
   function onError(error) {
-    if (error.syscall !== "listen") {
-      throw error;
-    }
+    if (error.syscall !== "listen") throw error;
 
     const bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
 
     switch (error.code) {
       case "EACCES":
-        console.error(bind + " requires elevated privileges");
+        print(bind + " requires elevated privileges", "error");
         process.exit(1);
         break;
       case "EADDRINUSE":
-        console.error(bind + " is already in use");
+        print(bind + " is already in use", "error");
         process.exit(1);
         break;
       default:
@@ -113,12 +108,10 @@ export default function createServer(client) {
    */
   function onListening() {
     const addr = server.address();
-    const bind =
-      typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+    const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
 
     debug("Listening on " + bind);
-
-    print(`Dashboard is running on ${addr.address}:${addr.port}`);
+    print(`Dashboard is running on ${addr.address}:${addr.port}`, "info");
   }
 
   return server;
