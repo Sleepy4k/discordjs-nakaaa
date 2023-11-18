@@ -29,16 +29,14 @@ export default async (client) => {
 
     const items = await Promise.all(
       commandsDir.map(async (dir) => {
-        if (!client.config.nsfw.enable) {
-          if (dir === client.config.nsfw.directory) return;
-        };
+        if (!client.config.nsfw.enable && dir === client.config.nsfw.directory) return;
 
         const commands = await readdir(`./commands/message/${dir}`);
         let filterCommands = commands.filter((f) => f.endsWith(".js"));
 
         for (const cmd of filterCommands) {
           /**
-           * @type {import("../index.js").Scommand}
+           * @type {client.mcommands}
            */
           const command = await import(`../commands/message/${dir}/${cmd}`).then((r) => r.default);
 
@@ -54,7 +52,7 @@ export default async (client) => {
 
     await Promise.all(items);
   } catch (error) {
-    print(`Error: ${error.message}`);
+    print(error.message, "error");
   }
 };
 

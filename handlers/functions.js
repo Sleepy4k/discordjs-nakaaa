@@ -37,8 +37,8 @@ export function cooldown(interaction, cmd) {
 
     if (now < expirationTime) {
       const timeLeft = (expirationTime - now) / 1000;
-      print(`${member.user.tag} : ${cmd.name} | Cooldown: ${timeLeft.toFixed(1)} seconds.`);
-      return true;
+      print(`${member.user.tag} : ${cmd.name} | Cooldown: ${timeLeft.toFixed(1)} seconds.`, "info");
+      return timeLeft;
     }
 
     timestamps.set(member.id, now);
@@ -64,7 +64,7 @@ export function logStatus(name, isLoaded, type) {
   const statusIcon = isLoaded ? "\x1b[32m✅\x1b[0m" : "\x1b[31m❌\x1b[0m";
   const statusText = isLoaded ? "Loaded" : "Not Loaded";
 
-  print(`${type} : ${name} | Status: ${statusIcon} ${statusText}`);
+  print(`${type} : ${name} | Status: ${statusIcon} ${statusText}`, "info");
 }
 
 // Path: handlers\functions.js

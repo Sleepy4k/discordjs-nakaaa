@@ -47,7 +47,7 @@ export default async (client) => {
 
     await Promise.all(items);
   } catch (error) {
-    print(`Error: ${error.message}`);
+    print(error.message, "error");
   }
 };
 

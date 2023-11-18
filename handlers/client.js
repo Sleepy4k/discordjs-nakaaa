@@ -13,10 +13,12 @@
  */
 import {
   Client,
+  Message,
   Partials,
   Collection,
   EmbedBuilder,
   GatewayIntentBits,
+  CommandInteraction
 } from "discord.js";
 import print from "../utils/print.js";
 import config from "../config/_index.js";
@@ -97,18 +99,18 @@ export class Bot extends Client {
     await loadHandlers(this);
     await this.player.extractors.loadDefault();
     this.login(token).catch((e) => {
-      print(`Bot Error: ${e.message}`);
+      print(e.message, "error");
     });
   }
 
   /**
    * Send embed to interaction
    *
-   * @param {import("discord.js").CommandInteraction} interaction
+   * @param {CommandInteraction} interaction
    * @param {object} data
    * @param {boolean} ephemeral
    *
-   * @returns {Promise<import("discord.js").Message>}
+   * @returns {Promise<Message>}
    */
   async sendEmbed(interaction, data, ephemeral = false, fetchReply = false) {
     try {
@@ -152,7 +154,7 @@ export class Bot extends Client {
   /**
    * Get footer for embed
    *
-   * @param {import("discord.js").CommandInteraction} client
+   * @param {CommandInteraction} client
    * @param {string} type
    *
    * @returns {object}
@@ -195,10 +197,10 @@ export class Bot extends Client {
   /**
    * Send message to interaction
    *
-   * @param {import("discord.js").CommandInteraction} interaction
+   * @param {CommandInteraction} interaction
    * @param {object} data
    *
-   * @returns {Promise<import("discord.js").Message>}
+   * @returns {Promise<Message>}
    */
   async send(interaction, data) {
     try {
