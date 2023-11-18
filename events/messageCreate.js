@@ -15,9 +15,6 @@ import print from "../utils/print.js";
 import { PermissionsBitField } from "discord.js";
 import { cooldown } from "../handlers/functions.js";
 
-/**
- * @type {import("..").EventHandler}
- */
 export default {
   name: "messageCreate",
 
@@ -25,7 +22,6 @@ export default {
     if (message.author.bot || !message.guild || !message.id) return;
 
     let mentionprefix = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(client.prefix)})\\s*`);
-
     if (!mentionprefix.test(message.content)) return;
 
     const [, nprefix] = message.content.match(mentionprefix);
@@ -65,15 +61,16 @@ export default {
         description: "I don't have enough Permissions !!",
         footer: client.getFooter(message),
       });
-    } else if (cooldown(message, command)) {
+    } else if (cooldown(message, command) !== false) {
       return client.sendEmbed(message, {
         title: "Cooldown",
         description: `You are On Cooldown , wait \`${cooldown(message, command).toFixed()}\` Seconds`,
         footer: client.getFooter(message),
       });
     } else {
-      print(`${message.author.tag} (${message.author.id}) ran command ${command.name} in ${message.guild.name} (${message.guild.id})`);
+      print(`${message.author.tag} (${message.author.id}) ran command ${command.name} in ${message.guild.name} (${message.guild.id})`, "info");
       command.run(client, message, args, client.prefix);
+      client.cooldowns.set(command.name, Date.now());
     }
   },
 };
