@@ -14,9 +14,6 @@
 import print from "../utils/print.js";
 import { ActivityType } from "discord.js";
 
-/**
- * @type {import("..").EventHandler}
- */
 export default {
   name: "ready",
 
@@ -32,7 +29,7 @@ export default {
         status: client.config.activity.type,
       });
     } catch (error) {
-      print(`Error: ${error.message}`);
+      print(error.message, "error");
     }
   },
 };

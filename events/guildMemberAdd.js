@@ -13,25 +13,20 @@
  */
 import print from "../utils/print.js";
 
-/**
- * @type {import("..").EventHandler}
- */
 export default {
   name: "guildMemberAdd",
 
   run: async (client, member) => {
     if (!client.config.welcome.enable) return;
 
-    const channel = member.guild.channels.cache.get(
-      client.config.welcome.channel_id
-    );
+    const channel = member.guild.channels.cache.get(client.config.welcome.channel_id);
 
     if (!channel) return;
 
     return channel
       .send(client.config.welcome.message(member))
       .catch((error) => {
-        print(`Error: ${error.message}`);
+        print(error.message, "error");
       });
   },
 };

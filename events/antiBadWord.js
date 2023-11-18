@@ -13,9 +13,6 @@
  */
 import print from "../utils/print.js";
 
-/**
- * @type {import("..").EventHandler}
- */
 export default {
   name: "messageCreate",
 
@@ -32,12 +29,10 @@ export default {
               title: "Bad Words",
               description: `**${message.author.tag}**, You can't say that word here!`,
               footer: client.getFooter(message),
-            })
-            .then((msg) => {
+            }).then((msg) => {
               setTimeout(() => msg.delete(), 2500);
-            })
-            .catch((error) => {
-              print(`Error: ${error.message}`);
+            }).catch((error) => {
+              print(error.message, "error");
             });
         }
       });

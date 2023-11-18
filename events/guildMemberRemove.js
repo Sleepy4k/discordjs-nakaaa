@@ -13,25 +13,20 @@
  */
 import print from "../utils/print.js";
 
-/**
- * @type {import("..").EventHandler}
- */
 export default {
   name: "guildMemberRemove",
 
   run: async (client, member) => {
     if (!client.config.goodbye.enable) return;
 
-    const channel = member.guild.channels.cache.get(
-      client.config.goodbye.channel_id
-    );
+    const channel = member.guild.channels.cache.get(client.config.goodbye.channel_id);
 
     if (!channel) return;
 
     return channel
       .send(client.config.goodbye.message(member))
       .catch((error) => {
-        print(`Error: ${error.message}`);
+        print(error.message, "error");
       });
   },
 };

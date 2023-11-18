@@ -14,9 +14,6 @@
 import print from "../utils/print.js";
 import { InteractionType, PermissionsBitField } from "discord.js";
 
-/**
- * @type {import("..").EventHandler}
- */
 export default {
   name: "interactionCreate",
 
@@ -45,7 +42,7 @@ export default {
           footer: client.getFooter(interaction, "interaction"),
         }, true);
       } else {
-        print(`${interaction.user.tag} (${interaction.user.id}) ran command ${command.name} in ${interaction.guild.name} (${interaction.guild.id})`)
+        print(`${interaction.user.tag} (${interaction.user.id}) ran command ${command.name} in ${interaction.guild.name} (${interaction.guild.id})`, "info")
         command.run(client, interaction);
       }
     }

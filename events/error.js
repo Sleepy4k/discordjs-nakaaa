@@ -15,9 +15,6 @@ import { inspect } from "util";
 import config from "../config/_index.js";
 import { WebhookClient, EmbedBuilder } from "discord.js";
 
-/**
- * @type {import("..").EventHandler}
- */
 export default {
   name: "error",
 
