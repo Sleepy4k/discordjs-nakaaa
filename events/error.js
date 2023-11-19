@@ -12,15 +12,13 @@
  * March 12, 2023
  */
 import { inspect } from "util";
-import config from "../config/_index.js";
+import config from "#config/_index.js";
 import { WebhookClient, EmbedBuilder } from "discord.js";
 
 export default {
   name: "error",
 
   run: async (err) => {
-    console.log(err);
-
     if (!config.anti_crash.enable) return;
 
     const webhook = new WebhookClient({
@@ -35,7 +33,7 @@ export default {
       .setTimestamp();
 
     return webhook.send({ embeds: [embed] });
-  },
+  }
 };
 
 // Path: events\error.js

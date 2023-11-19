@@ -11,7 +11,7 @@
  *
  * March 12, 2023
  */
-import print from "../utils/print.js";
+import print from "#utils/print.js";
 import { ActivityType } from "discord.js";
 
 export default {
