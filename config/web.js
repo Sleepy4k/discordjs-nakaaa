@@ -14,7 +14,7 @@
 import "dotenv/config.js";
 
 const web = {
-  hostname: process.env.WEB_URL || "localhost",
+  hostname: process.env.WEB_HOSTNAME || "localhost",
   port: process.env.WEB_PORT || 3000,
   env: process.env.WEB_ENV || "production",
   name: process.env.WEB_NAME || "Sleepy4k",
