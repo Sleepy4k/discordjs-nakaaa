@@ -20,26 +20,25 @@
  * @returns {String}
  */
 export default function parseDur(ms) {
-  let seconds = ms / 1000;
+  let seconds = Math.floor(ms / 1000);
 
-  const days = parseInt(seconds / 86400);
-  seconds = seconds % 86400;
+  const days = Math.floor(seconds / 86400);
+  seconds %= 86400;
 
-  const hours = parseInt(seconds / 3600);
-  seconds = seconds % 3600;
+  const hours = Math.floor(seconds / 3600);
+  seconds %= 3600;
 
-  const minutes = parseInt(seconds / 60);
-  seconds = parseInt(seconds % 60);
+  const minutes = Math.floor(seconds / 60);
+  seconds %= 60;
 
-  if (days) {
-    return `${days} day, ${hours} hours, ${minutes} minutes`;
-  } else if (hours) {
-    return `${hours} hours, ${minutes} minutes, ${seconds} seconds`;
-  } else if (minutes) {
-    return `${minutes} minutes, ${seconds} seconds`;
-  }
+  let result = '';
 
-  return `${seconds} second(s)`;
+  if (days) result += `${days} day${days > 1 ? 's' : ''}, `;
+  if (hours) result += `${hours} hour${hours > 1 ? 's' : ''}, `;
+  if (minutes) result += `${minutes} minute${minutes > 1 ? 's' : ''}, `;
+
+  result += `${seconds} second${seconds > 1 ? 's' : ''}`;
+  return result;
 }
 
 // Path: utils\parseDur.js

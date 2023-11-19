@@ -44,4 +44,4 @@ export default function print(message, type = "default") {
   }
 }
 
-// Path: utils\parseDur.js
+// Path: utils\print.js
