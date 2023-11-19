@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import main from "#functions/core/say.js";
 import { ApplicationCommandType, PermissionFlagsBits } from "discord.js";
 
 /**
@@ -31,15 +32,8 @@ export default {
   }],
 
   run: async (client, interaction) => {
-    const say = interaction.options.getString("text");
-
-    return client.sendEmbed(interaction, {
-      color: "Navy",
-      title: "Say",
-      description: `\`\`\`${say}\`\`\``,
-      footer: client.getFooter(interaction, "interaction"),
-    });
-  },
+    return main("slash", {client, interaction});
+  }
 };
 
 // Path: commands\slash\core\say.js

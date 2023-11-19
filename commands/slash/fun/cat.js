@@ -11,7 +11,7 @@
  *
  * March 12, 2023
  */
-import axios from "axios";
+import main from "#functions/fun/cat.js";
 import { ApplicationCommandType, PermissionFlagsBits } from "discord.js";
 
 /**
@@ -26,25 +26,8 @@ export default {
   type: ApplicationCommandType.ChatInput,
 
   run: async (client, interaction) => {
-    try {
-      const response = await axios.get("https://some-random-api.ml/img/cat");
-      const { link } = response.data;
-
-      return client.sendEmbed(interaction, {
-        color: "Aqua",
-        title: "Cute cat!",
-        image: link,
-        footer: client.getFooter(interaction, "interaction"),
-      }, true);
-    } catch (error) {
-      return client.sendEmbed(interaction, {
-        color: "Red",
-        title: "Error",
-        description: "```An error occurred while running this command.```",
-        footer: client.getFooter(interaction, "interaction"),
-      }, true);
-    }
-  },
+    return main("slash", { client, interaction });
+  }
 };
 
 // Path: commands\slash\fun\cat.js

@@ -11,7 +11,7 @@
  *
  * March 12, 2023
  */
-import parseDur from "../../../utils/parseDur.js";
+import main from "#functions/misc/uptime.js";
 import { ApplicationCommandType, PermissionFlagsBits } from "discord.js";
 
 /**
@@ -26,15 +26,8 @@ export default {
   type: ApplicationCommandType.ChatInput,
 
   run: async (client, interaction) => {
-    const uptime = parseDur(client.uptime);
-
-    return client.sendEmbed(interaction, {
-      color: "Yellow",
-      title: ":inbox_tray: Bot Uptime",
-      description: `\`\`\`Uptime: ${uptime}\`\`\``,
-      footer: client.getFooter(interaction, "interaction"),
-    }, true);
-  },
+    return main("slash", { client, interaction });
+  }
 };
 
 // Path: commands\slash\misc\uptime.js

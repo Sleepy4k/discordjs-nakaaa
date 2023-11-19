@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import main from "#functions/music/loop.js";
 import { ApplicationCommandType, PermissionFlagsBits } from "discord.js";
 
 /**
@@ -45,55 +46,8 @@ export default {
   }],
 
   run: async (client, interaction) => {
-    let mode = null;
-    const arg = interaction.options.getString("mode");
-    const methods = ["off", "single", "all"];
-    const queue = client.player.nodes.get(interaction.guild.id);
-
-    if (!queue || !queue.isPlaying())
-      return client.sendEmbed(interaction, {
-        color: "Red",
-        title: "Error",
-        description: "```There is no music currently playing.```",
-        footer: client.getFooter(interaction, "interaction"),
-      }, true);
-
-    if (!arg)
-      return client.sendEmbed(interaction, {
-        color: "Red",
-        title: "Error",
-        description: "```Please specify a mode. (off, single, all)```",
-        footer: client.getFooter(interaction, "interaction"),
-      }, true);
-
-    switch (arg.toLowerCase()) {
-      case "off":
-        mode = 0;
-        break;
-      case "single":
-        mode = 1;
-        break;
-      case "all":
-        mode = 2;
-        break;
-      default:
-        return client.sendEmbed(interaction, {
-          color: "Red",
-          title: "Error",
-          description: "```Please specify a mode. (off, single, all)```",
-          footer: client.getFooter(interaction, "interaction"),
-        }, true);
-    }
-
-    await queue.setRepeatMode(mode);
-
-    return client.sendEmbed(interaction, {
-      color: "Green",
-      title: "Success",
-      description: `\`\`\`Loop mode has been set to ${methods[mode]}.\`\`\``,
-      footer: client.getFooter(interaction, "interaction"),
-    }, true);
-  },
+    return main("slash", { client, interaction });
+  }
 };
 
 // Path: commands\slash\music\loop.js

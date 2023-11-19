@@ -11,7 +11,7 @@
  *
  * March 12, 2023
  */
-import print from "../../../utils/print.js";
+import main from "#functions/fun/coin.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -25,29 +25,9 @@ export default {
   category: "fun",
   cooldown: 5,
 
-  run: async (client, message, args, prefix) => {
-    let result = Math.floor(Math.random() * 2) + 1;
-    let coin = result === 1 ? "Heads" : "Tails";
-    let answer = args.slice(0).join(" ");
-
-    if (!answer || !["Heads", "Tails"].includes(answer)) {
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Coin flip",
-        description: `\`\`\`Usage: ${prefix}coin <Heads/Tails>\`\`\``,
-        footer: client.getFooter(message),
-      });
-    }
-
-    return client.sendEmbed(message, {
-      color: "Green",
-      title: "Coin flip",
-      description: `\`\`\`Result: ${coin} \nGuess: ${answer} \nStatus: ${
-        coin === answer ? "You win!" : "You lose!"
-      }\`\`\``,
-      footer: client.getFooter(message),
-    });
-  },
+  run: async (client, interaction, args, prefix) => {
+    return main("message", { client, interaction, args, prefix });
+  }
 };
 
 // Path: commands\message\fun\coin.js

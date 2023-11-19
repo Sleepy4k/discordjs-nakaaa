@@ -11,7 +11,7 @@
  *
  * March 12, 2023
  */
-import print from "../../../utils/print.js";
+import main from "#functions/misc/ping.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -25,14 +25,9 @@ export default {
   category: "misc",
   cooldown: 5,
 
-  run: async (client, message, args, prefix) => {
-    return client.sendEmbed(message, {
-      color: "Blue",
-      title: "🏓 Pong",
-      description: `\`\`\`Latency: ${client.ws.ping}ms \nAPI Latency: ${message.createdTimestamp - Date.now()}ms\`\`\``,
-      footer: client.getFooter(message),
-    });
-  },
+  run: async (client, interaction, args, prefix) => {
+    return main("message", { client, interaction, args, prefix });
+  }
 };
 
 // Path: commands\message\misc\ping.js

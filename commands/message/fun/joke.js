@@ -11,8 +11,7 @@
  *
  * March 12, 2023
  */
-import axios from "axios";
-import print from "../../../utils/print.js";
+import main from "#functions/fun/joke.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -26,28 +25,9 @@ export default {
   category: "fun",
   cooldown: 5,
 
-  run: async (client, message, args, prefix) => {
-    try {
-      const response = await axios.get("https://api.dadjokes.io/api/random/joke");
-      const joke = response.data.body[0];
-
-      return client.sendEmbed(message, {
-        color: "DarkAqua",
-        title: "Dad Joke",
-        description: `\`\`\`${joke.setup}\n\n${joke.punchline}\`\`\``,
-        footer: client.getFooter(message),
-      });
-    } catch (error) {
-      print(`Dad Joke Error: ${error.message}`);
-
-      return client.sendEmbed(message, {
-        color: "DarkAqua",
-        title: "Dad Joke",
-        description: `\`\`\`Looks like the dad is too tired to tell you some jokes, please try again later.\`\`\``,
-        footer: client.getFooter(message),
-      });
-    }
-  },
+  run: async (client, interaction, args, prefix) => {
+    return main("message", { client, interaction, args, prefix });
+  }
 };
 
 // Path: commands\message\fun\joke.js

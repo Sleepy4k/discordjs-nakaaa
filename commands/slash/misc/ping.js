@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import main from "#functions/misc/ping.js";
 import { ApplicationCommandType, PermissionFlagsBits } from "discord.js";
 
 /**
@@ -25,13 +26,8 @@ export default {
   type: ApplicationCommandType.ChatInput,
 
   run: async (client, interaction) => {
-    return client.sendEmbed(interaction, {
-      color: "Blue",
-      title: "🏓 Pong",
-      description: `\`\`\`Latency: ${client.ws.ping}ms \nAPI Latency: ${interaction.createdTimestamp - Date.now()}ms\`\`\``,
-      footer: client.getFooter(interaction, "interaction"),
-    }, true);
-  },
+    return main("slash", { client, interaction });
+  }
 };
 
 // Path: commands\slash\misc\ping.js

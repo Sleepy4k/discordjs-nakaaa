@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import main from "#functions/core/polling.js";
 import { ApplicationCommandType, PermissionFlagsBits } from "discord.js";
 
 /**
@@ -31,28 +32,8 @@ export default {
   }],
 
   run: async (client, interaction) => {
-    const polling = await interaction.options.getString("polling");
-
-    if (!polling)
-      return client.sendEmbed(interaction, {
-        color: "Red",
-        title: "Error",
-        description: "```Please provide a polling text.```",
-        footer: client.getFooter(interaction, "interaction"),
-      }, true);
-
-    const poll = await client.sendEmbed(interaction, {
-      color: "Gold",
-      title: "Polling",
-      description: `\`\`\`${polling}\`\`\``,
-      footer: client.getFooter(interaction, "interaction"),
-    }, false, true);
-
-    await poll.react("👍");
-    await poll.react("👎");
-
-    return poll;
-  },
+    return main("slash", {client, interaction});
+  }
 };
 
 // Path: commands\slash\core\polling.js

@@ -11,9 +11,8 @@
  *
  * March 12, 2023
  */
-import print from "../../../utils/print.js";
+import main from "#functions/misc/uptime.js";
 import { PermissionFlagsBits } from "discord.js";
-import parseDur from "../../../utils/parseDur.js";
 
 /**
  * @type {import("../../../index.js").Mcommand}
@@ -26,16 +25,9 @@ export default {
   category: "misc",
   cooldown: 5,
 
-  run: async (client, message, args, prefix) => {
-    const uptime = parseDur(client.uptime);
-
-    return client.sendEmbed(message, {
-      color: "Yellow",
-      title: ":inbox_tray: Bot Uptime",
-      description: `\`\`\`Uptime: ${uptime}\`\`\``,
-      footer: client.getFooter(message),
-    });
-  },
+  run: async (client, interaction, args, prefix) => {
+    return main("message", { client, interaction, args, prefix });
+  }
 };
 
 // Path: commands\message\misc\uptime.js

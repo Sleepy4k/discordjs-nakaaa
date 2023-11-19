@@ -11,7 +11,7 @@
  *
  * March 12, 2023
  */
-import print from "../../../utils/print.js";
+import main from "#functions/core/say.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -25,24 +25,9 @@ export default {
   category: "core",
   cooldown: 5,
 
-  run: async (client, message, args, prefix) => {
-    let say = args.slice(0).join(" ");
-
-    if (!say) {
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Say something!",
-        description: `\`\`\`Usage: ${prefix}say <text>\`\`\``,
-        footer: client.getFooter(message),
-      });
-    }
-
-    return client.sendEmbed(message, {
-      color: "Navy",
-      description: `\`\`\`${say}\`\`\``,
-      footer: client.getFooter(message),
-    });
-  },
+  run: async (client, interaction, args, prefix) => {
+    return main("message", {client, interaction, args, prefix});
+  }
 };
 
 // Path: commands\message\core\say.js

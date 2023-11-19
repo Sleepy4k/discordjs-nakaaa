@@ -11,7 +11,7 @@
  *
  * March 12, 2023
  */
-import print from "../../../utils/print.js";
+import main from "#functions/core/polling.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -25,30 +25,9 @@ export default {
   category: "core",
   cooldown: 5,
 
-  run: async (client, message, args, prefix) => {
-    let polling = args.slice(0).join(" ");
-
-    if (!polling) {
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Polling something!",
-        description: `\`\`\`Usage: ${prefix}polling <text>\`\`\``,
-        footer: client.getFooter(message),
-      });
-    }
-
-    return client.sendEmbed(message, {
-      color: "Gold",
-      title: "Polling",
-      description: `\`\`\`${polling}\`\`\``,
-      footer: client.getFooter(message),
-    }).then((msg) => {
-      msg.react("👍");
-      msg.react("👎");
-    }).catch((err) => {
-      print(`SendEmbed Error: ${err.message}`);
-    });
-  },
+  run: async (client, interaction, args, prefix) => {
+    return main("message", {client, interaction, args, prefix});
+  }
 };
 
 // Path: commands\message\core\polling.js
