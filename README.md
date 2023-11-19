@@ -11,6 +11,9 @@
 ### Kebutuhan System
 
 - Node JS >= 16.13.x
+- Node GYP
+- Python >= 3.6.0
+- Visual Studio >= 2022
 
 ### Instalasi
 
@@ -62,6 +65,9 @@ jika sudah, isi detail data pada index.js dalam folder config. dan jalankan bot
 ### Dependencies
 
 - Node JS >= 16.13.x
+- Node GYP
+- Python >= 3.6.0
+- Visual Studio >= 2022
 
 ### Instalation
 
