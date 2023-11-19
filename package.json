@@ -57,5 +57,17 @@
   },
   "engines": {
     "node": ">=16.13.0"
+  },
+  "imports": {
+    "#utils/*": "./utils/*",
+    "#config/*": "./config/*",
+    "#events/*": "./events/*",
+    "#server/*": "./server/*",
+    "#commands/*": "./commands/*",
+    "#handlers/*": "./handlers/*",
+    "#dashboard/*": "./dashboard/*",
+    "#functions/*": "./functions/*",
+    "#slashCommands/*": "./commands/slash/*",
+    "#messageCommands/*": "./commands/message/*"
   }
 }
