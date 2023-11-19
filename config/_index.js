@@ -18,6 +18,7 @@ import slash from "./slash.js";
 import emoji from "./emoji.js";
 import welcome from "./welcome.js";
 import goodbye from "./goodbye.js";
+import handler from "./handler.js";
 import activity from "./activity.js";
 import bad_words from "./bad_words.js";
 import anti_crash from "./anti_crash.js";
@@ -30,6 +31,7 @@ const config = {
   slash,
   welcome,
   goodbye,
+  handler,
   activity,
   bad_words,
   anti_crash,
