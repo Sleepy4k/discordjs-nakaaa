@@ -11,13 +11,6 @@
  *
  * March 12, 2023
  */
-import { Bot } from "./handlers/client.js";
-import createServer from "./dashboard/bin/www.js";
-
-const client = new Bot();
-
-createServer(client);
-
-client.build(client.config.bot.token);
+import "#server/init.js"
 
 // Path: index.js
