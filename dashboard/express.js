@@ -13,7 +13,7 @@ import cookieSession from "cookie-session";
 /**
  * Import routes
  */
-import routes from "./routes/_index.js";
+import routes from "#dashboard/routes/_index.js";
 
 /**
  * Create express app

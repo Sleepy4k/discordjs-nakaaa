@@ -3,8 +3,8 @@
  */
 import http from "http";
 import debugLib from "debug";
-import app from "../express.js";
-import print from "../../utils/print.js";
+import print from "#utils/print.js";
+import app from "#dashboard/express.js";
 
 /**
  * Create server
