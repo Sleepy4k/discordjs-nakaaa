@@ -11,6 +11,9 @@
  *
  * March 12, 2023
  */
+import print from "#utils/print.js";
+import config from "#config/_index.js";
+import { Player } from "discord-player";
 import {
   Client,
   Message,
@@ -20,9 +23,6 @@ import {
   GatewayIntentBits,
   CommandInteraction
 } from "discord.js";
-import print from "../utils/print.js";
-import config from "../config/_index.js";
-import { Player } from "discord-player";
 
 export class Bot extends Client {
   constructor() {
@@ -136,12 +136,11 @@ export class Bot extends Client {
     } catch (error) {
       print(`Send Embed Error: ${error.message}`);
 
-      if (interaction)
-        return await this.send(interaction, {
-          content: "Error: " + error.message,
-          ephemeral: ephemeral,
-          fetchReply: fetchReply
-        });
+      if (interaction) return await this.send(interaction, {
+        content: "Error: " + error.message,
+        ephemeral: ephemeral,
+        fetchReply: fetchReply
+      });
 
       return await interaction.channel.send({
         content: "Error: " + error.message,
@@ -161,21 +160,18 @@ export class Bot extends Client {
    */
   getFooter(client, type = "message") {
     try {
-      if (!client)
-        return {
-          text: `${config.bot.name} | Bot by ${config.bot.author}`,
-          iconURL: config.bot.icon,
-        };
+      if (!client) return {
+        text: `${config.bot.name} | Bot by ${config.bot.author}`,
+        iconURL: config.bot.icon,
+      };
 
-      if (type === "message") {
-        return {
-          text: `Requested by ${client.author.username} | Bot by ${config.bot.author}`,
-          iconURL: client.author.displayAvatarURL({
-            dynamic: true,
-            format: "png",
-          }),
-        };
-      }
+      if (type === "message") return {
+        text: `Requested by ${client.author.username} | Bot by ${config.bot.author}`,
+        iconURL: client.author.displayAvatarURL({
+          dynamic: true,
+          format: "png",
+        }),
+      };
 
       return {
         text: `Requested by ${client.user.username} | Bot by ${config.bot.author}`,
@@ -185,7 +181,7 @@ export class Bot extends Client {
         }),
       };
     } catch (error) {
-      print(`Get Footer Error: ${error.message}`);
+      print(error.message, "error");
 
       return {
         text: `${config.bot.name} | Bot by ${config.bot.author}`,
@@ -224,7 +220,7 @@ export class Bot extends Client {
         });
       }
     } catch (error) {
-      print(`Send Error: ${error.message}`);
+      print(error.message, "error");
       await interaction.deferReply().catch((e) => {});
     }
   }
@@ -238,8 +234,10 @@ export class Bot extends Client {
  * @returns {Promise<void>}
  */
 async function loadHandlers(client) {
-  ["messageHandler", "slashHandler", "eventHandler"].forEach(async (file) => {
-    let handler = await import(`./${file}.js`).then((r) => r.default);
+  const { list } = client.config.handler;
+
+  list.forEach(async (file) => {
+    let handler = await import(`#handlers/${file}.js`).then((r) => r.default);
     await handler(client);
   });
 }

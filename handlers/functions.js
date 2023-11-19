@@ -11,7 +11,7 @@
  *
  * March 12, 2023
  */
-import print from "../utils/print.js";
+import print from "#utils/print.js";
 import { Collection, CommandInteraction } from "discord.js";
 
 /**
@@ -37,7 +37,6 @@ export function cooldown(interaction, cmd) {
 
     if (now < expirationTime) {
       const timeLeft = (expirationTime - now) / 1000;
-      print(`${member.user.tag} : ${cmd.name} | Cooldown: ${timeLeft.toFixed(1)} seconds.`, "info");
       return timeLeft;
     }
 

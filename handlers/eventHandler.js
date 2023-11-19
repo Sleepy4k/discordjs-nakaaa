@@ -11,10 +11,10 @@
  *
  * March 12, 2023
  */
-import { Bot } from "./client.js";
-import print from "../utils/print.js";
+import print from "#utils/print.js";
+import { Bot } from "#handlers/client.js";
 import { readdir } from "node:fs/promises";
-import { logStatus } from "./functions.js";
+import { logStatus } from "#handlers/functions.js";
 
 /**
  * Handle all events
@@ -33,7 +33,7 @@ export default async (client) => {
         /**
          * @type {import("../index.js").EventHandler}
          */
-        let event = await import(`../events/${file}`).then((r) => r.default);
+        let event = await import(`#events/${file}`).then((r) => r.default);
 
         if (event?.name) {
           client.events.set(event.name, event);

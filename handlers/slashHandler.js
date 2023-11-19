@@ -11,10 +11,10 @@
  *
  * March 12, 2023
  */
-import { Bot } from "./client.js";
-import print from "../utils/print.js";
+import print from "#utils/print.js";
+import { Bot } from "#handlers/client.js";
 import { readdir } from "node:fs/promises";
-import { logStatus } from "./functions.js";
+import { logStatus } from "#handlers/functions.js";
 
 /**
  * Register all slash commands
@@ -41,7 +41,7 @@ export default async (client) => {
           /**
            * @type {client.scommands}
            */
-          const command = await import(`../commands/slash/${dir}/${cmd}`).then((r) => r.default);
+          const command = await import(`#slashCommands/${dir}/${cmd}`).then((r) => r.default);
 
           if (command.name) {
             client.scommands.set(command.name, command);

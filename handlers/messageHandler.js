@@ -11,10 +11,10 @@
  *
  * March 12, 2023
  */
-import { Bot } from "./client.js";
-import print from "../utils/print.js";
+import print from "#utils/print.js";
+import { Bot } from "#handlers/client.js";
 import { readdir } from "node:fs/promises";
-import { logStatus } from "./functions.js";
+import { logStatus } from "#handlers/functions.js";
 
 /**
  * Register all message commands
@@ -38,7 +38,7 @@ export default async (client) => {
           /**
            * @type {client.mcommands}
            */
-          const command = await import(`../commands/message/${dir}/${cmd}`).then((r) => r.default);
+          const command = await import(`#messageCommands/${dir}/${cmd}`).then((r) => r.default);
 
           if (command.name) {
             client.mcommands.set(command.name, command);
