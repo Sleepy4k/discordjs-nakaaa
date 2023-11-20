@@ -16,6 +16,7 @@ import bot from "./bot.js";
 import nsfw from "./nsfw.js";
 import slash from "./slash.js";
 import emoji from "./emoji.js";
+import chatbot from "./chatbot.js";
 import welcome from "./welcome.js";
 import goodbye from "./goodbye.js";
 import handler from "./handler.js";
@@ -29,6 +30,7 @@ const config = {
   nsfw,
   emoji,
   slash,
+  chatbot,
   welcome,
   goodbye,
   handler,
