@@ -18,9 +18,11 @@ export default {
 
   run: async (client, message) => {
     if (message.author.bot || !message.guild || !message.id) return;
-    if (!client.config.bad_words.enable) return;
 
-    client.config.bad_words.list.forEach(async (badword) => {
+    const { list, enable } = client.config.bad_words;
+    if (!enable) return;
+
+    list.forEach(async (badword) => {
       if (message.content.match(badword)) {
         await message.delete().catch((e) => print(e.message, "error"));
 

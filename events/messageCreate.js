@@ -12,8 +12,13 @@
  * March 12, 2023
  */
 import print from "#utils/print.js";
+import CharacterAI from "node_characterai";
 import { PermissionsBitField } from "discord.js";
 import { cooldown } from "#handlers/functions.js";
+
+let AIChat = null;
+let isAIAutehnticated = false;
+const characterAI = new CharacterAI();
 
 export default {
   name: "messageCreate",
@@ -28,11 +33,24 @@ export default {
     const args = message.content.slice(nprefix.length).trim().split(/ +/);
     const cmd = args.shift().toLowerCase();
 
-    if (cmd.length === 0 && nprefix.includes(client.user.id)) return client.sendEmbed(message, {
-      title: "Help",
-      description: `${client.config.emoji.success} To See My All Commands Type  \`/help\` or \`${prefix}help\``,
-      footer: client.getFooter(message),
+    if (cmd.length === 0 && nprefix.includes(client.user.id)) return await client.sendEmbed(message, {
+      description: "Kamu kenapa? kok mention aku? kangen ya? :smiling_face_with_tear:",
     });
+
+    if (cmd.length > 0 && !client.mcommands.has(cmd) && !client.mcommands.find((cmds) => cmds.aliases && cmds.aliases.includes(cmd))) {
+      if (!isAIAutehnticated && client.config.chatbot.token && client.config.chatbot.charId) {
+        await characterAI.authenticateWithToken("eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkVqYmxXUlVCWERJX0dDOTJCa2N1YyJ9.eyJpc3MiOiJodHRwczovL2NoYXJhY3Rlci1haS51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMDQ0NzQ0MTY5NTE3MjQ1NTM5MTMiLCJhdWQiOlsiaHR0cHM6Ly9hdXRoMC5jaGFyYWN0ZXIuYWkvIiwiaHR0cHM6Ly9jaGFyYWN0ZXItYWkudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTcwMDQ0ODcxNywiZXhwIjoxNzAzMDQwNzE3LCJhenAiOiJkeUQzZ0UyODFNcWdJU0c3RnVJWFloTDJXRWtucVp6diIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwifQ.hD52MQTZSi_qqvLYFYFfFoTFJEkrIcMY8_iCQoAFV08j63i5rk043vo3lf_KBqpZs_Fq37IlTHRsXgHR5F8STF7rFMvYtNhH0ecQI_G3YnhZKeXyETiwDCKFxzp044X1XYN5V0UUCr8CQvcaihB8oG8_-05cmxgjs40vzLJPoBdoU3F4qsRuWJ4xMsm1q3LeAPZIYVDhZiYWtvIUnMOfBp_n3-yAMLPLExumuaknn-qsBUSDF4aZxjarrn4w5jIKF4J82F2a4w0IjeYPUk_3LeNALSwECu9wpxcRBucQYRT_7HkoywqLzMDcASUkuf5UAF7W5-8gllKkX2Ke2BEIdA");
+        const characterId = "IFdILKj2qmOyv6V53N85CGezo9V8v7dOMKXw42vuTrQ";
+        AIChat = await characterAI.createOrContinueChat(characterId);
+        isAIAutehnticated = true;
+      }
+
+      const response = await AIChat.sendAndAwaitResponse(cmd, true);
+
+      return await client.sendEmbed(message, {
+        description: response.text,
+      });
+    }
 
     const command = client.mcommands.get(cmd) || client.mcommands.find((cmds) => cmds.aliases && cmds.aliases.includes(cmd));
     if (!command) return client.sendEmbed(message, {
