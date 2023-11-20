@@ -15,7 +15,7 @@ import "dotenv/config.js";
 
 const chatbot = {
   token: process.env.CHATBOT_TOKEN || "",
-  charId: process.env.CHATBOT_CHAR_ID | ""
+  charId: process.env.CHATBOT_CHAR_ID || ""
 }
 
 export default chatbot;
