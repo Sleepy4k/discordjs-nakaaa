@@ -15,7 +15,7 @@ import "dotenv/config.js";
 
 const slash = {
   global: process.env.SLASH_GLOBAL || true,
-  guild_id: ["1083959134602412164"]
+  guild_id: ["123456789012345678"]
 }
 
 export default slash;
