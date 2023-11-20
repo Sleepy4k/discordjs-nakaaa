@@ -14,7 +14,7 @@
 import "dotenv/config.js";
 
 const bad_words = {
-  enable: process.env.BAD_WORDS_ENABLE || true,
+  enable: process.env.BAD_WORDS_ENABLE || false,
   list: [
     "anjing",
     "babi",
