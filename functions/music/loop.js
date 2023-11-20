@@ -22,6 +22,13 @@ export default async function main(type, data) {
   const loopMode = ephemeral ? interaction.options.getString("mode") : (args.slice(0).join(" ")).tolowerCase();
 
   try {
+    if (!interaction.member.voice.channel) return client.sendEmbed(interaction, {
+      color: "Red",
+      title: "Error",
+      description: "```You must be in a voice channel to use this command.```",
+      footer: client.getFooter(interaction, type),
+    }, ephemeral);
+
     const guildId = interaction.guild.id;
     const queue = await client.player.nodes.get(guildId);
 

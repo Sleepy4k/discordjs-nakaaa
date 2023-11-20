@@ -19,6 +19,13 @@ export default async function main(type, data) {
   const ephemeral = type === "slash" ? true : false;
 
   try {
+    if (!interaction.member.voice.channel) return client.sendEmbed(interaction, {
+      color: "Red",
+      title: "Error",
+      description: "```You must be in a voice channel to use this command.```",
+      footer: client.getFooter(interaction, type),
+    }, ephemeral);
+
     const guildId = interaction.guild.id;
     const queue = await client.player.nodes.get(guildId);
 

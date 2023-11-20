@@ -19,6 +19,13 @@ export default async function main(type, data) {
   const ephemeral = type === "slash" ? true : false;
 
   try {
+    if (!interaction.member.voice.channel) return client.sendEmbed(interaction, {
+      color: "Red",
+      title: "Error",
+      description: "```You must be in a voice channel to use this command.```",
+      footer: client.getFooter(interaction, type),
+    }, ephemeral);
+
     const guildId = interaction.guild.id;
     const queue = await client.player.nodes.get(guildId);
 
@@ -37,12 +44,19 @@ export default async function main(type, data) {
     }, ephemeral);
 
     if (ephemeral) await interaction.deferReply({ ephemeral }).catch((error) => print(error.message, "error"));
+    if (ephemeral) await client.sendEmbed(interaction, {
+      color: "Blue",
+      title: "Searching...",
+      description: `\`\`\`Searching for ${queue.history.previousTrack.title}...\`\`\``,
+      footer: client.getFooter(interaction, type),
+    }, ephemeral);
+
     await queue.history.back();
 
     return client.sendEmbed(interaction, {
       color: "Blue",
       title: "Success",
-      description: "```Playing the previous song.```",
+      description: `\`\`\`${queue.currentTrack.title} is now playing.\`\`\``,
       footer: client.getFooter(interaction, type),
     }, ephemeral);
   } catch (error) {
