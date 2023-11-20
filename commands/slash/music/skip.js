@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import main from "#functions/music/skip.js";
 import { ApplicationCommandType, PermissionFlagsBits } from "discord.js";
 
 /**
@@ -25,31 +26,8 @@ export default {
   type: ApplicationCommandType.ChatInput,
 
   run: async (client, interaction) => {
-    const queue = client.player.nodes.get(interaction.guild.id);
-
-    if (!queue || !queue.isPlaying())
-      return client.sendEmbed(interaction, {
-        color: "Red",
-        title: "Error",
-        description: "```There is no music currently playing.```",
-        footer: client.getFooter(interaction, "interaction"),
-      }, true);
-
-    if (queue.repeatMode === 1) {
-      queue.setRepeatMode(0);
-      queue.node.skip();
-      setTimeout(() => queue.setRepeatMode(1), 1500);
-    } else {
-      queue.node.skip();
-    }
-
-    return client.sendEmbed(interaction, {
-      color: "Blue",
-      title: "Success",
-      description: "```Skipped the current song.```",
-      footer: client.getFooter(interaction, "interaction"),
-    }, true);
-  },
+    return main("slash", { client, interaction });
+  }
 };
 
 // Path: commands\slash\music\skip.js

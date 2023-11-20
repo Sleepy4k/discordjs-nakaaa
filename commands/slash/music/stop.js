@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import main from "#functions/music/stop.js";
 import { ApplicationCommandType, PermissionFlagsBits } from "discord.js";
 
 /**
@@ -25,25 +26,8 @@ export default {
   type: ApplicationCommandType.ChatInput,
 
   run: async (client, interaction) => {
-    const queue = client.player.nodes.get(interaction.guild.id);
-
-    if (!queue)
-      return client.sendEmbed(interaction, {
-        color: "Red",
-        title: "Error",
-        description: "```There is no music currently playing.```",
-        footer: client.getFooter(interaction, "interaction"),
-      }, true);
-
-    await queue.delete();
-
-    return client.sendEmbed(interaction, {
-      color: "Blue",
-      title: "Success",
-      description: "```Stopped the current song.```",
-      footer: client.getFooter(interaction, "interaction"),
-    }, true);
-  },
+    return main("slash", { client, interaction });
+  }
 };
 
 // Path: commands\slash\music\stop.js

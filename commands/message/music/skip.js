@@ -11,7 +11,7 @@
  *
  * March 12, 2023
  */
-import print from "../../../utils/print.js";
+import main from "#functions/music/skip.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -25,36 +25,9 @@ export default {
   category: "music",
   cooldown: 5,
 
-  run: async (client, message, args, prefix) => {
-    const queue = await client.player.nodes.get(message.guild.id);
-
-    if (!queue || !queue.isPlaying())
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Error",
-        description: "```There is no music currently playing.```",
-        footer: client.getFooter(message),
-      });
-
-    try {
-      if (queue.repeatMode === 1) {
-        queue.setRepeatMode(0);
-        queue.node.skip();
-        setTimeout(() => queue.setRepeatMode(1), 1500);
-      } else {
-        queue.node.skip();
-      }
-    } catch (error) {
-      print(`Skip Error: ${error.message}`);
-    }
-
-    return client.sendEmbed(message, {
-      color: "Blue",
-      title: "Success",
-      description: "```Skipped the current song.```",
-      footer: client.getFooter(message),
-    });
-  },
+  run: async (client, interaction, args, prefix) => {
+    return main("message", { client, interaction, args, prefix });
+  }
 };
 
 // Path: commands\message\music\skip.js

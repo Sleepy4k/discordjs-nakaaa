@@ -11,7 +11,7 @@
  *
  * March 12, 2023
  */
-import print from "../../../utils/print.js";
+import main from "#functions/music/resume.js";
 import { PermissionFlagsBits } from "discord.js";
 
 /**
@@ -25,40 +25,9 @@ export default {
   category: "music",
   cooldown: 5,
 
-  run: async (client, message, args, prefix) => {
-    const queue = await client.player.nodes.get(message.guild.id);
-
-    if (!queue)
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Error",
-        description: "```There is no music currently playing.```",
-        footer: client.getFooter(message),
-      });
-
-    let success = false;
-
-    try {
-      success = await queue.node.resume();
-    } catch (error) {
-      print(`Resume Error: ${error.message}`);
-    }
-
-    if (!success)
-      return client.sendEmbed(message, {
-        color: "Red",
-        title: "Error",
-        description: "```Failed to resume the current song.```",
-        footer: client.getFooter(message),
-      });
-
-    return client.sendEmbed(message, {
-      color: "Blue",
-      title: "Success",
-      description: "```Resumed the current song.```",
-      footer: client.getFooter(message),
-    });
-  },
+  run: async (client, interaction, args, prefix) => {
+    return main("message", { client, interaction, args, prefix });
+  }
 };
 
 // Path: commands\message\music\resume.js

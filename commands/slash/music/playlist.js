@@ -11,6 +11,7 @@
  *
  * March 12, 2023
  */
+import main from "#functions/music/playlist.js";
 import { ApplicationCommandType, PermissionFlagsBits } from "discord.js";
 
 /**
@@ -25,40 +26,8 @@ export default {
   type: ApplicationCommandType.ChatInput,
 
   run: async (client, interaction) => {
-    const queue = client.player.nodes.get(interaction.guild.id);
-
-    if (!queue || !queue.currentTrack)
-      return client.sendEmbed(interaction, {
-        color: "Red",
-        title: "Error",
-        description: "```There is no music currently playing.```",
-        footer: client.getFooter(interaction, "interaction"),
-      }, true);
-
-    const tracks = queue.tracks.map((track, index) => `${++index}. ${track.title}`);
-
-    let nowPlaying = `Now Playing: ${queue.currentTrack.title}\n\n`;
-    let tracksQueue = "";
-
-    if (tracks.length < 1) {
-      tracksQueue = "------------------------------";
-    } else if (tracks.length > 9) {
-      tracksQueue = tracks.slice(0, 10).join("\n");
-      tracksQueue += `\nand ${tracks.length - 10} other songs`;
-    } else {
-      tracksQueue = tracks.join("\n");
-    }
-
-    let loopStatus = queue.repeatMode ? (queue.repeatMode === 2 ? "All" : "One") : "Off";
-
-    return client.sendEmbed(interaction, {
-      color: "Blue",
-      title: "Playlist",
-      fields: { name: nowPlaying, value: tracksQueue },
-      description: `\nLoop: ${loopStatus}`,
-      footer: client.getFooter(interaction, "interaction"),
-    }, true);
-  },
+    return main("slash", { client, interaction });
+  }
 };
 
 // Path: commands\slash\music\playlist.js
