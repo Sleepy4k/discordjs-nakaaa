@@ -14,7 +14,6 @@
 import print from "#utils/print.js";
 import CharacterAI from "node_characterai";
 import { PermissionsBitField } from "discord.js";
-import { cooldown } from "#handlers/functions.js";
 
 let AIChat = null;
 let isAIAutehnticated = false;
@@ -71,10 +70,10 @@ export default {
         description: "I don't have enough Permissions !!",
         footer: client.getFooter(message),
       });
-    } else if (cooldown(message, command) !== false) {
+    } else if (client.cooldown(message, command) !== false) {
       return client.sendEmbed(message, {
         title: "Cooldown",
-        description: `You are On Cooldown , wait \`${cooldown(message, command).toFixed()}\` Seconds`,
+        description: `You are On Cooldown , wait \`${client.cooldown(message, command).toFixed()}\` Seconds`,
         footer: client.getFooter(message),
       });
     } else {

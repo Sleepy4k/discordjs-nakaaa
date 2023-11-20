@@ -13,9 +13,9 @@
  */
 const handler = {
   list: [
-    "messageHandler",
-    "slashHandler",
-    "eventHandler"
+    "slash",
+    "event",
+    "message"
   ]
 }
 

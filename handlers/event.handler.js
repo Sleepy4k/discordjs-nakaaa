@@ -12,9 +12,8 @@
  * March 12, 2023
  */
 import print from "#utils/print.js";
-import { Bot } from "#handlers/client.js";
+import { Bot } from "#server/bot.js";
 import { readdir } from "node:fs/promises";
-import { logStatus } from "#handlers/functions.js";
 
 /**
  * Handle all events
@@ -37,10 +36,10 @@ export default async (client) => {
 
         if (event?.name) {
           client.events.set(event.name, event);
-          logStatus(event.name, true, "Event");
+          client.logStatus(event.name, true, "Event");
           client.on(event.name, (...args) => event.run(client, ...args));
         } else {
-          logStatus(event.name, false, "Event");
+          client.logStatus(event.name, false, "Event");
         }
       })
     );

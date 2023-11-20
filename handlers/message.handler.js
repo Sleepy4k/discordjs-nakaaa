@@ -12,60 +12,47 @@
  * March 12, 2023
  */
 import print from "#utils/print.js";
-import { Bot } from "#handlers/client.js";
+import { Bot } from "#server/bot.js";
 import { readdir } from "node:fs/promises";
-import { logStatus } from "#handlers/functions.js";
 
 /**
- * Register all slash commands
+ * Register all message commands
  *
  * @param {Bot} client
  *
  * @returns {Promise<void>}
  */
 export default async (client) => {
-  const { global, guild_id } = client.config.slash;
-
   try {
-    let allCommands = [];
-    const commandsDir = await readdir(`./commands/slash`);
+    const commandsDir = await readdir(`./commands/message`);
 
     const items = await Promise.all(
       commandsDir.map(async (dir) => {
         if (!client.config.nsfw.enable && dir === client.config.nsfw.directory) return;
 
-        const commands = await readdir(`./commands/slash/${dir}`);
+        const commands = await readdir(`./commands/message/${dir}`);
         let filterCommands = commands.filter((f) => f.endsWith(".js"));
 
         for (const cmd of filterCommands) {
           /**
-           * @type {client.scommands}
+           * @type {client.mcommands}
            */
-          const command = await import(`#slashCommands/${dir}/${cmd}`).then((r) => r.default);
+          const command = await import(`#messageCommands/${dir}/${cmd}`).then((r) => r.default);
 
           if (command.name) {
-            client.scommands.set(command.name, command);
-            allCommands.push(command);
-            logStatus(command.name, true, "Slash");
+            client.mcommands.set(command.name, command);
+            client.logStatus(command.name, true, "Message");
           } else {
-            logStatus(command.name, false, "Slash");
+            client.logStatus(command.name, false, "Message");
           }
         }
       })
     );
 
     await Promise.all(items);
-
-    client.on("ready", async () => {
-      if (global) {
-        client.application.commands.set(allCommands);
-      } else {
-        client.guilds.cache.get(guild_id)?.commands.set(allCommands);
-      }
-    });
   } catch (error) {
     print(error.message, "error");
   }
 };
 
-// Path: handlers\slashHandler.js
+// Path: handlers\messageHandler.js

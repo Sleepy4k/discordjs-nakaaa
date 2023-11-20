@@ -11,18 +11,18 @@
  *
  * March 12, 2023
  */
-import web from "./web.js";
-import bot from "./bot.js";
-import nsfw from "./nsfw.js";
-import slash from "./slash.js";
-import emoji from "./emoji.js";
-import chatbot from "./chatbot.js";
-import welcome from "./welcome.js";
-import goodbye from "./goodbye.js";
-import handler from "./handler.js";
-import activity from "./activity.js";
-import bad_words from "./bad_words.js";
-import anti_crash from "./anti_crash.js";
+import web from "./web.config.js";
+import bot from "./bot.config.js";
+import nsfw from "./nsfw.config.js";
+import slash from "./slash.config.js";
+import emoji from "./emoji.config.js";
+import chatbot from "./chatbot.config.js";
+import welcome from "./welcome.config.js";
+import goodbye from "./goodbye.config.js";
+import handler from "./handler.config.js";
+import activity from "./activity.config.js";
+import bad_words from "./bad_words.config.js";
+import anti_crash from "./anti_crash.config.js";
 
 const config = {
   bot,
