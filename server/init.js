@@ -11,13 +11,19 @@
  *
  * March 12, 2023
  */
-import initBot from "./bot.js";
-import initWeb from "./web.js";
-import { Bot } from "#handlers/client.js";
+import { Bot } from "./bot.js";
+import createServer from "#dashboard/bin/www.js";
 
 const client = new Bot();
 
-initBot(client, client.config.bot.token);
-initWeb(client);
+/**
+ * Host express server
+ */
+createServer(client);
+
+/**
+ * Host discord bot
+ */
+client.build(client.config.bot.token).catch((err) => console.error(err));
 
 // Path: server\init.js
