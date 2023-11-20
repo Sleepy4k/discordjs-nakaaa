@@ -14,7 +14,15 @@
 import { Bot } from "./bot.js";
 import createServer from "#dashboard/bin/www.js";
 
+/**
+ * Init bot
+ */
 const client = new Bot();
+
+/**
+ * Init chatbot
+ */
+await client.initChatbot();
 
 /**
  * Host express server

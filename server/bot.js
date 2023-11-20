@@ -14,6 +14,7 @@
 import print from "#utils/print.js";
 import config from "#config/_index.js";
 import { Player } from "discord-player";
+import CharacterAI from "node_characterai";
 import {
   Client,
   Message,
@@ -78,6 +79,11 @@ export class Bot extends Client {
     this.mcommands = new Collection();
     this.cooldowns = new Collection();
     this.prefix = this.config.bot.prefix;
+    this.chatbot = {
+      AIChat: null,
+      isAIAutehnticated: false,
+      characterAI: new CharacterAI(),
+    };
 
     this.player = new Player(this, {
       ytdlOptions: {
@@ -275,6 +281,28 @@ export class Bot extends Client {
     const statusText = isLoaded ? "Loaded" : "Not Loaded";
 
     print(`${type} : ${name} | Status: ${statusIcon} ${statusText}`, "info");
+  }
+
+  /**
+   * Init chatbot
+   *
+   * @returns {Promise<void>}
+   */
+  async initChatbot() {
+    const { characterAI, isAIAutehnticated } = this.chatbot;
+    const charConfig = config.chatbot;
+
+    if (isAIAutehnticated || !charConfig.charId) return;
+
+    try {
+      if (charConfig.token) await characterAI.authenticateWithToken(charConfig.token);
+      else await characterAI.authenticateAsGuest();
+
+      this.chatbot.AIChat = await characterAI.createOrContinueChat(charConfig.charId);
+      this.chatbot.isAIAutehnticated = true;
+    } catch (error) {
+      print(error.message, "error");
+    }
   }
 }
 
