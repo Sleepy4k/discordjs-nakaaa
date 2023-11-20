@@ -57,6 +57,11 @@ export default async (client) => {
 
     client.on("ready", async () => {
       if (global) {
+        client.application.commands.fetch().then((commands) => {
+          for (const command of commands.values()) {
+            client.application.commands.delete(command.id);
+          }
+        }).catch((error) => print(error.message, "error"));
         client.application.commands.set(allCommands);
       } else {
         client.guilds.cache.get(guild_id)?.commands.set(allCommands);
