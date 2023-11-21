@@ -51,7 +51,8 @@ jika sudah, isi detail data pada index.js dalam folder config. dan jalankan bot
 ### Catatan
 
 ~~~bash
-  Project ini dibuat dengan ES6 dan discord js v14
+  Project ini dibuat dengan ES6 dan discord js v14.
+  Untuk catatan lebih lanjut kalian bisa baca note.md
 ~~~
 
 ## EN
@@ -105,5 +106,6 @@ if so, fill in the data details in index.js in the config folder. and run bots
 ### Note
 
 ~~~bash
-  This project was made with ES6 and discord js v14
+  This project was made with ES6 and discord js v14.
+  For further note you can read note.md
 ~~~
