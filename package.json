@@ -1,5 +1,6 @@
 {
   "name": "discordjs-nakaaa",
+  "bin": "index.js",
   "version": "1.0.0",
   "description": "Simple bot but have some feature built with discord js v14",
   "main": "index.js",
