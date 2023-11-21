@@ -47,12 +47,14 @@ export default async function main(type, data) {
     }, ephemeral);
 
     if (ephemeral) await interaction.deferReply({ ephemeral });
-    if (ephemeral) await client.sendEmbed(interaction, {
+    await client.sendEmbed(interaction, {
       color: "Blue",
       title: "Searching...",
       description: `\`\`\`Searching for ${results.playlist ? results.tracks.length : results.tracks[0].title}...\`\`\``,
       footer: client.getFooter(interaction, type),
-    }, ephemeral);
+    }, ephemeral).then((msg) => {
+      if (!ephemeral) setTimeout(() => msg.delete(), 2500);
+    });
 
     if (client.player.queues.has(interaction.guild.id)) queue = await client.player.nodes.get(interaction.guild.id);
     else {
@@ -61,7 +63,9 @@ export default async function main(type, data) {
         title: "Success",
         description: `\`\`\`Creating queue for ${memberChannel.name}...\`\`\``,
         footer: client.getFooter(interaction, "interaction"),
-      }, true);
+      }, ephemeral).then((msg) => {
+        if (!ephemeral) setTimeout(() => msg.delete(), 2500);
+      });
 
       queue = await client.player.nodes.create(interaction.guild, {
         volume: 75,
@@ -85,7 +89,9 @@ export default async function main(type, data) {
         title: "Success",
         description: `\`\`\`Connecting to ${memberChannel.name}...\`\`\``,
         footer: client.getFooter(interaction, type),
-      }, ephemeral);
+      }, ephemeral).then((msg) => {
+        if (!ephemeral) setTimeout(() => msg.delete(), 2500);
+      });
 
       await queue?.connect(memberChannel);
     };
