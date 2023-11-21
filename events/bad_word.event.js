@@ -25,6 +25,7 @@ export default {
     list.forEach(async (badword) => {
       if (message.content.match(badword)) {
         await message.delete().catch((e) => print(e.message, "error"));
+        print(`${message.author.tag} (${message.author.id}) send bad word '${message}' in ${message.guild.name} (${message.guild.id})`, "info");
 
         return client.sendEmbed(message, {
           title: "Bad Words",

@@ -27,12 +27,17 @@ export default {
     const args = message.content.slice(nprefix.length).trim().split(/ +/);
     const cmd = args.shift().toLowerCase();
 
-    if (cmd.length === 0 && nprefix.includes(client.user.id)) return await client.sendEmbed(message, {
-      description: "Kamu kenapa? kok mention aku? kangen ya? :smiling_face_with_tear:",
-    });
+    if (cmd.length === 0 && nprefix.includes(client.user.id)) {
+      print(`${message.author.tag} (${message.author.id}) mention bot in ${message.guild.name} (${message.guild.id})`, "info");
+
+      return await client.sendEmbed(message, {
+        description: "Kamu kenapa? kok mention aku? kangen ya? :smiling_face_with_tear:",
+      });
+    }
 
     if (cmd.length > 0 && !client.mcommands.has(cmd) && !client.mcommands.find((cmds) => cmds.aliases && cmds.aliases.includes(cmd))) {
       const response = await client.chatbot.AIChat.sendAndAwaitResponse(cmd, true);
+      print(`${message.author.tag} (${message.author.id}) send message to chatbot '${cmd}' with response '${response.text}' in ${message.guild.name} (${message.guild.id})`, "info");
 
       return await client.sendEmbed(message, {
         description: response.text,
