@@ -1,5 +1,18 @@
 # Discord.js Nakaaa
 
+## Important
+
+~~~bash
+  Project ini sudah tidak lagi di lakukan pengembangan dan sudah tidak digunakan lagi, jika kamu ingin menggunakan project ini
+  dan mendapatkan sebuah error, saya sarankan untuk pindah menggunakan project yang baru pada
+  `https://github.com/sleepy4k/discordjs-nakaaa-ts`
+~~~
+
+~~~bash
+  This project is no longer under development and desprecated, if you want to use this project and get an error,
+  I suggest moving to a new project on `https://github.com/sleepy4k/discordjs-nakaaa-ts`
+~~~
+
 ## ID
 
 ### Pengertian
